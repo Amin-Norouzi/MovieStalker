@@ -1,6 +1,6 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.util.View;
+import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

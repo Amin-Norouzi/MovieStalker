@@ -1,13 +1,11 @@
 package com.aminnorouzi.ms.util;
 
-import com.aminnorouzi.ms.MovieStalkerApplication.StageReadyEvent;
-import com.aminnorouzi.ms.controller.HomeController;
+import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
+import com.aminnorouzi.ms.model.View;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.context.ApplicationListener;
@@ -41,11 +39,9 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
         Parent root;
 
         if (cache.containsKey(view)) {
-            System.out.println("Loading from cache.");
             root = cache.get(view);
             setCurrent(view);
         } else {
-            System.out.println("Loading from loader.");
             root = fxWeaver.loadView(view.getController());
 
             cache.put(view, root);

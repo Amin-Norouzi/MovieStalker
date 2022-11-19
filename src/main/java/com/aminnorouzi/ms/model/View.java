@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.util;
+package com.aminnorouzi.ms.model;
 
 import com.aminnorouzi.ms.controller.HomeController;
 import com.aminnorouzi.ms.controller.LibraryController;
