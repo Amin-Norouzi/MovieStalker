@@ -3,13 +3,15 @@ package com.aminnorouzi.ms.model;
 import com.aminnorouzi.ms.controller.HomeController;
 import com.aminnorouzi.ms.controller.LibraryController;
 import com.aminnorouzi.ms.controller.SidebarController;
+import com.aminnorouzi.ms.controller.SigninController;
 
 public enum View {
 
     HOME(HomeController.class, "/view/home-view.fxml", "Home"),
     LIBRARY(LibraryController.class, "/view/library-view.fxml", "Library"),
     MOVIE(null, "/view/movie-view.fxml", "Movie"),
-    SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar");
+    SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar"),
+    SIGNIN(SigninController.class, "/view/signin-view", "Signin");
 
     private final Class<?> controller;
     private final String path;
@@ -31,5 +33,9 @@ public enum View {
 
     public String getTitle() {
         return title;
+    }
+
+    public static View getDefault() {
+        return View.HOME;
     }
 }

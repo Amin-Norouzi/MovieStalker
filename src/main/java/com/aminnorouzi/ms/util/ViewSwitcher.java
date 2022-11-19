@@ -11,7 +11,7 @@ import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @Data
@@ -21,20 +21,15 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
 
     private final FxWeaver fxWeaver;
 
-    private static final Map<View, Parent> cache = new HashMap<>();
+    private static final Map<View, Parent> cache = new EnumMap<>(View.class);
+
+    private View current;
 
     private Scene scene;
     private Stage stage;
 
-    private View current;
-
     public void switchTo(View view) {
         if (current.equals(view)) return;
-
-        if (scene == null || stage == null) {
-            System.out.println("No scene/stage was set");
-            return;
-        }
 
         Parent root;
 
@@ -43,9 +38,9 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
             setCurrent(view);
         } else {
             root = fxWeaver.loadView(view.getController());
+            setCurrent(view);
 
             cache.put(view, root);
-            setCurrent(view);
         }
 
         scene.setRoot(root);
@@ -64,16 +59,19 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
-        View view = View.HOME;
+        View view = View.getDefault();
         Stage stage = event.getStage();
         Scene scene = new Scene(fxWeaver.loadView(view.getController()));
 
         init(stage, scene);
-        cache.put(view, scene.getRoot());
         setCurrent(view);
+
+        cache.put(view, scene.getRoot());
 
         stage.setScene(scene);
         stage.setTitle(view.getTitle());
+        stage.centerOnScreen();
+        stage.setResizable(false);
         stage.show();
     }
 

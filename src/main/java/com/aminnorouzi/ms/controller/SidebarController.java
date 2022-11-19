@@ -29,6 +29,6 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onLibrary(ActionEvent event) {
-        switcher.switchTo(View.LIBRARY);
+        switcher.switchTo(View.SIGNIN);
     }
 }
