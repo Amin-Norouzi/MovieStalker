@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="400.0" prefWidth="240.0" style="-fx-background-color: black; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="poster" cache="true" fitHeight="400.0" fitWidth="240.0" opacity="0.7" pickOnBounds="true" smooth="false" style="-fx-background-radius: 20;">
+         <image>
+            <Image url="@../../../../../../../../../Downloads/freddie-marriage-utwYoEu9SU8-unsplash.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <VBox alignment="BOTTOM_LEFT" fillWidth="false" spacing="5.0" style="-fx-background-radius: 20;">
+         <children>
+            <Label fx:id="title" alignment="BOTTOM_LEFT" prefHeight="72.0" prefWidth="210.0" text="Title" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Arial Black" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="date" prefHeight="19.0" prefWidth="215.0" text="Date" textFill="#aeaeae">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</StackPane>

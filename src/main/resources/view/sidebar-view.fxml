@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="600.0" prefWidth="200.0" spacing="10.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SidebarController">
+    <children>
+        <Label text="Logo"/>
+        <Button onAction="#onHome" focusTraversable="false" mnemonicParsing="false" text="Home"/>
+        <Button onAction="#onLibrary" focusTraversable="false" mnemonicParsing="false" text="Library"/>
+        <Button focusTraversable="false" mnemonicParsing="false" text="Watch"/>
+        <Region prefHeight="404.0" prefWidth="200.0"/>
+        <Button focusTraversable="false" mnemonicParsing="false" text="Account"/>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+</VBox>
