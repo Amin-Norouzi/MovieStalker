@@ -50,6 +50,10 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
         stage.show();
     }
 
+    public void cleanup() {
+        cache.clear();
+    }
+
     private void init(Stage stage, Scene scene) {
         if (scene != null && stage != null) {
             this.stage = stage;

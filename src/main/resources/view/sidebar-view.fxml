@@ -13,7 +13,7 @@
         <Button onAction="#onLibrary" focusTraversable="false" mnemonicParsing="false" text="Library"/>
         <Button focusTraversable="false" mnemonicParsing="false" text="Watch"/>
         <Region prefHeight="404.0" prefWidth="200.0"/>
-        <Button focusTraversable="false" mnemonicParsing="false" text="Account"/>
+        <Button onAction="#onLogout" focusTraversable="false" mnemonicParsing="false" text="Log out"/>
     </children>
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>

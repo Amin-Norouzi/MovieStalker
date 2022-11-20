@@ -1,9 +1,6 @@
 package com.aminnorouzi.ms.model;
 
-import com.aminnorouzi.ms.controller.HomeController;
-import com.aminnorouzi.ms.controller.LibraryController;
-import com.aminnorouzi.ms.controller.SidebarController;
-import com.aminnorouzi.ms.controller.SigninController;
+import com.aminnorouzi.ms.controller.*;
 
 public enum View {
 
@@ -11,7 +8,8 @@ public enum View {
     LIBRARY(LibraryController.class, "/view/library-view.fxml", "Library"),
     MOVIE(null, "/view/movie-view.fxml", "Movie"),
     SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar"),
-    SIGNIN(SigninController.class, "/view/signin-view", "Signin");
+    SIGNIN(SigninController.class, "/view/signin-view.fxml", "Signin"),
+    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Signup");
 
     private final Class<?> controller;
     private final String path;

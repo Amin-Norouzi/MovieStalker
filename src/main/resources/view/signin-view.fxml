@@ -10,43 +10,56 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SigninController">
-   <center>
-      <VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Welcome back!" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="26.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Label>
-            <TextField prefHeight="34.0" prefWidth="220.0" promptText="Username" />
-            <PasswordField prefHeight="34.0" prefWidth="220.0" promptText="Password" />
-            <Button mnemonicParsing="false" prefWidth="220.0" text="Sign in">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </Button>
-            <Label text="Don't have an account? Sign up" />
-         </children>
-      </VBox>
-   </center>
-   <top>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
-   <left>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SigninController">
+    <center>
+        <VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" prefWidth="100.0" spacing="10.0"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Welcome back!" textAlignment="CENTER">
+                    <font>
+                        <Font name="Arial Bold" size="26.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="usernameField" prefHeight="34.0" prefWidth="220.0" promptText="Username">
+                    <font>
+                        <Font name="Arial" size="13.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="passwordField" prefHeight="34.0" prefWidth="220.0" promptText="Password">
+                    <font>
+                        <Font name="Arial" size="13.0"/>
+                    </font>
+                </PasswordField>
+                <Button mnemonicParsing="false" onAction="#onSignin" prefWidth="220.0" text="Sign in">
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="Arial" size="13.0"/>
+                    </font>
+                </Button>
+                <Label text="Don't have an account? Sign up" onMouseClicked="#onSignup"/>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+    <top>
+        <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </top>
+    <right>
+        <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </right>
+    <bottom>
+        <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </bottom>
+    <left>
+        <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </left>
 </BorderPane>

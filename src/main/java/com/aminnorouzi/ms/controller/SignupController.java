@@ -1,9 +1,8 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.model.SigninRequest;
+import com.aminnorouzi.ms.model.SignupRequest;
 import com.aminnorouzi.ms.model.User;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.repository.UserRepository;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -11,15 +10,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-@FxmlView("/view/signin-view.fxml")
-public class SigninController extends Controller {
+@FxmlView("/view/signup-view.fxml")
+public class SignupController extends Controller {
 
     private final UserService userService;
     private final ViewSwitcher switcher;
@@ -35,24 +33,25 @@ public class SigninController extends Controller {
     }
 
     @FXML
-    private void onSignin(ActionEvent event) {
-        SigninRequest request = SigninRequest.builder()
+    private void onSignup(ActionEvent event) {
+        SignupRequest request = SignupRequest.builder()
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();
 
         try {
-            if (userService.signin(request)) {
+            User created = userService.signup(request);
+            if (created != null) {
                 switcher.switchTo(View.HOME);
                 return;
             }
-        } catch (Exception ignored) {}
+        } catch (RuntimeException ignored) {}
 
-        System.out.println("Incorrect username or password!");
+        System.out.println("Username already exists!");
     }
 
     @FXML
-    private void onSignup(MouseEvent event) {
-        switcher.switchTo(View.SIGNUP);
+    private void onSignin(MouseEvent event) {
+        switcher.switchTo(View.SIGNIN);
     }
 }
