@@ -8,8 +8,8 @@ public enum View {
     LIBRARY(LibraryController.class, "/view/library-view.fxml", "Library"),
     MOVIE(null, "/view/movie-view.fxml", "Movie"),
     SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar"),
-    SIGNIN(SigninController.class, "/view/signin-view.fxml", "Signin"),
-    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Signup");
+    SIGNIN(SigninController.class, "/view/signin-view.fxml", "Sign in"),
+    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Sign up");
 
     private final Class<?> controller;
     private final String path;

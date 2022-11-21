@@ -1,6 +1,6 @@
 package com.aminnorouzi.ms;
 
-import com.aminnorouzi.ms.model.User;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,11 +9,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing
 @AllArgsConstructor
+@EnableFeignClients
 @SpringBootApplication
 public class MovieStalkerApplication {
 

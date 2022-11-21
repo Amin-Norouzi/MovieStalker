@@ -27,7 +27,7 @@
                 </Label>
                 <TextField fx:id="usernameField" prefHeight="34.0" prefWidth="220.0" promptText="Username">
                     <font>
-                        <Font name="Arial" size="13.0" />
+                        <Font name="Arial" size="13.0"/>
                     </font>
                 </TextField>
                 <PasswordField fx:id="passwordField" prefHeight="34.0" prefWidth="220.0" promptText="Password">
@@ -35,7 +35,8 @@
                         <Font name="Arial" size="13.0"/>
                     </font>
                 </PasswordField>
-                <Button mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
+                <Button mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up"
+                        disable="${usernameField.text.empty || passwordField.text.empty}">
                     <VBox.margin>
                         <Insets top="10.0"/>
                     </VBox.margin>
@@ -62,4 +63,10 @@
     <left>
         <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
     </left>
+
+    <!--    <fx:script>-->
+    <!--        function isValid(String val) {-->
+    <!--        usernameField.setText("not  valid");-->
+    <!--        }-->
+    <!--    </fx:script>-->
 </BorderPane>

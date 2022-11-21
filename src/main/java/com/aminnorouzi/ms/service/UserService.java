@@ -1,8 +1,8 @@
 package com.aminnorouzi.ms.service;
 
-import com.aminnorouzi.ms.model.SigninRequest;
-import com.aminnorouzi.ms.model.SignupRequest;
-import com.aminnorouzi.ms.model.User;
+import com.aminnorouzi.ms.model.user.SigninRequest;
+import com.aminnorouzi.ms.model.user.SignupRequest;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

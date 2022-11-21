@@ -1,9 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.model.SigninRequest;
-import com.aminnorouzi.ms.model.User;
+import com.aminnorouzi.ms.model.user.SigninRequest;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.repository.UserRepository;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -11,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;

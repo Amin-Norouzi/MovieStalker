@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.model;
+package com.aminnorouzi.ms.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

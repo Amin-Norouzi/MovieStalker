@@ -1,7 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.model.SignupRequest;
-import com.aminnorouzi.ms.model.User;
+import com.aminnorouzi.ms.model.user.SignupRequest;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
