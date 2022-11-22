@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotationsInside
-@JsonDeserialize(using = FirstArrayValueDeserializer.class)
-public @interface FirstArrayValue {
+@JsonDeserialize(using = ArrayFirstValueDeserializer.class)
+public @interface ArrayFirstValue {
 
 }

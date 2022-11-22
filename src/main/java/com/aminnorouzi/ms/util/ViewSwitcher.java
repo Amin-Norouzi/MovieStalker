@@ -1,7 +1,10 @@
 package com.aminnorouzi.ms.util;
 
 import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
+import com.aminnorouzi.ms.controller.Controller;
+import com.aminnorouzi.ms.controller.HomeController;
 import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -37,6 +40,16 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
             root = cache.get(view);
             setCurrent(view);
         } else {
+
+            User user = User.builder()
+                    .fullName("amin norouzi")
+                    .username("amin1")
+                    .password("9999")
+                    .build();
+
+            Controller controller = (Controller) fxWeaver.getBean(view.getController());
+            controller.setUser(user);
+
             root = fxWeaver.loadView(view.getController());
             setCurrent(view);
 
@@ -65,6 +78,17 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
     public void onApplicationEvent(StageReadyEvent event) {
         View view = View.getDefault();
         Stage stage = event.getStage();
+
+        User user = User.builder()
+                .fullName("amin norouzi")
+                .username("amin1")
+                .password("9999")
+                .build();
+
+        Controller controller = (Controller) fxWeaver.getBean(view.getController());
+        controller.setUser(user);
+
+
         Scene scene = new Scene(fxWeaver.loadView(view.getController()));
 
         init(stage, scene);

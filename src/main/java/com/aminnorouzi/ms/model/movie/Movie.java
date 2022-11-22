@@ -1,19 +1,17 @@
 package com.aminnorouzi.ms.model.movie;
 
 import com.aminnorouzi.ms.annotation.CustomNumber;
-import com.aminnorouzi.ms.annotation.FirstArrayValue;
+import com.aminnorouzi.ms.annotation.ArrayFirstValue;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -83,7 +81,7 @@ public class Movie {
 
     @NotNull
     @Positive
-    @FirstArrayValue
+    @ArrayFirstValue
     @JsonAlias({"runtime", "episode_run_time"})
     private Integer runtime;
 

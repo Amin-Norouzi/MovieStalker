@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 @FxmlView("/view/signup-view.fxml")
@@ -25,16 +27,22 @@ public class SignupController extends Controller {
     @FXML
     private TextField usernameField;
     @FXML
+    private TextField fullNameField;
+    @FXML
     private PasswordField passwordField;
 
     @Override
     protected void configure() {
+        System.out.println("Running SignupController");
 
+        System.out.println("-------------------- my user --------------------");
+        System.out.println(getUser().toString());
     }
 
     @FXML
     private void onSignup(ActionEvent event) {
         SignupRequest request = SignupRequest.builder()
+                .fullName(fullNameField.getText().toLowerCase())
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();
