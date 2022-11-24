@@ -8,9 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
@@ -34,14 +32,17 @@ public class UserService {
         return created;
     }
 
-    public boolean signin(SigninRequest request) {
-        User found = getUserByUsername(request.getUsername());
+    public User signin(SigninRequest request) {
+        User found = getByUsername(request.getUsername());
 
-        boolean equals = found.getPassword()
-                .equals(request.getPassword());
+        // raise new exception
+        boolean equals = found.getPassword().equals(request.getPassword());
+        if (!equals) {
+            found = null;
+        }
 
         log.info("Signed in user: status={}, {}", equals, found);
-        return equals;
+        return found;
     }
 
     public List<User> getAll() {
@@ -51,7 +52,7 @@ public class UserService {
         return found;
     }
 
-    public User getUserByUsername(String username) {
+    public User getByUsername(String username) {
         return repository.findByUsername(username).orElseThrow(RuntimeException::new);
     }
 

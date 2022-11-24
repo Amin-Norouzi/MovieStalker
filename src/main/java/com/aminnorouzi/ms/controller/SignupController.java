@@ -34,9 +34,6 @@ public class SignupController extends Controller {
     @Override
     protected void configure() {
         System.out.println("Running SignupController");
-
-        System.out.println("-------------------- my user --------------------");
-        System.out.println(getUser().toString());
     }
 
     @FXML
@@ -50,7 +47,7 @@ public class SignupController extends Controller {
         try {
             User created = userService.signup(request);
             if (created != null) {
-                switcher.switchTo(View.HOME);
+                switcher.switchTo(View.HOME, created);
                 return;
             }
         } catch (RuntimeException ignored) {}

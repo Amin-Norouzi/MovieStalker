@@ -9,7 +9,9 @@ public enum View {
     MOVIE(null, "/view/movie-view.fxml", "Movie"),
     SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar"),
     SIGNIN(SigninController.class, "/view/signin-view.fxml", "Sign in"),
-    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Sign up");
+    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Sign up"),
+
+    EMPTY(null, null, null);
 
     private final Class<?> controller;
     private final String path;
@@ -25,15 +27,15 @@ public enum View {
         return controller;
     }
 
-    public String getPath() {
-        return path;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public static View getDefault() {
         return View.HOME;
+    }
+
+    public static View getEmpty() {
+        return View.EMPTY;
     }
 }

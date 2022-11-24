@@ -2,6 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.user.SigninRequest;
 import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -28,7 +29,7 @@ public class SigninController extends Controller {
 
     @Override
     protected void configure() {
-
+        System.out.println("Running SigninController");
     }
 
     @FXML
@@ -39,8 +40,9 @@ public class SigninController extends Controller {
                 .build();
 
         try {
-            if (userService.signin(request)) {
-                switcher.switchTo(View.HOME);
+            User found = userService.signin(request);
+            if (found != null) {
+                switcher.switchTo(View.HOME, found);
                 return;
             }
         } catch (Exception ignored) {}

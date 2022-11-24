@@ -1,6 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,12 +25,12 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onHome(ActionEvent event) {
-        switcher.switchTo(View.HOME);
+        switcher.switchTo(View.HOME, new User());
     }
 
     @FXML
     private void onLibrary(ActionEvent event) {
-        switcher.switchTo(View.LIBRARY);
+        switcher.switchTo(View.LIBRARY, new User());
     }
 
     @FXML

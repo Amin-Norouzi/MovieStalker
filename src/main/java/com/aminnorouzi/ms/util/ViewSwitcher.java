@@ -1,17 +1,15 @@
 package com.aminnorouzi.ms.util;
 
-import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.controller.HomeController;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxWeaver;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
@@ -20,16 +18,43 @@ import java.util.Map;
 @Data
 @Component
 @RequiredArgsConstructor
-public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
-
-    private final FxWeaver fxWeaver;
+public class ViewSwitcher {
 
     private static final Map<View, Parent> cache = new EnumMap<>(View.class);
+
+    private final FxWeaver fxWeaver;
 
     private View current;
 
     private Scene scene;
     private Stage stage;
+
+    public void initialize(Stage stage) {
+        if (stage != null) {
+            Scene scene = new Scene(new Pane());
+            View current = View.EMPTY;
+
+            this.stage = stage;
+            this.scene = scene;
+            this.current = current;
+        }
+    }
+
+    public void switchTo(View view, User user) {
+        if (current.equals(view)) return;
+
+        Parent root;
+
+        if (cache.containsKey(view)) {
+            root = cache.get(view);
+        } else {
+            setup(view, user);
+            root = fxWeaver.loadView(view.getController());
+        }
+
+        finalize(view, root);
+        showup(view, root);
+    }
 
     public void switchTo(View view) {
         if (current.equals(view)) return;
@@ -38,24 +63,24 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
 
         if (cache.containsKey(view)) {
             root = cache.get(view);
-            setCurrent(view);
         } else {
-
-            User user = User.builder()
-                    .fullName("amin norouzi")
-                    .username("amin1")
-                    .password("9999")
-                    .build();
-
-            Controller controller = (Controller) fxWeaver.getBean(view.getController());
-            controller.setUser(user);
-
             root = fxWeaver.loadView(view.getController());
-            setCurrent(view);
-
-            cache.put(view, root);
         }
 
+        finalize(view, root);
+        showup(view, root);
+    }
+
+    private void finalize(View view, Parent root) {
+        if (cache.containsKey(view)) {
+            setCurrent(view);
+            return;
+        }
+
+        cache.put(view, root);
+    }
+
+    private void showup(View view, Parent root) {
         scene.setRoot(root);
 
         stage.setTitle(view.getTitle());
@@ -63,47 +88,13 @@ public class ViewSwitcher implements ApplicationListener<StageReadyEvent> {
         stage.show();
     }
 
-    public void cleanup() {
-        cache.clear();
-    }
-
-    private void init(Stage stage, Scene scene) {
-        if (scene != null && stage != null) {
-            this.stage = stage;
-            this.scene = scene;
-        }
-    }
-
-    @Override
-    public void onApplicationEvent(StageReadyEvent event) {
-        View view = View.getDefault();
-        Stage stage = event.getStage();
-
-        User user = User.builder()
-                .fullName("amin norouzi")
-                .username("amin1")
-                .password("9999")
-                .build();
-
+    private void setup(View view, User user) {
         Controller controller = (Controller) fxWeaver.getBean(view.getController());
         controller.setUser(user);
-
-
-        Scene scene = new Scene(fxWeaver.loadView(view.getController()));
-
-        init(stage, scene);
-        setCurrent(view);
-
-        cache.put(view, scene.getRoot());
-
-        stage.setScene(scene);
-        stage.setTitle(view.getTitle());
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
     }
 
-    public void setCurrent(View current) {
-        this.current = current;
+    public void cleanup() {
+        setCurrent(View.getEmpty());
+        cache.clear();
     }
 }
