@@ -26,7 +26,7 @@ public class HomeController extends Controller {
     protected void configure() {
         System.out.println("Running HomeController");
 //        System.out.println(getClass().getSimpleName());
-//        movieService.doSomething();
+        movieService.doSomething();
         List<User> users = userService.getAll();
         users.forEach(user -> System.out.println(user));
 
