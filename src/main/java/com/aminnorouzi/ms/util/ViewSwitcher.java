@@ -2,6 +2,7 @@ package com.aminnorouzi.ms.util;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.model.input.Input;
 import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,11 +49,27 @@ public class ViewSwitcher {
         if (cache.containsKey(view)) {
             root = cache.get(view);
         } else {
-            setup(view, user);
+            setup(view, user, null);
             root = fxWeaver.loadView(view.getController());
         }
 
-        finalize(view, root);
+        cacheup(view, root);
+        showup(view, root);
+    }
+
+    public void switchTo(View view, Input input) {
+        if (current.equals(view)) return;
+
+        Parent root;
+
+        if (cache.containsKey(view)) {
+            root = cache.get(view);
+        } else {
+            setup(view, null, input);
+            root = fxWeaver.loadView(view.getController());
+        }
+
+        cacheup(view, root);
         showup(view, root);
     }
 
@@ -64,14 +81,15 @@ public class ViewSwitcher {
         if (cache.containsKey(view)) {
             root = cache.get(view);
         } else {
+            setup(view, null, null);
             root = fxWeaver.loadView(view.getController());
         }
 
-        finalize(view, root);
+        cacheup(view, root);
         showup(view, root);
     }
 
-    private void finalize(View view, Parent root) {
+    private void cacheup(View view, Parent root) {
         if (cache.containsKey(view)) {
             setCurrent(view);
             return;
@@ -88,13 +106,27 @@ public class ViewSwitcher {
         stage.show();
     }
 
-    private void setup(View view, User user) {
+    private void setup(View view, User user, Input input) {
         Controller controller = (Controller) fxWeaver.getBean(view.getController());
-        controller.setUser(user);
+        controller.setView(view);
+
+        if (!View.isNoneHeader(view)) {
+            Controller subController = (Controller) fxWeaver.getBean(View.HEADER.getController());
+            subController.setView(view);
+        }
+
+        if (user != null) {
+            controller.setUser(user);
+        }
+        if (input != null) {
+            controller.setInput(input);
+        }
     }
 
     public void cleanup() {
         setCurrent(View.getEmpty());
         cache.clear();
     }
+
+
 }

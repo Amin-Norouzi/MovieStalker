@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.ResultController">
+    <left>
+        <fx:include source="sidebar-view.fxml" />
+    </left>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <fx:include source="header-view.fxml" />
+            <VBox alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+      
+                  <Label text="Found movies:" />
+                  <TextArea fx:id="foundArea" prefHeight="200.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <Label text="Failed queries:" />
+                  <TextArea fx:id="failedArea" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

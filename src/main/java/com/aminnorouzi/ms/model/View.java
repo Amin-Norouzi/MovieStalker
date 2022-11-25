@@ -1,34 +1,31 @@
 package com.aminnorouzi.ms.model;
 
 import com.aminnorouzi.ms.controller.*;
+import lombok.Getter;
 
+@Getter
 public enum View {
 
-    HOME(HomeController.class, "/view/home-view.fxml", "Home"),
-    LIBRARY(LibraryController.class, "/view/library-view.fxml", "Library"),
-    MOVIE(null, "/view/movie-view.fxml", "Movie"),
-    SIDEBAR(SidebarController.class, "/view/sidebar-view.fxml", "Sidebar"),
-    SIGNIN(SigninController.class, "/view/signin-view.fxml", "Sign in"),
-    SIGNUP(SignupController.class, "/view/signup-view.fxml", "Sign up"),
+    HOME(HomeController.class, "Home", Header.HOME),
+    LIBRARY(LibraryController.class, "Library", Header.LIBRARY),
+    MOVIE(null, "Movie", Header.MOVIE),
+    SIDEBAR(SidebarController.class, "Sidebar", Header.NONE),
+    HEADER(HeaderController.class, "Header", Header.NONE),
+    SIGNIN(SigninController.class, "Sign in", Header.NONE),
+    SIGNUP(SignupController.class, "Sign up", Header.NONE),
+    ADDITION(AdditionController.class, "Addition", Header.ADDITION),
+    RESULT(ResultController.class, "Result", Header.RESULT),
 
-    EMPTY(null, null, null);
+    EMPTY(null, null, Header.NONE);
 
     private final Class<?> controller;
-    private final String path;
     private final String title;
+    private final Header header;
 
-    View(Class<?> controller, String path, String title) {
+    View(Class<?> controller, String title, Header header) {
         this.controller = controller;
-        this.path = path;
         this.title = title;
-    }
-
-    public Class<?> getController() {
-        return controller;
-    }
-
-    public String getTitle() {
-        return title;
+        this.header = header;
     }
 
     public static View getDefault() {
@@ -37,5 +34,9 @@ public enum View {
 
     public static View getEmpty() {
         return View.EMPTY;
+    }
+
+    public static boolean isNoneHeader(View view) {
+        return view.getHeader().equals(Header.NONE);
     }
 }

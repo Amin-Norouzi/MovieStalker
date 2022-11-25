@@ -21,11 +21,11 @@ public class MovieStalkerInitializer implements ApplicationListener<StageReadyEv
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
-        View view = View.getDefault();
+        View view = View.getDefault(); // HOME view
         Stage stage = getCustomizedStage(event);
 
         switcher.initialize(stage);
-        switcher.switchTo(view, new User());
+        switcher.switchTo(view, new User()); // read user from settings or login page
     }
 
     private Stage getCustomizedStage(StageReadyEvent event) {

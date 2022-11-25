@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.LibraryController">
 
@@ -19,7 +19,7 @@
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <fx:include source="header-view.fxml"/>
 
-            <Button mnemonicParsing="false" text="Go bro"/>
+            <Button mnemonicParsing="false" text="Add movie" onAction="#onAddition"/>
             <ScrollPane hbarPolicy="NEVER" hmax="0.0" maxWidth="-Infinity" minWidth="-Infinity"
                         prefHeight="575.0" prefWidth="800.0" vbarPolicy="NEVER">
                 <TilePane fx:id="content" hgap="20.0" maxWidth="-Infinity" minWidth="-Infinity"
