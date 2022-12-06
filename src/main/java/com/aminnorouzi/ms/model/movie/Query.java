@@ -13,4 +13,8 @@ public class Query {
 
     private String title;
     private String release;
+
+    public String getFullQuery() {
+        return title + " " + release;
+    }
 }

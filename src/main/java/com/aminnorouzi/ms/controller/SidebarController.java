@@ -1,7 +1,9 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.MovieService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +14,15 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@AllArgsConstructor
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
     private final ViewSwitcher switcher;
+
+    public SidebarController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService) {
+        super(configuration, switcher, movieService);
+        this.switcher = switcher;
+    }
 
     @Override
     protected void configure() {
@@ -25,12 +31,12 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onHome(ActionEvent event) {
-        switcher.switchTo(View.HOME, new User());
+        switcher.switchTo(View.HOME, getUser());
     }
 
     @FXML
     private void onLibrary(ActionEvent event) {
-        switcher.switchTo(View.LIBRARY, new User());
+        switcher.switchTo(View.LIBRARY, getUser());
     }
 
     @FXML

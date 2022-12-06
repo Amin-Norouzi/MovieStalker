@@ -1,43 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="400.0" prefWidth="240.0" style="-fx-background-color: black; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fx:id="poster" cache="true" fitHeight="400.0" fitWidth="240.0" opacity="0.7" pickOnBounds="true" smooth="false" style="-fx-background-radius: 20;">
-         <image>
-            <Image url="@../../../../../../../../../Downloads/freddie-marriage-utwYoEu9SU8-unsplash.jpg" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <VBox alignment="BOTTOM_LEFT" fillWidth="false" spacing="5.0" style="-fx-background-radius: 20;">
-         <children>
-            <Label fx:id="title" alignment="BOTTOM_LEFT" prefHeight="72.0" prefWidth="210.0" text="Title" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Arial Black" size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="date" prefHeight="19.0" prefWidth="215.0" text="Date" textFill="#aeaeae">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
-   </children>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.MovieController">
+    <children>
+        <ImageView fx:id="backdrop" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" smooth="false">
+            <effect>
+                <GaussianBlur radius="25.0" />
+            </effect>
+        </ImageView>
+        <Rectangle height="600.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1000.0">
+            <fill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color opacity="0.25" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+<!--            <left>-->
+            <!--                <fx:include source="sidebar-view.fxml" />-->
+            <!--            </left>-->
+            <center>
+                <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <Label text="&lt; Back" textFill="WHITE" onMouseClicked="#onBack">
+                  <font>
+                     <Font name="Arial Bold Italic" size="13.0" />
+                  </font>
+               </Label>
+                    <fx:include source="header-view.fxml" />
+                    <HBox spacing="10.0">
+                        <VBox.margin>
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </VBox.margin>
+                        <children>
+                            <Rectangle fx:id="poster" arcHeight="30.0" arcWidth="30.0" height="300.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" width="200.0">
+                                <fill>
+                                    <LinearGradient endX="1.0" endY="1.0">
+                                        <stops>
+                                            <Stop>
+                                                <color>
+                                                    <Color red="0.11999999731779099" green="0.5746666789054871" blue="1.0" opacity="0.2581261992454529" />
+                                                </color>
+                                            </Stop>
+                                            <Stop offset="1.0">
+                                                <color>
+                                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                                </color>
+                                            </Stop>
+                                        </stops>
+                                    </LinearGradient>
+                                </fill>
+                            </Rectangle>
+                            <VBox maxWidth="-Infinity" minHeight="-Infinity" spacing="5.0">
+                                <children>
+                                    <Label fx:id="title" text="Title" textFill="WHITE">
+                                        <font>
+                                            <Font name="Arial Bold" size="24.0" />
+                                        </font>
+                                    </Label>
+                                    <Label fx:id="release" text="Release" textFill="WHITE">
+                                        <font>
+                                            <Font name="Arial" size="15.0" />
+                                        </font>
+                                    </Label>
+                                    <Region prefHeight="118.0" prefWidth="530.0" />
+                                    <Label fx:id="overview" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="530.0" text="Overview" textFill="WHITE" wrapText="true">
+                                        <font>
+                                            <Font name="Arial" size="15.0" />
+                                        </font>
+                                    </Label>
+                                </children>
+                                <HBox.margin>
+                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                                </HBox.margin>
+                            </VBox>
+                        </children>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
 </StackPane>

@@ -1,8 +1,10 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.user.SigninRequest;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.MovieService;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -14,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Component
 @FxmlView("/view/signin-view.fxml")
 public class SigninController extends Controller {
@@ -26,6 +27,13 @@ public class SigninController extends Controller {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+
+    public SigninController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService,
+                            UserService userService) {
+        super(configuration, switcher, movieService);
+        this.switcher = switcher;
+        this.userService = userService;
+    }
 
     @Override
     protected void configure() {

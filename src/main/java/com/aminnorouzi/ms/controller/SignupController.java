@@ -1,8 +1,10 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.user.SignupRequest;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.service.MovieService;
 import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Component
 @FxmlView("/view/signup-view.fxml")
 public class SignupController extends Controller {
@@ -30,6 +31,13 @@ public class SignupController extends Controller {
     private TextField fullNameField;
     @FXML
     private PasswordField passwordField;
+
+    public SignupController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService,
+                            UserService userService) {
+        super(configuration, switcher, movieService);
+        this.switcher = switcher;
+        this.userService = userService;
+    }
 
     @Override
     protected void configure() {

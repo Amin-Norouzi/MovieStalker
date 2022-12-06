@@ -1,5 +1,6 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.input.Result;
 import com.aminnorouzi.ms.model.movie.Query;
@@ -10,7 +11,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.DirectoryChooser;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@RequiredArgsConstructor
 @Slf4j
 @Component
 @FxmlView("/view/addition-view.fxml")
@@ -30,6 +29,14 @@ public class AdditionController extends Controller {
     private final ViewSwitcher switcher;
     private final FileService fileService;
     private final MovieService movieService;
+
+    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService
+            , FileService fileService) {
+        super(configuration, switcher, movieService);
+        this.switcher = switcher;
+        this.fileService = fileService;
+        this.movieService = movieService;
+    }
 
 //    @FXML
 //    private Button chooseButton;
@@ -63,7 +70,7 @@ public class AdditionController extends Controller {
 
             // TODO: handle threads properly
             new Thread(() -> {
-                Result result = movieService.getMoviesFromQueries(queries);
+                Result result = movieService.getByQueries(queries);
 
                 Platform.runLater(() -> switcher.switchTo(View.RESULT, result));
             }).start();

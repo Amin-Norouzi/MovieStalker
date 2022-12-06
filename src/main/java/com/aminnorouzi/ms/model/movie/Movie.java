@@ -2,6 +2,7 @@ package com.aminnorouzi.ms.model.movie;
 
 import com.aminnorouzi.ms.annotation.CustomNumber;
 import com.aminnorouzi.ms.annotation.ArrayFirstValue;
+import com.aminnorouzi.ms.model.input.Input;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Setter
@@ -25,7 +27,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "movie")
-public class Movie {
+public class Movie extends Input {
 
     @Id
     @JsonIgnore
@@ -99,7 +101,7 @@ public class Movie {
 
     private Boolean isWatched;
 
-    private LocalDate watchedAt;
+    private LocalDateTime watchedAt;
 
     @CreatedDate
     @Column(updatable = false)

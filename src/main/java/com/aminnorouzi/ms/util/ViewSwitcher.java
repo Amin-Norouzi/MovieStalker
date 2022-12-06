@@ -1,6 +1,6 @@
 package com.aminnorouzi.ms.util;
 
-import com.aminnorouzi.ms.controller.Controller;
+import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.input.Input;
 import com.aminnorouzi.ms.model.user.User;
@@ -23,9 +23,12 @@ public class ViewSwitcher {
 
     private static final Map<View, Parent> cache = new EnumMap<>(View.class);
 
+    private final ApplicationConfiguration configuration;
     private final FxWeaver fxWeaver;
 
     private View current;
+
+    private Input data;
 
     private Scene scene;
     private Stage stage;
@@ -53,7 +56,7 @@ public class ViewSwitcher {
             root = fxWeaver.loadView(view.getController());
         }
 
-        cacheup(view, root);
+        cacheup(view, root, null);
         showup(view, root);
     }
 
@@ -62,14 +65,14 @@ public class ViewSwitcher {
 
         Parent root;
 
-        if (cache.containsKey(view)) {
+        if (cache.containsKey(view) && data.equals(input)) {
             root = cache.get(view);
         } else {
             setup(view, null, input);
             root = fxWeaver.loadView(view.getController());
         }
 
-        cacheup(view, root);
+        cacheup(view, root, input);
         showup(view, root);
     }
 
@@ -85,17 +88,17 @@ public class ViewSwitcher {
             root = fxWeaver.loadView(view.getController());
         }
 
-        cacheup(view, root);
+        cacheup(view, root, null);
         showup(view, root);
     }
 
-    private void cacheup(View view, Parent root) {
-        if (cache.containsKey(view)) {
-            setCurrent(view);
-            return;
+    private void cacheup(View view, Parent root, Input input) {
+        if (input != null) {
+            this.data = input;
         }
 
-        cache.put(view, root);
+        cache.computeIfAbsent(view, v -> root);
+        setCurrent(view);
     }
 
     private void showup(View view, Parent root) {
@@ -107,19 +110,13 @@ public class ViewSwitcher {
     }
 
     private void setup(View view, User user, Input input) {
-        Controller controller = (Controller) fxWeaver.getBean(view.getController());
-        controller.setView(view);
-
-        if (!View.isNoneHeader(view)) {
-            Controller subController = (Controller) fxWeaver.getBean(View.HEADER.getController());
-            subController.setView(view);
-        }
+        configuration.setView(view);
 
         if (user != null) {
-            controller.setUser(user);
+            configuration.setUser(user);
         }
         if (input != null) {
-            controller.setInput(input);
+            configuration.setInput(input);
         }
     }
 

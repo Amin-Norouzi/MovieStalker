@@ -6,26 +6,24 @@ import lombok.Getter;
 @Getter
 public enum View {
 
-    HOME(HomeController.class, "Home", Header.HOME),
-    LIBRARY(LibraryController.class, "Library", Header.LIBRARY),
-    MOVIE(null, "Movie", Header.MOVIE),
-    SIDEBAR(SidebarController.class, "Sidebar", Header.NONE),
-    HEADER(HeaderController.class, "Header", Header.NONE),
-    SIGNIN(SigninController.class, "Sign in", Header.NONE),
-    SIGNUP(SignupController.class, "Sign up", Header.NONE),
-    ADDITION(AdditionController.class, "Addition", Header.ADDITION),
-    RESULT(ResultController.class, "Result", Header.RESULT),
+    HOME(HomeController.class, "Home"),
+    LIBRARY(LibraryController.class, "Library"),
+    MOVIE(MovieController.class, "Movie"),
+    SIDEBAR(SidebarController.class, "Sidebar"),
+    HEADER(HeaderController.class, "Header"),
+    SIGNIN(SigninController.class, "Sign in"),
+    SIGNUP(SignupController.class, "Sign up"),
+    ADDITION(AdditionController.class, "Addition"),
+    RESULT(ResultController.class, "Result"),
 
-    EMPTY(null, null, Header.NONE);
+    EMPTY(null, null);
 
     private final Class<?> controller;
     private final String title;
-    private final Header header;
 
-    View(Class<?> controller, String title, Header header) {
+    View(Class<?> controller, String title) {
         this.controller = controller;
         this.title = title;
-        this.header = header;
     }
 
     public static View getDefault() {
@@ -34,9 +32,5 @@ public enum View {
 
     public static View getEmpty() {
         return View.EMPTY;
-    }
-
-    public static boolean isNoneHeader(View view) {
-        return view.getHeader().equals(Header.NONE);
     }
 }
