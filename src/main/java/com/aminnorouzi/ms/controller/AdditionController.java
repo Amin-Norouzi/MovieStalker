@@ -72,10 +72,8 @@ public class AdditionController extends Controller {
 
         try {
             Movie movie = movieService.getByQuery(query);
-            Result result = Result.builder()
-                    .found(List.of(movie)).build();
 
-            switcher.switchTo(View.RESULT, result);
+            switcher.switchTo(View.RESULT, movie);
         } catch (RuntimeException exception) {
             // TODO: handle exception with notifications
         }
