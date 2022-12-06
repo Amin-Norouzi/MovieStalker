@@ -6,6 +6,8 @@ import com.aminnorouzi.ms.model.input.Result;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.service.FileService;
 import com.aminnorouzi.ms.service.MovieService;
+import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -26,16 +28,9 @@ import java.util.Set;
 @FxmlView("/view/addition-view.fxml")
 public class AdditionController extends Controller {
 
-    private final ViewSwitcher switcher;
-    private final FileService fileService;
-    private final MovieService movieService;
-
-    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService
-            , FileService fileService) {
-        super(configuration, switcher, movieService);
-        this.switcher = switcher;
-        this.fileService = fileService;
-        this.movieService = movieService;
+    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                           NotificationService notificationService, MovieService movieService, UserService userService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService);
     }
 
 //    @FXML
@@ -63,10 +58,10 @@ public class AdditionController extends Controller {
         if (directory != null) {
             List<File> files = Arrays.stream(Objects.requireNonNull(directory.listFiles()))
                     .filter(File::isFile)
-                    .filter(fileService::isValid)
+                    .filter(fileService::verify)
                     .sorted().toList();
 
-            Set<Query> queries = fileService.convertFilesToQueries(files);
+            Set<Query> queries = fileService.convert(files);
 
             // TODO: handle threads properly
             new Thread(() -> {

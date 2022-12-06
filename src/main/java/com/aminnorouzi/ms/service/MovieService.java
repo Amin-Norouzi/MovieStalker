@@ -9,6 +9,7 @@ import com.aminnorouzi.ms.repository.MovieRepository;
 import com.aminnorouzi.ms.task.AdditionTask;
 import javafx.concurrent.Task;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MovieService {
 
     private final MovieClient movieClient;

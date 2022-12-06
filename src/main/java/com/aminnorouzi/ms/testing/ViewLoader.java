@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class ViewLoader {
 

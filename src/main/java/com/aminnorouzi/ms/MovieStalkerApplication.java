@@ -1,32 +1,25 @@
 package com.aminnorouzi.ms;
 
-import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.repository.UserRepository;
+import com.aminnorouzi.ms.service.TaskService;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import lombok.AllArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
 
+@EnableScheduling
 @EnableJpaAuditing
-@AllArgsConstructor
 @EnableFeignClients
 @SpringBootApplication
 public class MovieStalkerApplication {
 
-    private final UserRepository repository;
-
-    public static void main(String[] args) {
-        Application.launch(MovieStalkerIntegrationApplication.class, args);
-    }
 
     public static class MovieStalkerIntegrationApplication extends Application {
 
@@ -60,18 +53,7 @@ public class MovieStalkerApplication {
         }
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner() {
-        return args -> {
-            repository.save(User.builder()
-                    .username("admin")
-                    .password("1234")
-                    .build());
-
-            repository.save(User.builder()
-                    .username("user")
-                    .password("1233")
-                    .build());
-        };
+    public static void main(String[] args) {
+        Application.launch(MovieStalkerIntegrationApplication.class, args);
     }
 }

@@ -6,59 +6,65 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SignupController">
-    <center>
-        <VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label text="Create New Account!" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Bold" size="26.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="20.0" />
-                    </VBox.margin>
-                </Label>
-                <TextField fx:id="fullNameField" prefHeight="34.0" prefWidth="220.0" promptText="Full Name">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font>
-                </TextField>
-                <TextField fx:id="usernameField" prefHeight="34.0" prefWidth="220.0" promptText="Username">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font>
-                </TextField>
-                <PasswordField fx:id="passwordField" prefHeight="34.0" prefWidth="220.0" promptText="Password">
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font>
-                </PasswordField>
-                <Button mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
-<!--                        disable="${usernameField.text.blank || passwordField.text.blank || fullNameField.text.blank}">-->
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                    <font>
-                        <Font name="Arial" size="13.0" />
-                    </font>
-                </Button>
-                <Label onMouseClicked="#onSignin" text="Already have an account? Sign in" />
-            </children>
-            <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </BorderPane.margin>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-        </VBox>
-    </center>
 
-    <!--    <fx:script>-->
-    <!--        function isValid(String val) {-->
-    <!--        usernameField.setText("not  valid");-->
-    <!--        }-->
-    <!--    </fx:script>-->
-</BorderPane>
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SignupController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+          <center>
+              <VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <Label text="Create New Account!" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Bold" size="26.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="20.0" />
+                          </VBox.margin>
+                      </Label>
+                      <TextField fx:id="fullNameField" prefHeight="34.0" prefWidth="220.0" promptText="Full Name">
+                          <font>
+                              <Font name="Arial" size="13.0" />
+                          </font>
+                      </TextField>
+                      <TextField fx:id="usernameField" prefHeight="34.0" prefWidth="220.0" promptText="Username">
+                          <font>
+                              <Font name="Arial" size="13.0" />
+                          </font>
+                      </TextField>
+                      <PasswordField fx:id="passwordField" prefHeight="34.0" prefWidth="220.0" promptText="Password">
+                          <font>
+                              <Font name="Arial" size="13.0" />
+                          </font>
+                      </PasswordField>
+                      <Button mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
+      <!--                        disable="${usernameField.text.blank || passwordField.text.blank || fullNameField.text.blank}">-->
+                          <VBox.margin>
+                              <Insets top="10.0" />
+                          </VBox.margin>
+                          <font>
+                              <Font name="Arial" size="13.0" />
+                          </font>
+                      </Button>
+                      <Label onMouseClicked="#onSignin" text="Already have an account? Sign in" />
+                  </children>
+                  <BorderPane.margin>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  </BorderPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+              </VBox>
+          </center>
+      
+          <!--    <fx:script>-->
+          <!--        function isValid(String val) {-->
+          <!--        usernameField.setText("not  valid");-->
+          <!--        }-->
+          <!--    </fx:script>-->
+      </BorderPane>
+   </children>
+</StackPane>

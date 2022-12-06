@@ -1,25 +1,22 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
+import com.aminnorouzi.ms.service.FileService;
 import com.aminnorouzi.ms.service.MovieService;
-import com.aminnorouzi.ms.service.TaskService;
-import com.aminnorouzi.ms.testing.ViewLoader;
+import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
-import com.dlsc.gemsfx.DialogPane;
-import com.dlsc.gemsfx.DialogPane.Dialog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -40,33 +37,23 @@ import java.util.Map;
 @FxmlView("/view/library-view.fxml")
 public class LibraryController extends Controller {
 
-    private final ViewSwitcher switcher;
-    private final ViewLoader viewLoader;
-    private final TaskService taskService;
-
     private final Map<Rectangle, Movie> contents = new HashMap<>();
 
     @FXML
-    private BorderPane root;
+    private TilePane body;
 
-    @FXML
-    private TilePane content;
-
-    private final DialogPane dialogPane = new DialogPane();
+    public LibraryController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                             NotificationService notificationService, MovieService movieService, UserService userService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService);
+    }
 
     private final EventHandler<MouseEvent> mouseClickEventHandler = event -> {
         if (event.getButton() == MouseButton.PRIMARY) {
             Rectangle clickedRectangle = (Rectangle) event.getSource();
             if (contents.containsKey(clickedRectangle)) {
                 Movie movie = contents.get(clickedRectangle);
-                System.out.println(movie.getTitle());
 
-//                onMovieClicked(movie);
-
-
-//                dialogPane.setAnimateDialogs(true);
-//                dialogPane.setFadeInOut(true);
-                dialogPane.showInformation("Clicked", movie.getTitle());
+                onMovieClicked(movie);
             }
         }
     };
@@ -100,14 +87,6 @@ public class LibraryController extends Controller {
             clickedRectangle.setEffect(null);
         }
     };
-
-    public LibraryController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService,
-                             ViewLoader viewLoader, TaskService taskService) {
-        super(configuration, switcher, movieService);
-        this.switcher = switcher;
-        this.viewLoader = viewLoader;
-        this.taskService = taskService;
-    }
 
     @Override
     protected void configure() {
@@ -163,20 +142,10 @@ public class LibraryController extends Controller {
 
                     contents.put(rec, movie);
 
-                    content.getChildren().add(rec);
+                    body.getChildren().add(rec);
                 }
             });
         });
-
-//        viewLoader.getView(movies, content);
-
-//        content.setContent(loader.getView(movies));
-//        // close the executor
-//        switcher.getStage().setOnCloseRequest(x -> {
-//            ViewLoader.executor.shutdown();
-//            Platform.exit();
-//            System.exit(0);
-//        });
     }
 
     private void onMovieClicked(Movie movie) {

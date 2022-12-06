@@ -1,13 +1,15 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.FileService;
 import com.aminnorouzi.ms.service.MovieService;
+import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -17,11 +19,9 @@ import org.springframework.stereotype.Component;
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
-    private final ViewSwitcher switcher;
-
-    public SidebarController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService) {
-        super(configuration, switcher, movieService);
-        this.switcher = switcher;
+    public SidebarController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                             NotificationService notificationService, MovieService movieService, UserService userService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService);
     }
 
     @Override

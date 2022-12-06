@@ -1,19 +1,22 @@
 package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.model.movie.Query;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class FileService {
 
     @Value("#{'${movie.validation.tags}'.split(',')}")
@@ -22,16 +25,16 @@ public class FileService {
     @Value("#{'${movie.validation.formats}'.split(',')}")
     private Set<String> formats;
 
-    public Set<Query> convertFilesToQueries(List<File> files) {
+    public Set<Query> convert(List<File> files) {
         Set<Query> queries = new HashSet<>();
 
-        Set<String> names = convertFilesToNames(files);
-        names.forEach(name -> queries.add(generateQuery(name)));
+        Set<String> names = generate(files);
+        names.forEach(name -> queries.add(build(name)));
 
         return queries;
     }
 
-    public Set<String> convertFilesToNames(List<File> files) {
+    private Set<String> generate(List<File> files) {
         Set<String> result = new HashSet<>();
         for (File file : files) {
             String name = file.getName();
@@ -60,7 +63,7 @@ public class FileService {
         return result;
     }
 
-    private Query generateQuery(String fileName) {
+    private Query build(String fileName) {
         StringBuilder builder = new StringBuilder();
         AtomicReference<String> release = new AtomicReference<>("");
 
@@ -79,7 +82,7 @@ public class FileService {
                 .build();
     }
 
-    public boolean isValid(File file) {
+    public boolean verify(File file) {
         for (String format : formats) {
             if (file.getName().endsWith(format)) {
                 return true;

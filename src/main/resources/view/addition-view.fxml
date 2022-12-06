@@ -5,41 +5,47 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.AdditionController">
-    <left>
-        <fx:include source="sidebar-view.fxml" />
-    </left>
-   <center>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-         <children>
-            <fx:include source="header-view.fxml"/>
 
-            <HBox alignment="BOTTOM_CENTER" prefHeight="550.0" prefWidth="200.0">
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.AdditionController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+          <left>
+              <fx:include source="sidebar-view.fxml" />
+          </left>
+         <center>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="20.0">
+                  <fx:include source="header-view.fxml" />
+      
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="550.0" prefWidth="200.0">
                      <children>
-                        <VBox prefWidth="160.0" spacing="5.0">
+                        <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="20.0">
                            <children>
-                              <Label text="Enter movie" />
-                              <TextField fx:id="titleField" promptText="Title" />
-                              <Label text="or" />
-                              <TextField fx:id="imdbField" promptText="IMDB id" />
+                              <VBox prefWidth="160.0" spacing="5.0">
+                                 <children>
+                                    <Label text="Enter movie" />
+                                    <TextField fx:id="titleField" promptText="Title" />
+                                    <Label text="or" />
+                                    <TextField fx:id="imdbField" promptText="IMDB id" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="searchButton" mnemonicParsing="false" prefWidth="160.0" text="Search" />
                            </children>
                         </VBox>
-                        <Button fx:id="searchButton" mnemonicParsing="false" prefWidth="160.0" text="Search" />
+                        <VBox alignment="CENTER" layoutX="210.0" layoutY="60.0" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: D7E0EA;">
+                           <children>
+                              <Label prefWidth="160.0" text="You can choose a directoey where your movies are located." wrapText="true" />
+                              <Button fx:id="chooseButton" mnemonicParsing="false" onAction="#onChoose" prefWidth="160.0" text="Choose" />
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
-                  <VBox alignment="CENTER" layoutX="210.0" layoutY="60.0" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: D7E0EA;">
-                     <children>
-                        <Label prefWidth="160.0" text="You can choose a directoey where your movies are located." wrapText="true" />
-                        <Button fx:id="chooseButton" mnemonicParsing="false" onAction="#onChoose" prefWidth="160.0" text="Choose" />
-                     </children>
-                  </VBox>
+                  </HBox>
                </children>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

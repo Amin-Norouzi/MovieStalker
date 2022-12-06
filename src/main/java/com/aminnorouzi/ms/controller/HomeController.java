@@ -1,9 +1,13 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
+import com.aminnorouzi.ms.service.FileService;
 import com.aminnorouzi.ms.service.MovieService;
+import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.service.UserService;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -17,11 +21,9 @@ import java.util.Set;
 @FxmlView("/view/home-view.fxml")
 public class HomeController extends Controller {
 
-    private final MovieService movieService;
-
-    public HomeController(ApplicationConfiguration configuration, ViewSwitcher switcher, MovieService movieService) {
-        super(configuration, switcher, movieService);
-        this.movieService = movieService;
+    public HomeController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                          NotificationService notificationService, MovieService movieService, UserService userService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService);
     }
 
     @Override

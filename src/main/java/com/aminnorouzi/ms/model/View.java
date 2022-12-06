@@ -15,6 +15,7 @@ public enum View {
     SIGNUP(SignupController.class, "Sign up"),
     ADDITION(AdditionController.class, "Addition"),
     RESULT(ResultController.class, "Result"),
+    OFFLINE(null, "/view/offline-view.fxml"),
 
     EMPTY(null, null);
 
