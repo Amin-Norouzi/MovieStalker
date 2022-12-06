@@ -28,7 +28,7 @@ public class ViewSwitcher {
 
     private View current;
 
-    private Input data;
+    private Object data;
 
     private Scene scene;
     private Stage stage;
@@ -60,7 +60,7 @@ public class ViewSwitcher {
         showup(view, root);
     }
 
-    public void switchTo(View view, Input input) {
+    public void switchTo(View view, Object input) {
         if (current.equals(view)) return;
 
         Parent root;
@@ -92,7 +92,7 @@ public class ViewSwitcher {
         showup(view, root);
     }
 
-    private void cacheup(View view, Parent root, Input input) {
+    private void cacheup(View view, Parent root, Object input) {
         if (input != null) {
             this.data = input;
         }
@@ -109,7 +109,7 @@ public class ViewSwitcher {
         stage.show();
     }
 
-    private void setup(View view, User user, Input input) {
+    private void setup(View view, User user, Object input) {
         configuration.setView(view);
 
         if (user != null) {

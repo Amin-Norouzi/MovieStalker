@@ -96,13 +96,6 @@ public class UserService {
         return found;
     }
 
-    public List<User> getAll() {
-        List<User> found = repository.findAll();
-
-        log.info("Found all users: {}", found);
-        return found;
-    }
-
     public UpdateRequest build(Long id, List<Movie> movies) {
         return UpdateRequest.builder()
                 .id(id)

@@ -2,13 +2,9 @@ package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.client.MovieClient;
 import com.aminnorouzi.ms.exception.MovieNotFoundException;
-import com.aminnorouzi.ms.model.input.Result;
 import com.aminnorouzi.ms.model.movie.*;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import com.aminnorouzi.ms.task.AdditionTask;
-import javafx.concurrent.Task;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,33 +48,26 @@ public class MovieService {
 
         Movie movie = getBySearch(search);
 
-        log.info("Found new movie: {}", movie);
+        log.info("Found a new movie: {}", movie);
         return movie;
     }
 
     // each query runs in a background task
-    public Result getByQueries(Set<Query> queries) {
+    public List<Movie> getByQueries(Set<Query> queries) {
         List<Movie> found = new ArrayList<>();
-        List<Query> failed = new ArrayList<>();
 
         queries.forEach(query -> {
             AdditionTask task = AdditionTask.builder()
                     .movieService(this)
                     .query(query)
                     .found(found)
-                    .failed(failed)
                     .build();
 
             taskService.run(task);
         });
 
-        Result result = Result.builder()
-                .found(found)
-                .failed(failed)
-                .build();
-
-        log.info("Found new movies: {}", result);
-        return result;
+        log.info("Found new movies: {}", found);
+        return found;
     }
 
     public Movie getById(Long id) {
@@ -102,12 +91,5 @@ public class MovieService {
         }
 
         return movie;
-    }
-
-    public List<Movie> getAll() {
-        List<Movie> found = movieRepository.findAll();
-
-        log.info("Found all movies: {}", found);
-        return found;
     }
 }

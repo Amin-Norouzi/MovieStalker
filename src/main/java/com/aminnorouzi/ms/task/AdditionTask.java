@@ -18,7 +18,6 @@ public class AdditionTask extends Task<Void> {
 
     private Query query;
     private List<Movie> found;
-    private List<Query> failed;
 
     @Override
     protected Void call() throws Exception {
@@ -27,9 +26,7 @@ public class AdditionTask extends Task<Void> {
             Movie movie = movieService.getBySearch(search);
 
             found.add(movie);
-        } catch (MovieNotFoundException exception) {
-            failed.add(query);
-        }
+        } catch (MovieNotFoundException ignored) {}
 
         return null;
     }

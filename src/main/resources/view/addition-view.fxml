@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.AdditionController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
@@ -24,15 +23,12 @@
                      <children>
                         <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="20.0">
                            <children>
-                              <VBox prefWidth="160.0" spacing="5.0">
+                              <HBox spacing="5.0">
                                  <children>
-                                    <Label text="Enter movie" />
-                                    <TextField fx:id="titleField" promptText="Title" />
-                                    <Label text="or" />
-                                    <TextField fx:id="imdbField" promptText="IMDB id" />
+                                    <TextField fx:id="titleField" promptText="Movie title" />
+                                    <Button mnemonicParsing="false" onAction="#onSearch" text="Search" />
                                  </children>
-                              </VBox>
-                              <Button fx:id="searchButton" mnemonicParsing="false" prefWidth="160.0" text="Search" />
+                              </HBox>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" layoutX="210.0" layoutY="60.0" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: D7E0EA;">

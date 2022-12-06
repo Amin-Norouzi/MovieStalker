@@ -12,5 +12,5 @@ public class ApplicationConfiguration {
 
     private View view;
     private User user;
-    private Input input;
+    private Object input;
 }

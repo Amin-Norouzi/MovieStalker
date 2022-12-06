@@ -2,7 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.model.input.Result;
+import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.service.FileService;
 import com.aminnorouzi.ms.service.MovieService;
@@ -12,6 +12,7 @@ import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -29,21 +30,12 @@ import java.util.Set;
 public class AdditionController extends Controller {
 
     public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
-                           NotificationService notificationService, MovieService movieService, UserService userService) {
+                              NotificationService notificationService, MovieService movieService, UserService userService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService);
     }
 
-//    @FXML
-//    private Button chooseButton;
-//
-//    @FXML
-//    private TextField imdbField;
-//
-//    @FXML
-//    private Button searchButton;
-//
-//    @FXML
-//    private TextField titleField;
+    @FXML
+    private TextField titleField;
 
     @Override
     protected void configure() {
@@ -65,15 +57,27 @@ public class AdditionController extends Controller {
 
             // TODO: handle threads properly
             new Thread(() -> {
-                Result result = movieService.getByQueries(queries);
+                List<Movie> movies = movieService.getByQueries(queries);
 
-                Platform.runLater(() -> switcher.switchTo(View.RESULT, result));
+                Platform.runLater(() -> switcher.switchTo(View.RESULT, movies));
             }).start();
         }
     }
 
     @FXML
     private void onSearch(ActionEvent event) {
+        Query query = Query.builder()
+                .title(titleField.getText())
+                .release("").build();
 
+        try {
+            Movie movie = movieService.getByQuery(query);
+            Result result = Result.builder()
+                    .found(List.of(movie)).build();
+
+            switcher.switchTo(View.RESULT, result);
+        } catch (RuntimeException exception) {
+            // TODO: handle exception with notifications
+        }
     }
 }
