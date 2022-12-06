@@ -4,11 +4,9 @@ import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
-import com.aminnorouzi.ms.service.FileService;
-import com.aminnorouzi.ms.service.MovieService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.service.UserService;
+import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
+import com.dlsc.gemsfx.DialogPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,18 +22,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.dlsc.gemsfx.DialogPane.Type.INFORMATION;
+
 @Slf4j
 @Component
 @FxmlView("/view/addition-view.fxml")
 public class AdditionController extends Controller {
 
-    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
-                              NotificationService notificationService, MovieService movieService, UserService userService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService);
-    }
-
     @FXML
     private TextField titleField;
+
+    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                              NotificationService notificationService, MovieService movieService, UserService userService,
+                              LibraryService libraryService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    }
 
     @Override
     protected void configure() {
@@ -59,7 +60,7 @@ public class AdditionController extends Controller {
             new Thread(() -> {
                 List<Movie> movies = movieService.getByQueries(queries);
 
-                Platform.runLater(() -> switcher.switchTo(View.RESULT, movies));
+                Platform.runLater(() -> notificationService.show(INFORMATION, "movies added!"));
             }).start();
         }
     }
@@ -72,8 +73,8 @@ public class AdditionController extends Controller {
 
         try {
             Movie movie = movieService.getByQuery(query);
+            notificationService.show(INFORMATION, movie.getTitle());
 
-            switcher.switchTo(View.RESULT, movie);
         } catch (RuntimeException exception) {
             // TODO: handle exception with notifications
         }

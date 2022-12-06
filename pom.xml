@@ -134,6 +134,12 @@
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-loader</artifactId>-->
 <!--        </dependency>-->
+
+        <dependency>
+            <groupId>fr.brouillard.oss</groupId>
+            <artifactId>cssfx</artifactId>
+            <version>11.5.1</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

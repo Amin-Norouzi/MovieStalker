@@ -4,10 +4,7 @@ import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.input.Input;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.service.FileService;
-import com.aminnorouzi.ms.service.MovieService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.service.UserService;
+import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
@@ -27,10 +24,11 @@ public abstract class Controller {
     protected final MovieService movieService;
     protected final FileService fileService;
     protected final UserService userService;
+    protected final LibraryService libraryService;
 
     protected View view;
     protected User user;
-    protected Input input;
+    protected Object input;
 
     @FXML
     protected StackPane root;

@@ -1,14 +1,11 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
-import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.service.FileService;
-import com.aminnorouzi.ms.service.MovieService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.service.UserService;
+import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -40,15 +37,17 @@ public class MovieController extends Controller {
     @FXML
     private Label title;
 
-    public MovieController(ApplicationConfiguration configuration, ViewSwitcher switcher,
-                           NotificationService notificationService, MovieService movieService, FileService fileService,
-                           UserService userService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService);
+    private Movie movie;
+
+    public MovieController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+                           NotificationService notificationService, MovieService movieService, UserService userService,
+                           LibraryService libraryService) {
+        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
     }
 
     @Override
     protected void configure() {
-        Movie movie = (Movie) input;
+        movie = (Movie) input;
 
         Image backdropImage = new Image("https://image.tmdb.org/t/p/original" + movie.getBackdrop(),
                 800, 600, false, false, true);
@@ -73,6 +72,22 @@ public class MovieController extends Controller {
         title.setText(movie.getTitle());
         release.setText(movie.getRelease());
         overview.setText(movie.getOverview());
+    }
+
+    @FXML
+    private void onWatch(ActionEvent event) {
+        Long userId = user.getId();
+        Long movieId = movie.getId();
+
+        try {
+            libraryService.watch(userId, movieId);
+        } catch (RuntimeException exception) {
+
+        }
+    }
+
+    private void onDelete(ActionEvent event) {
+
     }
 
     @FXML
