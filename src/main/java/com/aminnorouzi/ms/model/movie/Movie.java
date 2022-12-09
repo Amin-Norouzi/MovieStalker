@@ -1,70 +1,60 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.CustomNumber;
+import com.aminnorouzi.ms.annotation.CollectionOfJson;
+import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
 import com.aminnorouzi.ms.annotation.ArrayFirstValue;
-import com.aminnorouzi.ms.model.input.Input;
+import com.aminnorouzi.ms.annotation.FullPathUrl;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Setter
 @Getter
+@Entity
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "movie")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EntityListeners(AuditingEntityListener.class)
-@Entity
-@Table(name = "movie")
-public class Movie extends Input {
+public class Movie {
 
     @Id
     @JsonIgnore
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @NotNull
-    @Column(unique = true, updatable = false)
     @JsonProperty("id")
     private Long tmdbId;
 
-    //    @NotBlank
-//    @Column(unique = true, updatable = false)
     @JsonProperty("imdb_id")
     private String imdbId;
 
-    @NotBlank
     @JsonAlias({"title", "name"})
     private String title;
 
-    @NotBlank
-    @Column(length = 1000)
+    @Column(length = 2055)
     @JsonProperty("overview")
     private String overview;
 
-    @NotBlank
     @JsonAlias({"release_date", "first_air_date"})
-    private String release;
+    private String released;
 
-    @URL
-    @NotBlank
+    @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
 
-    @URL
-    @NotBlank
+    @FullPathUrl
     @JsonProperty("backdrop_path")
     private String backdrop;
 
@@ -73,43 +63,33 @@ public class Movie extends Input {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Min(0)
-    @Max(10)
-    @NotNull
-    @CustomNumber
-    @PositiveOrZero
+    @SimpleDoubleNumber
     @JsonProperty("vote_average")
     private Double rating;
 
-    @NotNull
-    @Positive
     @ArrayFirstValue
     @JsonAlias({"runtime", "episode_run_time"})
     private Integer runtime;
 
-    @Positive
-    @JsonProperty("number_of_episodes")
+    @JsonProperty(value = "number_of_episodes")
     private Integer episodes;
 
-    @Positive
     @JsonProperty("number_of_seasons")
     private Integer seasons;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movie")
+    @CollectionOfJson
     @JsonProperty("genres")
-    private Set<Genre> genres;
-
-    private Boolean isWatched;
+    @Column(name = "genre_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
+    private Set<String> genres;
 
     private LocalDateTime watchedAt;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDate createdAt;
 
-    @ManyToOne
-    @ToString.Exclude
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private User user;
-
 }

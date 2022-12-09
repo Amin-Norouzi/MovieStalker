@@ -2,23 +2,27 @@ package com.aminnorouzi.ms.model.user;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Setter
 @Getter
+@Entity
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "users")
+@Table(name = "users") // Why users? Because "user" is a reserved word in MySQL
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
     @Column(unique = true)
@@ -27,7 +31,10 @@ public class User {
     private String password;
     private String fullName;
 
-    @OneToMany(mappedBy = "user")
     @ToString.Exclude
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Movie> movies;
+
+    @CreatedDate
+    private LocalDate createdAt;
 }
