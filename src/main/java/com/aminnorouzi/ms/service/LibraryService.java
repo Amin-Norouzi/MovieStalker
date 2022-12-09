@@ -2,15 +2,11 @@ package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
-import com.aminnorouzi.ms.model.user.UpdateRequest;
+import com.aminnorouzi.ms.model.movie.Request;
 import com.aminnorouzi.ms.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -20,49 +16,36 @@ public class LibraryService {
     private final UserService userService;
     private final MovieService movieService;
 
-    public User watch(Long userId, Long movieId) {
-        User user = userService.getById(userId);
-        Movie movie = movieService.getById(movieId);
-
-        user.getMovies().remove(movie);
-        movie.setWatchedAt(LocalDateTime.now());
-        user.getMovies().add(movie);
-
-        UpdateRequest request = userService.build(user.getId(), user.getMovies());
-        User updated = userService.update(request);
-
-        log.info("Watched a new movie by user: movie={}, {}", movie, updated);
-        return updated;
-    }
-
-    public User add(Long userId, Query query) {
-        User user = userService.getById(userId);
-        Movie movie = movieService.getByQuery(query);
+    public Movie add(User user, Query query) {
+        Request request = new Request(user, query);
+        Movie movie = movieService.add(request);
 
         user.getMovies().add(movie);
 
-        UpdateRequest request = userService.build(user.getId(), user.getMovies());
-        User updated = userService.update(request);
+        User updated = userService.update(user);
+        log.info("Added a new movie: movie={}, user={}", movie, updated);
 
-        log.info("Added a new movie to user: movie={}, {}", movie, updated);
-        return updated;
+        return movie;
     }
 
-    public void add(Long userId, Set<Query> queries) {
-        User user = userService.getById(userId);
+    public void watch(Movie movie) {
+        movieService.watch(movie);
+
+        User updated = userService.update(movie.getUser());
+        log.info("Watched a movie: movieId={}, user={}", movie.getId(), updated);
     }
 
-    public User delete(Long userId, Long movieId) {
-        User user = userService.getById(userId);
-        Movie movie = movieService.getById(movieId);
+    public void unwatch(Movie movie) {
+        movieService.unwatch(movie);
 
-        user.getMovies().remove(movie);
-
-        UpdateRequest request = userService.build(user.getId(), user.getMovies());
-        User updated = userService.update(request);
-
-        log.info("Removed a movie from user: movie={}, {}", movie, updated);
-        return updated;
+        User updated = userService.update(movie.getUser());
+        log.info("Unwatched a movie: movieId={}, user={}", movie.getId(), updated);
     }
 
+    public void delete(Movie movie) {
+        movieService.delete(movie);
+
+        User updated = userService.update(movie.getUser());
+        log.info("Deleted a movie: movieId={}, user={}", movie.getId(), updated);
+    }
 }

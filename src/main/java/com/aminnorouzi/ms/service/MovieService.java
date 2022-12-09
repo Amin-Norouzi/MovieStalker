@@ -3,17 +3,15 @@ package com.aminnorouzi.ms.service;
 import com.aminnorouzi.ms.client.MovieClient;
 import com.aminnorouzi.ms.exception.MovieNotFoundException;
 import com.aminnorouzi.ms.model.movie.*;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
-import com.aminnorouzi.ms.task.AdditionTask;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -23,15 +21,38 @@ public class MovieService {
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
 
-    private final TaskService taskService;
-
     @Value("${movie.service.type.movie}")
     private String movieType;
 
     @Value("${movie.service.type.series}")
     private String seriesType;
 
-    public Search search(Query query) {
+    public Movie add(Request request) {
+        Movie movie = search(request.getQuery());
+        movie.setUser(request.getUser());
+
+        Movie added = movieRepository.save(movie);
+
+        log.info("Added a new movie: {}", added);
+        return movie;
+    }
+
+    public void watch(Movie movie) {
+        movie.setWatchedAt(LocalDateTime.now());
+    }
+
+    public void unwatch(Movie movie) {
+        movie.setWatchedAt(null);
+    }
+
+    public void delete(Movie movie) {
+        User user = movie.getUser();
+        user.getMovies().remove(movie);
+
+        log.info("Deleted a movie: {}", movie);
+    }
+
+    private Movie search(Query query) {
         Optional<Search> result = movieClient.getSearch(query.getTitle())
                 .getResults()
                 .stream().findFirst()
@@ -39,54 +60,15 @@ public class MovieService {
                         .getResults()
                         .stream().findFirst());
 
-        return result
+        Search search = result
                 .orElseThrow(() -> new MovieNotFoundException("Movie does not exist"));
-    }
 
-    public Movie getByQuery(Query query) {
-        Search search = search(query);
-
-        Movie movie = getBySearch(search);
-
-        log.info("Found a new movie: {}", movie);
-        return movie;
-    }
-
-    // each query runs in a background task
-    public List<Movie> getByQueries(Set<Query> queries) {
-        List<Movie> found = new ArrayList<>();
-
-        queries.forEach(query -> {
-            AdditionTask task = AdditionTask.builder()
-                    .movieService(this)
-                    .query(query)
-                    .found(found)
-                    .build();
-
-            taskService.run(task);
-        });
-
-        log.info("Found new movies: {}", found);
-        return found;
-    }
-
-    public Movie getById(Long id) {
-        Movie found = movieRepository.findById(id)
-                .orElseThrow(() -> new MovieNotFoundException(String.format("Movie: %s does not exist", id)));
-
-        log.info("Found a movie: {}", found);
-        return found;
-    }
-
-    public Movie getBySearch(Search search) {
-        Long id = search.getTmdbId();
         Movie movie;
-
         if (search.getMediaType().equals(movieType)) {
-            movie = movieClient.getMovie(id, movieType);
+            movie = movieClient.getMovie(search.getTmdbId(), movieType);
             movie.setType(Type.MOVIE);
         } else {
-            movie = movieClient.getMovie(id, seriesType);
+            movie = movieClient.getMovie(search.getTmdbId(), seriesType);
             movie.setType(Type.SERIES);
         }
 

@@ -2,37 +2,34 @@ package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.exception.IllegalSigninException;
 import com.aminnorouzi.ms.exception.IllegalSignupException;
-import com.aminnorouzi.ms.exception.MovieNotFoundException;
 import com.aminnorouzi.ms.exception.UserNotFoundException;
-import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.user.SigninRequest;
-import com.aminnorouzi.ms.model.user.SignupRequest;
-import com.aminnorouzi.ms.model.user.UpdateRequest;
+import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
 
-    public User update(UpdateRequest request) {
+    public User update(User request) {
         User user = getById(request.getId());
 
-        if (request.getFullName() != null) {
+        if (request.getFullName() != null &&
+                !request.getFullName().equals(user.getFullName())) {
             user.setFullName(request.getFullName());
         }
-        if (request.getPassword() != null) {
+        if (request.getPassword() != null &&
+                !request.getPassword().equals(user.getPassword())) {
             user.setPassword(request.getPassword());
         }
-        if (request.getMovies() != null) {
+        if (request.getMovies() != null &&
+                !request.getMovies().equals(user.getMovies())) {
             user.setMovies(request.getMovies());
         }
 
@@ -42,7 +39,7 @@ public class UserService {
         return updated;
     }
 
-    public User signup(SignupRequest request) {
+    public User signup(Request request) {
         verify(request);
 
         User user = User.builder()
@@ -57,14 +54,14 @@ public class UserService {
         return created;
     }
 
-    private void verify(SignupRequest request) {
+    private void verify(Request request) {
         User existing = getByUsername(request.getUsername());
         if (existing != null) {
             throw new IllegalSignupException("Username: {} already exists!");
         }
     }
 
-    public User signin(SigninRequest request) {
+    public User signin(Request request) {
         User found = getByUsername(request.getUsername());
 
         verify(request, found);
@@ -73,7 +70,7 @@ public class UserService {
         return found;
     }
 
-    private void verify(SigninRequest request, User user) {
+    private void verify(Request request, User user) {
         boolean equals = user.getPassword().equals(request.getPassword());
         if (!equals) {
             throw new IllegalSigninException("Incorrect username or password!");
@@ -94,12 +91,5 @@ public class UserService {
 
         log.info("Found an user: {}", found);
         return found;
-    }
-
-    public UpdateRequest build(Long id, List<Movie> movies) {
-        return UpdateRequest.builder()
-                .id(id)
-                .movies(movies)
-                .build();
     }
 }
