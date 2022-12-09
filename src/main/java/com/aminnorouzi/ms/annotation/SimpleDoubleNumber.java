@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotationsInside
-@JsonDeserialize(using = CustomNumberConverter.class)
-public @interface CustomNumber {
+@JsonDeserialize(using = SimpleDoubleNumberConverter.class)
+public @interface SimpleDoubleNumber {
 }

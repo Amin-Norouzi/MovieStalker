@@ -1,5 +1,6 @@
 package com.aminnorouzi.ms.annotation;
 
+
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -11,7 +12,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotationsInside
-@JsonDeserialize(using = ArrayFirstValueConverter.class)
-public @interface ArrayFirstValue {
-
+@JsonDeserialize(using = CollectionOfJsonConverter.class)
+public @interface CollectionOfJson {
 }

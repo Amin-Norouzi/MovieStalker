@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotationsInside
-@JsonDeserialize(using = ArrayFirstValueConverter.class)
-public @interface ArrayFirstValue {
-
+@JsonDeserialize(using = FullPathUrlConverter.class)
+public @interface FullPathUrl {
 }
