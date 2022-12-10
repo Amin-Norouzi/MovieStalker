@@ -1,7 +1,10 @@
 package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.client.MovieClient;
+import com.aminnorouzi.ms.exception.DuplicatedMovieException;
+import com.aminnorouzi.ms.exception.IllegalSignupException;
 import com.aminnorouzi.ms.exception.MovieNotFoundException;
+import com.aminnorouzi.ms.exception.UserNotFoundException;
 import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
@@ -29,12 +32,21 @@ public class MovieService {
 
     public Movie add(Request request) {
         Movie movie = search(request.getQuery());
+        verify(movie);
+
         movie.setUser(request.getUser());
 
         Movie added = movieRepository.save(movie);
 
         log.info("Added a new movie: {}", added);
         return movie;
+    }
+
+    private void verify(Movie movie) {
+        Movie existing = getByTmdbId(movie.getTmdbId());
+        if (existing != null) {
+            throw new DuplicatedMovieException(String.format("Movie: %s already exists!", movie.getTitle()));
+        }
     }
 
     public void watch(Movie movie) {
@@ -73,5 +85,21 @@ public class MovieService {
         }
 
         return movie;
+    }
+
+    private Movie getById(Long id) {
+        Movie found = movieRepository.findById(id)
+                .orElseThrow(() -> new MovieNotFoundException(String.format("Movie: %s does not exist", id)));
+
+        log.info("Found a movie: {}", found);
+        return found;
+    }
+
+    private Movie getByTmdbId(Long tmdbId) {
+        Movie found = movieRepository.findByTmdbId(tmdbId)
+                .orElseThrow(() -> new MovieNotFoundException(String.format("Movie: %s does not exist", tmdbId)));
+
+        log.info("Found a movie: {}", found);
+        return found;
     }
 }

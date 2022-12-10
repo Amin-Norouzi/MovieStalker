@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     public User update(User request) {
         User user = getById(request.getId());
@@ -33,7 +33,7 @@ public class UserService {
             user.setMovies(request.getMovies());
         }
 
-        User updated = repository.save(user);
+        User updated = userRepository.save(user);
 
         log.info("Updated an user: {}", updated);
         return updated;
@@ -48,7 +48,7 @@ public class UserService {
                 .fullName(request.getFullName())
                 .build();
 
-        User created = repository.save(user);
+        User created = userRepository.save(user);
 
         log.info("Signed up for user: {}", created);
         return created;
@@ -57,7 +57,7 @@ public class UserService {
     private void verify(Request request) {
         User existing = getByUsername(request.getUsername());
         if (existing != null) {
-            throw new IllegalSignupException("Username: {} already exists!");
+            throw new IllegalSignupException(String.format("Username: %s already exists!", request.getUsername()));
         }
     }
 
@@ -78,7 +78,7 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        User found = repository.findById(id)
+        User found = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", id)));
 
         log.info("Found a user: {}", found);
@@ -86,7 +86,7 @@ public class UserService {
     }
 
     public User getByUsername(String username) {
-        User found = repository.findByUsername(username)
+        User found = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", username)));
 
         log.info("Found an user: {}", found);
