@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class Query {
 
     private String title;
-    private String release;
+    private String released;
 
     public String getFullQuery() {
-        return title + " " + release;
+        return title + " " + released;
     }
 }

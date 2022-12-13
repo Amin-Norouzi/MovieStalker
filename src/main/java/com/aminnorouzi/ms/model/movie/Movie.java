@@ -1,9 +1,6 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.CollectionOfJson;
-import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
-import com.aminnorouzi.ms.annotation.ArrayFirstValue;
-import com.aminnorouzi.ms.annotation.FullPathUrl;
+import com.aminnorouzi.ms.annotation.*;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -37,7 +34,8 @@ public class Movie {
     @JsonProperty("id")
     private Long tmdbId;
 
-    @JsonProperty("imdb_id")
+    @IdFromJson
+    @JsonProperty("external_ids")
     private String imdbId;
 
     @JsonAlias({"title", "name"})
