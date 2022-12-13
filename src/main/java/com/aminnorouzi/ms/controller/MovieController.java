@@ -7,6 +7,7 @@ import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,18 +25,18 @@ public class MovieController extends Controller {
 
     @FXML
     private ImageView backdrop;
-
     @FXML
     private Rectangle poster;
-
     @FXML
     private Label overview;
-
     @FXML
     private Label release;
-
     @FXML
     private Label title;
+    @FXML
+    private Button watch;
+    @FXML
+    private Button unwatch;
 
     private Movie movie;
 
@@ -47,9 +48,9 @@ public class MovieController extends Controller {
 
     @Override
     protected void configure() {
-        movie = (Movie) input;
+        movie = (Movie) getInput();
 
-        Image backdropImage = new Image("https://image.tmdb.org/t/p/original" + movie.getBackdrop(),
+        Image backdropImage = new Image("https://image.tmdb.org/t/p/w400" + movie.getBackdrop(),
                 800, 600, false, false, true);
         backdropImage.progressProperty().addListener((observable, oldValue, progress) -> {
             if ((Double) progress == 1.0 && !backdropImage.isError()) {
@@ -68,26 +69,47 @@ public class MovieController extends Controller {
             }
         });
 
-
         title.setText(movie.getTitle());
-        release.setText(movie.getRelease());
+        release.setText(movie.getReleased());
         overview.setText(movie.getOverview());
+
+        if (movie.getWatchedAt() != null) {
+            changeState(true);
+        }
     }
 
     @FXML
     private void onWatch(ActionEvent event) {
-        Long userId = user.getId();
-        Long movieId = movie.getId();
+        libraryService.watch(movie);
+        changeState(true);
+    }
 
-        try {
-            libraryService.watch(userId, movieId);
-        } catch (RuntimeException exception) {
+    @FXML
+    private void onUnwatch(ActionEvent event) {
+        libraryService.unwatch(movie);
+        changeState(false);
+    }
 
+    private void changeState(boolean watched) {
+        if (watched) {
+            watch.setDisable(true);
+            watch.setText("Watched 👀");
+
+            unwatch.setVisible(true);
+        } else {
+            watch.setDisable(false);
+            watch.setText("Watch Now");
+
+            unwatch.setVisible(false);
         }
     }
 
+    @FXML
     private void onDelete(ActionEvent event) {
-
+        try {
+            libraryService.delete(movie);
+            switcher.switchTo(View.LIBRARY);
+        } catch (RuntimeException exception) {}
     }
 
     @FXML

@@ -2,7 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.model.user.SignupRequest;
+import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
@@ -33,12 +33,12 @@ public class SignupController extends Controller {
 
     @Override
     protected void configure() {
-        System.out.println("Running SignupController");
+
     }
 
     @FXML
     private void onSignup(ActionEvent event) {
-        SignupRequest request = SignupRequest.builder()
+        Request request = Request.builder()
                 .fullName(fullNameField.getText().toLowerCase())
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())

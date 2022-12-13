@@ -2,7 +2,6 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.model.input.Input;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public abstract class Controller {
 
-    protected final ApplicationConfiguration configuration;
+    private final ApplicationConfiguration configuration;
     protected final ViewSwitcher switcher;
 
     protected final NotificationService notificationService;
@@ -26,18 +25,17 @@ public abstract class Controller {
     protected final UserService userService;
     protected final LibraryService libraryService;
 
-    protected View view;
-    protected User user;
-    protected Object input;
+    private View view;
+    private User user;
+    private Object input;
 
     @FXML
-    protected StackPane root;
+    private StackPane root;
 
     @FXML
-    public void initialize() {
-        setView(configuration.getView());
-        setUser(configuration.getUser());
-        setInput(configuration.getInput());
+    protected void initialize() {
+        configuration.getChanges(this);
+
 
         notificationService.initialize(root);
 

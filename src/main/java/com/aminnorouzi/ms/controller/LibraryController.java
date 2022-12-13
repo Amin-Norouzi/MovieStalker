@@ -4,6 +4,7 @@ import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.util.ComponentUtils;
 import com.aminnorouzi.ms.util.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,20 +16,19 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
-import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-@Slf4j
 @Component
 @FxmlView("/view/library-view.fxml")
 public class LibraryController extends Controller {
@@ -58,8 +58,6 @@ public class LibraryController extends Controller {
     private final EventHandler<MouseEvent> mouseEnterEventHandler = event -> {
         Rectangle clickedRectangle = (Rectangle) event.getSource();
         if (contents.containsKey(clickedRectangle)) {
-            Movie movie = contents.get(clickedRectangle);
-            System.out.println("Mouse entered: " + movie.getTitle());
 
             clickedRectangle.setStroke(Color.rgb(59, 96, 228));
             clickedRectangle.setStrokeWidth(3);
@@ -73,8 +71,6 @@ public class LibraryController extends Controller {
     private final EventHandler<MouseEvent> mouseExitEventHandler = event -> {
         Rectangle clickedRectangle = (Rectangle) event.getSource();
         if (contents.containsKey(clickedRectangle)) {
-            Movie movie = contents.get(clickedRectangle);
-            System.out.println("Mouse exited: " + movie.getTitle());
 
             clickedRectangle.setStroke(null);
             clickedRectangle.setStrokeWidth(0);
@@ -87,50 +83,15 @@ public class LibraryController extends Controller {
 
     @Override
     protected void configure() {
-        List<Movie> movies = getUser().getMovies();
+        Set<Movie> movies = getUser().getMovies();
         System.out.println(movies.size());
-//            MovieTask task = new MovieTask(movie, content);
-        movies.forEach(movie -> {
-//            Task task = new Task() {
-//                final ImageView imageView = new ImageView();
-//
-//                @Override
-//                protected Object call() throws Exception {
-//                    imageView.setFitHeight(300);
-//                    imageView.setFitWidth(200);
-////                    imageView.setPreserveRatio(true);
-//                    imageView.setImage(new Image("https://image.tmdb.org/t/p/original" + movie.getPoster())); // 2000*3000
-//
-//                    return null;
-//                }
-//
-//                @Override
-//                protected void succeeded() {
-//                    super.succeeded();
-//                    Platform.runLater(() -> {
-//                        contents.put(imageView, movie);
-//
-//                        ComponentUtils.roundImage(imageView);
-//                        imageView.setOnMouseClicked(mouseEventEventHandler);
-//
-//                        content.getChildren().add(imageView);
-//                    });
-//                }
-//            };
-//
-//            taskService.run(task);
 
+        movies.forEach(movie -> {
             Image image = new Image("https://image.tmdb.org/t/p/w400" + movie.getPoster(),
                     200, 300, false, false, true);
             image.progressProperty().addListener((observable, oldValue, progress) -> {
                 if ((Double) progress == 1.0 && !image.isError()) {
-                    Rectangle rec = new Rectangle(200, 300);
-                    rec.setArcHeight(30);
-                    rec.setArcWidth(30);
-
-                    ImagePattern pattern = new ImagePattern(image);
-
-                    rec.setFill(pattern);
+                    Rectangle rec = ComponentUtils.roundImage(image);
                     rec.setCursor(Cursor.HAND);
 
                     rec.setOnMouseEntered(mouseEnterEventHandler);
@@ -151,12 +112,6 @@ public class LibraryController extends Controller {
 
     @FXML
     private void onAddition(ActionEvent event) {
-        switcher.switchTo(View.ADDITION, getUser());
-    }
-
-    @FXML
-    private void onOpen(ActionEvent event) {
-//        switcher.switchTo(View.MOVIE, getUser());
-        switcher.switchTo(View.MOVIE, new Movie());
+        switcher.switchTo(View.ADDITION);
     }
 }

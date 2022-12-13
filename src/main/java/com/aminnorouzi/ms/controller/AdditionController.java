@@ -1,18 +1,16 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
-import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
-import com.dlsc.gemsfx.DialogPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import lombok.extern.slf4j.Slf4j;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +22,6 @@ import java.util.Set;
 
 import static com.dlsc.gemsfx.DialogPane.Type.INFORMATION;
 
-@Slf4j
 @Component
 @FxmlView("/view/addition-view.fxml")
 public class AdditionController extends Controller {
@@ -46,7 +43,7 @@ public class AdditionController extends Controller {
     @FXML
     private void onChoose(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        File directory = directoryChooser.showDialog(null);
+        File directory = directoryChooser.showDialog(switcher.getStage());
 
         if (directory != null) {
             List<File> files = Arrays.stream(Objects.requireNonNull(directory.listFiles()))
@@ -56,26 +53,29 @@ public class AdditionController extends Controller {
 
             Set<Query> queries = fileService.convert(files);
 
-            // TODO: handle threads properly
-            new Thread(() -> {
-                List<Movie> movies = movieService.getByQueries(queries);
+            queries.forEach(query -> {
+                // TODO: handle threads properly
+                new Thread(() -> {
+                    try {
+                        libraryService.add(getUser(), query);
+                    } catch (RuntimeException ignored) {}
 
-                Platform.runLater(() -> notificationService.show(INFORMATION, "movies added!"));
-            }).start();
+                    Platform.runLater(() -> notificationService.show(INFORMATION, "movies added!"));
+                }).start();
+            });
         }
     }
 
     @FXML
     private void onSearch(ActionEvent event) {
-        Query query = Query.builder()
-                .title(titleField.getText())
-                .release("").build();
+        Query query = new Query(titleField.getText(), "");
 
         try {
-            Movie movie = movieService.getByQuery(query);
-            notificationService.show(INFORMATION, movie.getTitle());
+            Movie movie = libraryService.add(getUser(), query);
+            System.out.println("Added to library: " + movie.getTitle());
 
         } catch (RuntimeException exception) {
+            System.out.println(exception.getMessage());
             // TODO: handle exception with notifications
         }
     }

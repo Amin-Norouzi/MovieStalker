@@ -17,8 +17,6 @@
          <center>
             <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <fx:include source="header-view.fxml" />
-      
                   <HBox alignment="BOTTOM_CENTER" prefHeight="550.0" prefWidth="200.0">
                      <children>
                         <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" prefHeight="550.0" prefWidth="400.0" spacing="20.0">

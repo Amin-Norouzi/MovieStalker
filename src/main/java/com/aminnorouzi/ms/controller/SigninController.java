@@ -2,7 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.model.user.SigninRequest;
+import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ViewSwitcher;
@@ -31,12 +31,12 @@ public class SigninController extends Controller {
 
     @Override
     protected void configure() {
-        System.out.println("Running SigninController");
+
     }
 
     @FXML
     private void onSignin(ActionEvent event) {
-        SigninRequest request = SigninRequest.builder()
+        Request request = Request.builder()
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();

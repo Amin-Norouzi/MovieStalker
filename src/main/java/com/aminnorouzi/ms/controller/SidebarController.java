@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
@@ -23,7 +22,7 @@ public class SidebarController extends Controller {
 
     @Override
     protected void configure() {
-//        System.out.println(getClass().getSimpleName());
+
     }
 
     @FXML
