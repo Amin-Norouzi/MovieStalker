@@ -22,17 +22,9 @@ public class MovieStalkerInitializer implements ApplicationListener<StageReadyEv
     @Override
     public void onApplicationEvent(@NotNull StageReadyEvent event) {
         View view = View.getDefault();
-        Stage stage = getDefaultStage(event);
+        Stage stage = event.getDefault(event);
 
         switcher.initialize(stage);
         switcher.switchTo(view);
-    }
-
-    private Stage getDefaultStage(StageReadyEvent event) {
-        Stage stage = event.getStage();
-        stage.centerOnScreen();
-        stage.setResizable(false);
-
-        return stage;
     }
 }

@@ -46,6 +46,14 @@ public class MovieStalkerApplication {
             public Stage getStage() {
                 return ((Stage) getSource());
             }
+
+            public Stage getDefault(StageReadyEvent event) {
+                Stage stage = event.getStage();
+                stage.centerOnScreen();
+                stage.setResizable(false);
+
+                return stage;
+            }
         }
     }
 
