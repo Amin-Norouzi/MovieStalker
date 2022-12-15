@@ -4,7 +4,7 @@ import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewSwitcher;
+import com.aminnorouzi.ms.util.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,7 +40,7 @@ public class MovieController extends Controller {
 
     private Movie movie;
 
-    public MovieController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+    public MovieController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
                            NotificationService notificationService, MovieService movieService, UserService userService,
                            LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -108,13 +108,13 @@ public class MovieController extends Controller {
     private void onDelete(ActionEvent event) {
         try {
             libraryService.delete(movie);
-            switcher.switchTo(View.LIBRARY);
+            switchTo(View.LIBRARY);
         } catch (RuntimeException exception) {}
     }
 
     @FXML
     private void onBack(MouseEvent event) {
-        switcher.switchTo(View.LIBRARY);
+        switchTo(View.LIBRARY);
 //        DialogPane.Dialog<Object> dialog = new DialogPane.Dialog(dialogPane, DialogPane.Type.WARNING);
 //        dialog.setTitle("Maximized");
 //        dialog.setContent(new Label("Dialog using all available width and height."));

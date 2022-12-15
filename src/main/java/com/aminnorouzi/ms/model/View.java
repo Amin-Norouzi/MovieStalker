@@ -26,7 +26,7 @@ public enum View {
     }
 
     public static View getDefault() {
-        return View.HOME;
+        return View.SIGNIN;
     }
 
     public static View getEmpty() {

@@ -1,30 +1,22 @@
 package com.aminnorouzi.ms.util;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ComponentUtils {
 
-    public static void roundImage(ImageView imageView) {
-        Rectangle clip = new Rectangle(400, 600);
+    public static Rectangle roundImage(Image image) {
+        Rectangle rectangle = new Rectangle(200, 300);
+        rectangle.setArcHeight(30);
+        rectangle.setArcWidth(30);
 
-        clip.setArcWidth(30);
-        clip.setArcHeight(30);
-        imageView.setClip(clip);
+        ImagePattern pattern = new ImagePattern(image);
 
-        SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setFill(Color.TRANSPARENT);
-        WritableImage newImage = imageView.snapshot(parameters, null);
+        rectangle.setFill(pattern);
 
-        imageView.setClip(null);
-//        imageView.setEffect(new DropShadow(5, Color.BLACK));
-        imageView.setImage(newImage);
+        return rectangle;
     }
 }

@@ -5,7 +5,7 @@ import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewSwitcher;
+import com.aminnorouzi.ms.util.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -25,7 +25,7 @@ public class SignupController extends Controller {
     @FXML
     private PasswordField passwordField;
 
-    public SignupController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+    public SignupController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
                             NotificationService notificationService, MovieService movieService, UserService userService,
                             LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -47,7 +47,7 @@ public class SignupController extends Controller {
         try {
             User created = userService.signup(request);
             if (created != null) {
-                switcher.switchTo(View.HOME, created);
+                switchTo(View.HOME);
                 return;
             }
         } catch (RuntimeException ignored) {}
@@ -57,6 +57,6 @@ public class SignupController extends Controller {
 
     @FXML
     private void onSignin(MouseEvent event) {
-        switcher.switchTo(View.SIGNIN);
+        switchTo(View.SIGNIN);
     }
 }

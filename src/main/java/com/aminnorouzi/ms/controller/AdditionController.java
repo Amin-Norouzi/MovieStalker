@@ -4,7 +4,7 @@ import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewSwitcher;
+import com.aminnorouzi.ms.util.ViewManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +29,7 @@ public class AdditionController extends Controller {
     @FXML
     private TextField titleField;
 
-    public AdditionController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+    public AdditionController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
                               NotificationService notificationService, MovieService movieService, UserService userService,
                               LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -42,8 +42,10 @@ public class AdditionController extends Controller {
 
     @FXML
     private void onChoose(ActionEvent event) {
+        Stage stage = (Stage) getRoot().getScene().getWindow();
+
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        File directory = directoryChooser.showDialog(switcher.getStage());
+        File directory = directoryChooser.showDialog(stage);
 
         if (directory != null) {
             List<File> files = Arrays.stream(Objects.requireNonNull(directory.listFiles()))
@@ -58,7 +60,8 @@ public class AdditionController extends Controller {
                 new Thread(() -> {
                     try {
                         libraryService.add(getUser(), query);
-                    } catch (RuntimeException ignored) {}
+                    } catch (RuntimeException ignored) {
+                    }
 
                     Platform.runLater(() -> notificationService.show(INFORMATION, "movies added!"));
                 }).start();

@@ -5,7 +5,7 @@ import com.aminnorouzi.ms.model.View;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.ComponentUtils;
-import com.aminnorouzi.ms.util.ViewSwitcher;
+import com.aminnorouzi.ms.util.ViewManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,7 +37,7 @@ public class LibraryController extends Controller {
     @FXML
     private TilePane body;
 
-    public LibraryController(ApplicationConfiguration configuration, ViewSwitcher switcher, FileService fileService,
+    public LibraryController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
                              NotificationService notificationService, MovieService movieService, UserService userService,
                              LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -84,7 +83,7 @@ public class LibraryController extends Controller {
     @Override
     protected void configure() {
         Set<Movie> movies = getUser().getMovies();
-        System.out.println(movies.size());
+        System.out.println("User's library count: " + movies.size());
 
         movies.forEach(movie -> {
             Image image = new Image("https://image.tmdb.org/t/p/w400" + movie.getPoster(),
@@ -107,11 +106,11 @@ public class LibraryController extends Controller {
     }
 
     private void onMovieClicked(Movie movie) {
-        switcher.switchTo(View.MOVIE, movie);
+        switchTo(View.MOVIE, movie);
     }
 
     @FXML
     private void onAddition(ActionEvent event) {
-        switcher.switchTo(View.ADDITION);
+        switchTo(View.ADDITION);
     }
 }

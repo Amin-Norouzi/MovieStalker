@@ -55,15 +55,14 @@ public class ViewManager {
             root = fxWeaver.loadView(view.getController());
         }
 
-        cacheup(view, root, input);
+        cacheup(key, root);
         showup(view, root);
     }
 
-    private void cacheup(View view, Parent root, Object input) {
-        CacheKey key = new CacheKey(view, input);
+    private void cacheup(CacheKey key, Parent root) {
         cacheManager.cache(key, root);
 
-        setCurrent(view);
+        setCurrent(key.getView());
     }
 
     private void showup(View view, Parent root) {

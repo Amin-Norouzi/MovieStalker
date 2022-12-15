@@ -78,7 +78,7 @@ public class FileService {
 
         return Query.builder()
                 .title(builder.toString().trim())
-                .release(release.get())
+                .released(release.get())
                 .build();
     }
 
