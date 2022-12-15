@@ -78,6 +78,4 @@ public class ViewManager {
         setCurrent(View.getEmpty());
         cacheManager.cleanup();
     }
-
-
 }
