@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.configuration;
+package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.user.User;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfiguration {
+public class ApplicationContext {
 
     private User user;
     private Object input;
