@@ -4,7 +4,8 @@ import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +18,10 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Component
 @FxmlView("/view/addition-view.fxml")
@@ -28,10 +32,9 @@ public class AdditionController extends Controller {
     @FXML
     private TextField titleField;
 
-    public AdditionController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                              NotificationService notificationService, MovieService movieService, UserService userService,
+    public AdditionController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
                               LibraryService libraryService, LibraryController libraryController) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+        super(configuration, switcher, notificationService, libraryService);
         this.libraryController = libraryController;
     }
 
@@ -48,13 +51,9 @@ public class AdditionController extends Controller {
         File directory = directoryChooser.showDialog(stage);
 
         if (directory != null) {
-            List<File> files = Arrays.stream(Objects.requireNonNull(directory.listFiles()))
-                    .filter(File::isFile)
-                    .filter(fileService::verify)
-                    .sorted().toList();
+            List<File> files = libraryService.read(directory);
 
-            Set<Query> queries = fileService.convert(files);
-
+            Set<Query> queries = libraryService.convert(files);
             queries.forEach(query -> new Thread(() -> addMovieToLibrary(query)).start());
         }
     }

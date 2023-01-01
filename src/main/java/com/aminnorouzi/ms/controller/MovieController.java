@@ -3,14 +3,14 @@ package com.aminnorouzi.ms.controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieInput;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -55,10 +55,9 @@ public class MovieController extends Controller {
     @Value("${movie.client.api.imdb-base-url}")
     private String imdbBaseUrl;
 
-    public MovieController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                           NotificationService notificationService, MovieService movieService, UserService userService,
-                           LibraryService libraryService, LibraryController libraryController) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public MovieController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
+                             LibraryService libraryService, LibraryController libraryController) {
+        super(configuration, switcher, notificationService, libraryService);
         this.libraryController = libraryController;
     }
 

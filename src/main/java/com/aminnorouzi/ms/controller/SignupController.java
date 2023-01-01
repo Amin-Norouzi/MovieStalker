@@ -1,10 +1,11 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.core.ApplicationContext;
-import com.aminnorouzi.ms.util.view.View;
-import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.model.user.UserRequest;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,10 +26,9 @@ public class SignupController extends Controller {
     @FXML
     private PasswordField passwordField;
 
-    public SignupController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                            NotificationService notificationService, MovieService movieService, UserService userService,
-                            LibraryService libraryService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public SignupController(ApplicationContext configuration, ViewSwitcher switcher,
+                            NotificationService notificationService, LibraryService libraryService) {
+        super(configuration, switcher, notificationService, libraryService);
     }
 
     @Override
@@ -38,20 +38,19 @@ public class SignupController extends Controller {
 
     @FXML
     private void onSignup(ActionEvent event) {
-        Request request = Request.builder()
+        UserRequest userRequest = UserRequest.builder()
                 .fullName(fullNameField.getText().toLowerCase())
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();
 
         try {
-            User created = userService.signup(request);
-            if (created != null) {
-                getContext().initialize(created.getId());
-                getSwitcher().switchTo(View.HOME);
-            }
+            User created = libraryService.signup(userRequest);
+
+            getContext().initialize(created.getId());
+            getSwitcher().switchTo(View.HOME);
         } catch (RuntimeException exception) {
-            System.out.println(exception.getMessage());
+            notificationService.showError(exception.getMessage());
         }
     }
 

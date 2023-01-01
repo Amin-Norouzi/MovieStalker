@@ -28,7 +28,7 @@ public class MovieService {
             entry("movie", "movie"),
             entry("tv", "tv"));
 
-    public Movie add(Request request) {
+    public Movie add(MovieRequest request) {
         Movie movie = request.getMovie();
         verify(movie.getTmdbId());
 

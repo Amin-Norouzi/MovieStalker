@@ -1,6 +1,5 @@
-package com.aminnorouzi.ms.model.movie;
+package com.aminnorouzi.ms.model.user;
 
-import com.aminnorouzi.ms.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Request {
+public class UserRequest {
 
-    private User user;
-    private Movie movie;
+    private String username;
+    private String password;
+    private String fullName;
 }

@@ -5,7 +5,8 @@ import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieInput;
 import com.aminnorouzi.ms.model.movie.Type;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.GraphicsManager;
 import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
@@ -43,10 +44,9 @@ public class LibraryController extends Controller {
     @FXML
     private TilePane body;
 
-    public LibraryController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                             NotificationService notificationService, MovieService movieService, UserService userService,
-                             LibraryService libraryService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public LibraryController(ApplicationContext configuration, ViewSwitcher switcher,
+                             NotificationService notificationService, LibraryService libraryService) {
+        super(configuration, switcher, notificationService, libraryService);
     }
 
     private final EventHandler<MouseEvent> mouseClickEventHandler = event -> {

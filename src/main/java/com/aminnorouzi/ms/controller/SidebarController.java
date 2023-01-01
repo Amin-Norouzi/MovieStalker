@@ -1,9 +1,9 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.core.ApplicationContext;
-import com.aminnorouzi.ms.model.user.Stats;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.view.View;
-import com.aminnorouzi.ms.service.*;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +14,9 @@ import org.springframework.stereotype.Component;
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
-    public SidebarController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                             NotificationService notificationService, MovieService movieService, UserService userService,
-                             LibraryService libraryService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public SidebarController(ApplicationContext configuration, ViewSwitcher switcher,
+                           NotificationService notificationService, LibraryService libraryService) {
+        super(configuration, switcher, notificationService, libraryService);
     }
 
     @Override
@@ -27,9 +26,7 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onHome(ActionEvent event) {
-        Stats stats = userService.getStats(getUser());
-
-        getSwitcher().switchTo(View.HOME, stats);
+        getSwitcher().switchTo(View.HOME);
     }
 
     @FXML

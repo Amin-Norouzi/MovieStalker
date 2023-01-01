@@ -4,7 +4,7 @@ import com.aminnorouzi.ms.exception.IllegalSigninException;
 import com.aminnorouzi.ms.exception.IllegalSignupException;
 import com.aminnorouzi.ms.exception.UserNotFoundException;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.user.Request;
+import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.model.user.Stats;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
@@ -45,13 +45,14 @@ public class UserService {
         return updated;
     }
 
+    // TODO
     public Stats getStats(User user) {
         List<Movie> movies = user.getMovies();
 
         return Stats.of(movies);
     }
 
-    public User signup(Request request) {
+    public User signup(UserRequest request) {
         verify(request);
 
         User user = User.builder()
@@ -66,23 +67,23 @@ public class UserService {
         return created;
     }
 
-    private void verify(Request request) {
+    private void verify(UserRequest request) {
         boolean existing = userRepository.existsByUsername(request.getUsername());
         if (existing) {
             throw new IllegalSignupException(String.format("Username: %s already exists!", request.getUsername()));
         }
     }
 
-    public User signin(Request request) {
-        User found = getByUsername(request.getUsername());
+    public User signin(UserRequest userRequest) {
+        User found = getByUsername(userRequest.getUsername());
 
-        verify(request, found);
+        verify(userRequest, found);
 
         log.info("Signed in for user: {}", found);
         return found;
     }
 
-    private void verify(Request request, User user) {
+    private void verify(UserRequest request, User user) {
         boolean equals = user.getPassword().equals(request.getPassword());
         if (!equals) {
             throw new IllegalSigninException("Incorrect username or password!");

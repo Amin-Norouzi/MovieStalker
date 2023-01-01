@@ -3,7 +3,8 @@ package com.aminnorouzi.ms.controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.Stats;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.util.view.ViewLoader;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
@@ -48,16 +49,15 @@ public class HomeController extends Controller {
 
     private final ViewLoader viewLoader;
 
-    public HomeController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                          NotificationService notificationService, MovieService movieService, UserService userService,
-                          LibraryService libraryService, ViewLoader viewLoader) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public HomeController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
+                              LibraryService libraryService, ViewLoader viewLoader) {
+        super(configuration, switcher, notificationService, libraryService);
         this.viewLoader = viewLoader;
     }
 
     @Override
     protected void configure() {
-        Stats stats = userService.getStats(getUser());
+        Stats stats = (Stats) getInput();
 
         Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
         image.progressProperty().addListener((observable, oldValue, progress) -> {

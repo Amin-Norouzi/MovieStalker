@@ -1,10 +1,10 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.core.ApplicationContext;
-import com.aminnorouzi.ms.model.user.Request;
-import com.aminnorouzi.ms.model.user.Stats;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.service.*;
+import com.aminnorouzi.ms.model.user.UserRequest;
+import com.aminnorouzi.ms.service.LibraryService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -27,10 +27,9 @@ public class SigninController extends Controller {
     @FXML
     private Button signinButton;
 
-    public SigninController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
-                            NotificationService notificationService, MovieService movieService, UserService userService,
-                            LibraryService libraryService) {
-        super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+    public SigninController(ApplicationContext configuration, ViewSwitcher switcher,
+                            NotificationService notificationService, LibraryService libraryService) {
+        super(configuration, switcher, notificationService, libraryService);
     }
 
     @Override
@@ -43,13 +42,13 @@ public class SigninController extends Controller {
 
     @FXML
     public void onSignin(ActionEvent event) {
-        Request request = Request.builder()
+        UserRequest request = UserRequest.builder()
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();
 
         try {
-            User found = userService.signin(request);
+            User found = libraryService.signin(request);
 
             getContext().initialize(found.getId());
             getSwitcher().switchTo(View.HOME);

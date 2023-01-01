@@ -22,6 +22,13 @@ public class FileService {
     @Value("#{'${movie.validation.formats}'.split(',')}")
     private Set<String> formats;
 
+    public List<File> read(File directory) {
+        return Arrays.stream(Objects.requireNonNull(directory.listFiles()))
+                .filter(File::isFile)
+                .filter(this::verify)
+                .sorted().toList();
+    }
+
     public Set<Query> convert(List<File> files) {
         Set<Query> queries = new HashSet<>();
 
