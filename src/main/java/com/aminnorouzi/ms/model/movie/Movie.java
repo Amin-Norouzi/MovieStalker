@@ -4,6 +4,7 @@ import com.aminnorouzi.ms.annotation.*;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -12,8 +13,9 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Setter
 @Getter
@@ -100,11 +102,14 @@ public class Movie {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
+    // TODO: generate equals and hashcode methods properly
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Movie )) return false;
-        return id != null && id.equals(((Movie) o).getId());
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Movie movie = (Movie) o;
+        return id != null && Objects.equals(id, movie.id);
     }
 
     @Override

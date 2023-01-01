@@ -1,14 +1,13 @@
-package com.aminnorouzi.ms.util.view;
+package com.aminnorouzi.ms.tool.view;
 
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.util.view.ViewCacher.CacheKey;
+import com.aminnorouzi.ms.tool.view.ViewCacher.CacheKey;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Data
@@ -49,8 +48,10 @@ public class ViewSwitcher {
         CacheKey key = setup(view, input);
 
         if (viewCacher.contains(key)) {
+            System.out.println("loading from cache");
             root = viewCacher.get(key);
         } else {
+            System.out.println("loading from loader");
             root = viewLoader.load(view);
         }
 
@@ -62,13 +63,9 @@ public class ViewSwitcher {
        switchTo(view, null);
     }
 
-    public Stage stage() {
-        return this.stage;
-    }
-
     private CacheKey setup(View view, Object input) {
         context.setValue(input);
-        User user = context.user();
+        User user = context.getUser();
 
         return new CacheKey(view, user, input);
     }

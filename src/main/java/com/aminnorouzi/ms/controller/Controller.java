@@ -4,7 +4,7 @@ import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.util.view.ViewSwitcher;
+import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import lombok.Data;

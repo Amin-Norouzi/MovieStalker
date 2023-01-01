@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.util.view;
+package com.aminnorouzi.ms.tool.view;
 
 import com.aminnorouzi.ms.controller.*;
 import lombok.Getter;

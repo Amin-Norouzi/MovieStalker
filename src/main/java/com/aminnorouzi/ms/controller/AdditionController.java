@@ -6,7 +6,7 @@ import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.util.view.ViewSwitcher;
+import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;

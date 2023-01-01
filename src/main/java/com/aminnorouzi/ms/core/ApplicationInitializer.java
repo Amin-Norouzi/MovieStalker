@@ -1,8 +1,8 @@
 package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
-import com.aminnorouzi.ms.util.view.View;
-import com.aminnorouzi.ms.util.view.ViewSwitcher;
+import com.aminnorouzi.ms.tool.view.View;
+import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.stage.Stage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

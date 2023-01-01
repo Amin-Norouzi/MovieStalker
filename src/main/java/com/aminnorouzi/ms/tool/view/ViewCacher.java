@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.util.view;
+package com.aminnorouzi.ms.tool.view;
 
 import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
