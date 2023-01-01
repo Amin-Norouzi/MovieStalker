@@ -1,13 +1,15 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
+import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
+import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewManager;
-import javafx.application.Platform;
+import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -15,24 +17,22 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import static com.dlsc.gemsfx.DialogPane.Type.INFORMATION;
+import java.util.*;
 
 @Component
 @FxmlView("/view/addition-view.fxml")
 public class AdditionController extends Controller {
 
+    private final LibraryController libraryController;
+
     @FXML
     private TextField titleField;
 
-    public AdditionController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
+    public AdditionController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
                               NotificationService notificationService, MovieService movieService, UserService userService,
-                              LibraryService libraryService) {
+                              LibraryService libraryService, LibraryController libraryController) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+        this.libraryController = libraryController;
     }
 
     @Override
@@ -55,31 +55,48 @@ public class AdditionController extends Controller {
 
             Set<Query> queries = fileService.convert(files);
 
-            queries.forEach(query -> {
-                // TODO: handle threads properly
-                new Thread(() -> {
-                    try {
-                        libraryService.add(getUser(), query);
-                    } catch (RuntimeException ignored) {
-                    }
-
-                    Platform.runLater(() -> notificationService.show(INFORMATION, "movies added!"));
-                }).start();
-            });
+            queries.forEach(query -> new Thread(() -> addMovieToLibrary(query)).start());
         }
     }
 
     @FXML
     private void onSearch(ActionEvent event) {
-        Query query = new Query(titleField.getText(), "");
+        Query query = Query.of(titleField.getText());
+        addMovieToLibrary(query);
+    }
 
+    private void addMovieToLibrary(Query query) {
         try {
-            Movie movie = libraryService.add(getUser(), query);
-            System.out.println("Added to library: " + movie.getTitle());
+            Map<String, Search> rows = new HashMap<>();
 
+            ListView<String> listView = new ListView<>();
+            listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+            List<Search> searches = libraryService.search(query);
+            searches.forEach(search -> {
+                String row = search.getTitle() + " - " + search.getReleased().getYear();
+                listView.getItems().add(row);
+                rows.put(row + searches.indexOf(search), search);
+            });
+
+            notificationService.showList(listView, "Select a Movie", () -> {
+                String selected = listView.getSelectionModel().getSelectedItem();
+                String row = selected + listView.getItems().indexOf(selected);
+
+                Search search = rows.get(row);
+
+                Movie movie = libraryService.find(search);
+                try {
+                    Movie added = libraryService.add(getUser(), movie);
+                    libraryController.addToScene(added, true);
+
+                    notificationService.show("info", ("Movie added: " + added.getTitle().toLowerCase()));
+                } catch (RuntimeException exception) {
+                    notificationService.showError(exception.getMessage());
+                }
+            });
         } catch (RuntimeException exception) {
-            System.out.println(exception.getMessage());
-            // TODO: handle exception with notifications
+            notificationService.showError(exception.getMessage());
         }
     }
 }
