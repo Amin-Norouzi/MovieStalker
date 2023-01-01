@@ -1,14 +1,16 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
-import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
+import com.aminnorouzi.ms.model.movie.MovieInput;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewManager;
+import com.aminnorouzi.ms.util.view.View;
+import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -24,33 +27,68 @@ import org.springframework.stereotype.Component;
 public class MovieController extends Controller {
 
     @FXML
+    private Rectangle poster;
+    @FXML
     private ImageView backdrop;
     @FXML
-    private Rectangle poster;
+    private Label seasons;
+    @FXML
+    private Label episodes;
     @FXML
     private Label overview;
     @FXML
+    private Label rating;
+    @FXML
     private Label release;
+    @FXML
+    private Label runtime;
     @FXML
     private Label title;
     @FXML
     private Button watch;
-    @FXML
-    private Button unwatch;
 
+    private final LibraryController libraryController;
+
+    private MovieInput input;
     private Movie movie;
 
-    public MovieController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
+    @Value("${movie.client.api.imdb-base-url}")
+    private String imdbBaseUrl;
+
+    public MovieController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
                            NotificationService notificationService, MovieService movieService, UserService userService,
-                           LibraryService libraryService) {
+                           LibraryService libraryService, LibraryController libraryController) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
+        this.libraryController = libraryController;
     }
 
     @Override
     protected void configure() {
-        movie = (Movie) getInput();
+        input = (MovieInput) getInput();
+        movie = input.getMovie();
 
-        Image backdropImage = new Image("https://image.tmdb.org/t/p/w400" + movie.getBackdrop(),
+        initMovie(movie);
+    }
+
+    private void initMovie(Movie movie) {
+        initImages(movie);
+
+        title.setText(movie.getTitle());
+        release.setText(String.valueOf(movie.getReleased()));
+        overview.setText(movie.getOverview());
+        rating.setText(String.valueOf(movie.getRating()));
+        episodes.setText(String.valueOf(movie.getEpisodes()));
+        seasons.setText(String.valueOf(movie.getSeasons()));
+
+        initRuntime(movie);
+
+        if (movie.getWatchedAt() != null) {
+            changeState(true);
+        }
+    }
+
+    private void initImages(Movie movie) {
+        Image backdropImage = new Image(movie.getBackdrop(),
                 800, 600, false, false, true);
         backdropImage.progressProperty().addListener((observable, oldValue, progress) -> {
             if ((Double) progress == 1.0 && !backdropImage.isError()) {
@@ -58,7 +96,7 @@ public class MovieController extends Controller {
             }
         });
 
-        Image posterImage = new Image("https://image.tmdb.org/t/p/w400" + movie.getPoster(),
+        Image posterImage = new Image(movie.getPoster(),
                 200, 300, false, false, true);
 
         posterImage.progressProperty().addListener((observable, oldValue, progress) -> {
@@ -68,13 +106,31 @@ public class MovieController extends Controller {
                 poster.setFill(pattern);
             }
         });
+    }
 
-        title.setText(movie.getTitle());
-        release.setText(movie.getReleased());
-        overview.setText(movie.getOverview());
+    private void initRuntime(Movie movie) {
+        int hours = movie.getRuntime() / 60;
+        int minutes = movie.getRuntime() % 60;
 
-        if (movie.getWatchedAt() != null) {
-            changeState(true);
+        StringBuilder builder = new StringBuilder();
+        if (hours != 0) {
+            builder.append(hours).append("h ");
+        }
+        builder.append(minutes).append("m");
+
+        runtime.setText(builder.toString());
+    }
+
+    @FXML
+    private void onImdb(MouseEvent event) {
+        try {
+            String url = imdbBaseUrl + movie.getImdbId();
+            String command = "open " + url;
+
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(command);
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
     }
 
@@ -93,32 +149,29 @@ public class MovieController extends Controller {
     private void changeState(boolean watched) {
         if (watched) {
             watch.setDisable(true);
-            watch.setText("Watched 👀");
-
-            unwatch.setVisible(true);
+            watch.setText("Watched");
         } else {
             watch.setDisable(false);
             watch.setText("Watch Now");
-
-            unwatch.setVisible(false);
         }
     }
 
     @FXML
     private void onDelete(ActionEvent event) {
-        try {
-            libraryService.delete(movie);
-            switchTo(View.LIBRARY);
-        } catch (RuntimeException exception) {}
+        notificationService.showConfirmation("Are you sure you want to delete this?", () -> {
+            try {
+                libraryService.delete(movie);
+                libraryController.getContents().remove(input.getRectangle());
+
+                getSwitcher().switchTo(View.LIBRARY);
+            } catch (RuntimeException exception) {
+                notificationService.showError(exception.getMessage());
+            }
+        });
     }
 
     @FXML
     private void onBack(MouseEvent event) {
-        switchTo(View.LIBRARY);
-//        DialogPane.Dialog<Object> dialog = new DialogPane.Dialog(dialogPane, DialogPane.Type.WARNING);
-//        dialog.setTitle("Maximized");
-//        dialog.setContent(new Label("Dialog using all available width and height."));
-//        dialog.setMaximize(true);
-//        dialogPane.showDialog(dialog);
+        getSwitcher().switchTo(View.LIBRARY);
     }
 }

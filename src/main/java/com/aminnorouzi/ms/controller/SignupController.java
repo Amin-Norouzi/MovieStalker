@@ -1,11 +1,11 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
-import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.core.ApplicationContext;
+import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.model.user.Request;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewManager;
+import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -25,7 +25,7 @@ public class SignupController extends Controller {
     @FXML
     private PasswordField passwordField;
 
-    public SignupController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
+    public SignupController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
                             NotificationService notificationService, MovieService movieService, UserService userService,
                             LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -47,16 +47,16 @@ public class SignupController extends Controller {
         try {
             User created = userService.signup(request);
             if (created != null) {
-                switchTo(View.HOME);
-                return;
+                getContext().initialize(created.getId());
+                getSwitcher().switchTo(View.HOME);
             }
-        } catch (RuntimeException ignored) {}
-
-        System.out.println("Username already exists!");
+        } catch (RuntimeException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     @FXML
     private void onSignin(MouseEvent event) {
-        switchTo(View.SIGNIN);
+        getSwitcher().switchTo(View.SIGNIN);
     }
 }

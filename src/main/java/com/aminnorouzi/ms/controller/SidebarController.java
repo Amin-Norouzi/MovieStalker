@@ -1,9 +1,10 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.configuration.ApplicationConfiguration;
-import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.core.ApplicationContext;
+import com.aminnorouzi.ms.model.user.Stats;
+import com.aminnorouzi.ms.util.view.View;
 import com.aminnorouzi.ms.service.*;
-import com.aminnorouzi.ms.util.ViewManager;
+import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
-    public SidebarController(ApplicationConfiguration configuration, ViewManager switcher, FileService fileService,
+    public SidebarController(ApplicationContext configuration, ViewSwitcher switcher, FileService fileService,
                              NotificationService notificationService, MovieService movieService, UserService userService,
                              LibraryService libraryService) {
         super(configuration, switcher, notificationService, movieService, fileService, userService, libraryService);
@@ -26,16 +27,18 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onHome(ActionEvent event) {
-        switchTo(View.HOME);
+        Stats stats = userService.getStats(getUser());
+
+        getSwitcher().switchTo(View.HOME, stats);
     }
 
     @FXML
     private void onLibrary(ActionEvent event) {
-        switchTo(View.LIBRARY);
+        getSwitcher().switchTo(View.LIBRARY);
     }
 
     @FXML
     private void onLogout(ActionEvent event) {
-        switchTo(View.SIGNIN);
+        getSwitcher().switchTo(View.SIGNIN);
     }
 }
