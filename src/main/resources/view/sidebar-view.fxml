@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SidebarController">
+<StackPane fx:id="root" prefHeight="700.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SidebarController">
    <children>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: white;">
+      <VBox alignment="CENTER" spacing="10.0">
           <children>
               <Label text="Movie Stalker">
                <VBox.margin>
@@ -24,7 +23,7 @@
               <Button focusTraversable="false" mnemonicParsing="false" onAction="#onHome" prefHeight="30.0" prefWidth="160.0" text="Home" />
               <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLibrary" prefHeight="30.0" prefWidth="160.0" text="Library" />
               <Button focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="160.0" text="Watch" />
-              <Region prefHeight="376.0" prefWidth="180.0" />
+              <Region prefHeight="483.0" />
               <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLogout" prefHeight="30.0" prefWidth="160.0" text="Log out" />
           </children>
           <padding>
