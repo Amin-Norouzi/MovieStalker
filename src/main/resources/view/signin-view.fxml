@@ -34,7 +34,7 @@
                               <Font name="Arial" size="13.0" />
                           </font>
                       </PasswordField>
-                      <Button mnemonicParsing="false" onAction="#onSignin" prefWidth="220.0" text="Sign in">
+                      <Button fx:id="signinButton" mnemonicParsing="false" onAction="#onSignin" prefWidth="220.0" text="Sign in">
                           <VBox.margin>
                               <Insets top="10.0" />
                           </VBox.margin>

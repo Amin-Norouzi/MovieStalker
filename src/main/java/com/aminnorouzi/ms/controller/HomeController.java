@@ -57,7 +57,7 @@ public class HomeController extends Controller {
 
     @Override
     protected void configure() {
-        Stats stats = (Stats) getInput();
+        Stats stats = userService.getStats(getUser());
 
         Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
         image.progressProperty().addListener((observable, oldValue, progress) -> {
