@@ -1,8 +1,8 @@
 package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
-import com.aminnorouzi.ms.model.View;
-import com.aminnorouzi.ms.util.ViewManager;
+import com.aminnorouzi.ms.util.view.View;
+import com.aminnorouzi.ms.util.view.ViewSwitcher;
 import javafx.stage.Stage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ApplicationInitializer implements ApplicationListener<StageReadyEvent> {
 
-    private final ApplicationContext configuration;
-    private final ViewManager switcher;
+    private final ViewSwitcher switcher;
 
     @Override
     public void onApplicationEvent(@NotNull StageReadyEvent event) {
@@ -24,6 +23,6 @@ public class ApplicationInitializer implements ApplicationListener<StageReadyEve
         Stage stage = event.getDefault(event);
 
         switcher.initialize(stage);
-        switcher.switchTo(view);
+        switcher.switchTo(view, null);
     }
 }

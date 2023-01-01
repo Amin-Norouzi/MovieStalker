@@ -8,7 +8,6 @@ import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -51,7 +50,7 @@ public class MovieService {
     public Movie find(Search search) {
         String type = types.get(search.getMediaType());
 
-        Movie found = movieClient.getMovie(search.getTmdbId(), type);
+        Movie found = movieClient.get(search.getTmdbId(), type);
         found.setType(Type.of(type));
 
         log.info("Found a new movie: {}", found);

@@ -1,6 +1,6 @@
-package com.aminnorouzi.ms.util;
+package com.aminnorouzi.ms.util.view;
 
-import com.aminnorouzi.ms.model.View;
+import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class CacheManager {
+public class ViewCacher {
 
     private static final Map<CacheKey, Parent> caches = new HashMap<>();
 
@@ -37,6 +37,7 @@ public class CacheManager {
     public static class CacheKey {
 
         private View view;
+        private User user;
         private Object input;
     }
 }
