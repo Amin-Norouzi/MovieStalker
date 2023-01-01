@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MovieClient {
 
     @GetMapping("${movie.client.api.get-search}")
-    SearchResponse getSearch(@PathVariable String query);
+    SearchResponse search(@PathVariable("query") String query);
 
     @GetMapping("${movie.client.api.get-movie}")
-    Movie getMovie(@PathVariable Long tmdbId, @PathVariable String type);
+    Movie get(@PathVariable("tmdbId") Long tmdbId, @PathVariable("type") String type);
 }

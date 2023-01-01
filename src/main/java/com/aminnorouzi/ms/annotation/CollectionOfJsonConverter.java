@@ -8,20 +8,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CollectionOfJsonConverter extends JsonDeserializer<Set<String>> {
+public class CollectionOfJsonConverter extends JsonDeserializer<List<String>> {
 
     @Value("${movie.client.api.genre-field.name}")
     private String field;
 
     @Override
-    public Set<String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+    public List<String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         final ObjectCodec objectCodec = jsonParser.getCodec();
         final JsonNode node = objectCodec.readTree(jsonParser);
 
-        Set<String> genres = new HashSet<>();
+        List<String> genres = new ArrayList<>();
         node.forEach(n -> genres.add(n.findValue(field).asText()));
 
         return genres;
