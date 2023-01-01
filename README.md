@@ -1,7 +1,4 @@
-# MovieStalker
-A movie management app built with Spring Boot and JavaFX.
-
-### readme file will be updated soon. (working on project)
+# MovieStalker (working on project)
 
 It will available for: (with native installers)
 - windows
