@@ -1,6 +1,6 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.model.user.User;
+import javafx.scene.shape.Rectangle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Request {
+public class MovieInput {
 
-    private User user;
+    private Rectangle rectangle;
     private Movie movie;
+
+    public static MovieInput of(Rectangle rectangle, Movie movie) {
+        return new MovieInput(rectangle, movie);
+    }
 }

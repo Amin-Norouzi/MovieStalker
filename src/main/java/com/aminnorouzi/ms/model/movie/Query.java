@@ -14,7 +14,7 @@ public class Query {
     private String title;
     private String released;
 
-    public String getFullQuery() {
-        return title + " " + released;
+    public static Query of(String title) {
+        return new Query(title, "");
     }
 }

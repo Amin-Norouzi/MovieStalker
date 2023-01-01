@@ -3,14 +3,13 @@ package com.aminnorouzi.ms.model.user;
 import com.aminnorouzi.ms.model.movie.Movie;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateRequest {
+public class Update {
 
     private Long id;
     private String password;

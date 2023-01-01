@@ -1,4 +1,4 @@
-package com.aminnorouzi.ms.model;
+package com.aminnorouzi.ms.util.view;
 
 import com.aminnorouzi.ms.controller.*;
 import lombok.Getter;

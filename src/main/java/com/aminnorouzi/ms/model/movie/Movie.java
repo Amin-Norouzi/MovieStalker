@@ -8,9 +8,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.*;
 
 @Setter
 @Getter
@@ -20,7 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "movie")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EntityListeners(AuditingEntityListener.class)
 public class Movie {
@@ -29,12 +32,18 @@ public class Movie {
     @JsonIgnore
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_seq")
+//    @SequenceGenerator(name = "movie_seq", sequenceName = "movie_seq", allocationSize = 1)
     private Long id;
 
+    @NotNull
     @JsonProperty("id")
+    @Column(unique = true)
     private Long tmdbId;
 
+    @NotNull
     @IdFromJson
+    @Column(unique = true)
     @JsonProperty("external_ids")
     private String imdbId;
 
@@ -45,9 +54,6 @@ public class Movie {
     @JsonProperty("overview")
     private String overview;
 
-    @JsonAlias({"release_date", "first_air_date"})
-    private String released;
-
     @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
@@ -55,6 +61,9 @@ public class Movie {
     @FullPathUrl
     @JsonProperty("backdrop_path")
     private String backdrop;
+
+    @JsonAlias({"release_date", "first_air_date"})
+    private LocalDate released;
 
     @JsonIgnore
     @Column(nullable = false)
@@ -70,24 +79,36 @@ public class Movie {
     private Integer runtime;
 
     @JsonProperty(value = "number_of_episodes")
-    private Integer episodes;
+    private Integer episodes = 1;
 
-    @JsonProperty("number_of_seasons")
-    private Integer seasons;
+    @JsonProperty(value = "number_of_seasons")
+    private Integer seasons = 0;
 
     @CollectionOfJson
     @JsonProperty("genres")
-    @Column(name = "genre_id")
+    @Column(name = "genre")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
-    private Set<String> genres;
+    private List<String> genres;
 
     private LocalDateTime watchedAt;
 
     @CreatedDate
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
-    @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Movie )) return false;
+        return id != null && id.equals(((Movie) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

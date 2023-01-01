@@ -2,16 +2,10 @@ package com.aminnorouzi.ms.model.movie;
 
 public enum Type {
 
-    MOVIE("Movie"),
-    SERIES("Series");
+    MOVIE,
+    TV;
 
-    private final String name;
-
-    Type(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public static Type of(String value) {
+        return Type.valueOf(value.toUpperCase());
     }
 }

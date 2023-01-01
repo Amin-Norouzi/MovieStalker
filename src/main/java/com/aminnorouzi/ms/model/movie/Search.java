@@ -1,5 +1,6 @@
 package com.aminnorouzi.ms.model.movie;
 
+import com.aminnorouzi.ms.annotation.FullPathUrl;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -25,6 +28,16 @@ public class Search {
     @JsonAlias({"name", "title"})
     private String title;
 
+    @Column(length = 2055)
+    @JsonProperty("overview")
+    private String overview;
+
+    @FullPathUrl
+    @JsonProperty("poster_path")
+    private String poster;
+
+    @JsonAlias({"release_date", "first_air_date"})
+    private LocalDate released;
 
     @Data
     @NoArgsConstructor

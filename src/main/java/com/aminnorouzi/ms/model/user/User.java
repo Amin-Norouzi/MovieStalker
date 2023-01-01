@@ -6,9 +6,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -24,6 +24,8 @@ public class User {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+//    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     @Column(unique = true)
@@ -33,9 +35,22 @@ public class User {
     private String fullName;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Movie> movies;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Movie> movies;
 
     @CreatedDate
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
+    public void addMovie(Movie movie) {
+        if (movies == null) {
+            movies = new ArrayList<>();
+        }
+        movies.add(movie);
+        movie.setUser(this);
+    }
+
+    public void removeMovie(Movie movie) {
+        movies.remove(movie);
+        movie.setUser(null);
+    }
 }
