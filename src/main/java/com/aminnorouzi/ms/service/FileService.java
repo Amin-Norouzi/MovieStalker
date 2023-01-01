@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -39,28 +36,40 @@ public class FileService {
         for (File file : files) {
             String name = file.getName();
 
-            for (String format : formats) {
-                name = name.replace(format, "");
+            name = replace(formats, name);
+            name = replace(tags, name);
+            name = replace(name);
+
+            if (supports(name)) {
+                result.add(name);
             }
-
-            for (String tag : tags) {
-                if (name.contains(tag)) {
-                    name = name.replace(tag, "");
-                }
-            }
-
-            name = Arrays.stream(name.replaceAll("\\.", " ").trim()
-                            .replace("_", " ").trim()
-                            .replace("-", " ").trim()
-                            .replaceAll(" +", " ")
-                            .split("\\w\\d{2}\\w\\d{2}"))
-                    .findFirst().get()
-                    .replaceAll("(?<=\\d{4}).+", "");
-
-            result.add(name);
         }
 
         return result;
+    }
+
+    private boolean supports(String value) {
+        return value != null && value.isBlank();
+    }
+
+    private String replace(Collection<String> characters, String value) {
+        for (String character : characters) {
+            if (value.contains(character)) {
+                value = value.replace(character, "");
+            }
+        }
+
+        return value;
+    }
+
+    private String replace(String value) {
+        return Arrays.stream(value.replaceAll("\\.", " ").trim()
+                        .replace("_", " ").trim()
+                        .replace("-", " ").trim()
+                        .replaceAll(" +", " ")
+                        .split("\\w\\d{2}\\w\\d{2}"))
+                .findFirst().orElse("")
+                .replaceAll("(?<=\\d{4}).+", "");
     }
 
     private Query build(String fileName) {
@@ -90,5 +99,4 @@ public class FileService {
         }
         return false;
     }
-
 }

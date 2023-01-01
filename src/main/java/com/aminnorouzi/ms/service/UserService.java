@@ -3,12 +3,17 @@ package com.aminnorouzi.ms.service;
 import com.aminnorouzi.ms.exception.IllegalSigninException;
 import com.aminnorouzi.ms.exception.IllegalSignupException;
 import com.aminnorouzi.ms.exception.UserNotFoundException;
+import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.Request;
+import com.aminnorouzi.ms.model.user.Stats;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -17,6 +22,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public User update(User request) {
         User user = getById(request.getId());
 
@@ -39,6 +45,12 @@ public class UserService {
         return updated;
     }
 
+    public Stats getStats(User user) {
+        List<Movie> movies = user.getMovies();
+
+        return Stats.of(movies);
+    }
+
     public User signup(Request request) {
         verify(request);
 
@@ -55,8 +67,8 @@ public class UserService {
     }
 
     private void verify(Request request) {
-        User existing = getByUsername(request.getUsername());
-        if (existing != null) {
+        boolean existing = userRepository.existsByUsername(request.getUsername());
+        if (existing) {
             throw new IllegalSignupException(String.format("Username: %s already exists!", request.getUsername()));
         }
     }
@@ -77,9 +89,12 @@ public class UserService {
         }
     }
 
+    @Transactional
     public User getById(Long id) {
         User found = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", id)));
+
+        found.getMovies();
 
         log.info("Found a user: {}", found);
         return found;
