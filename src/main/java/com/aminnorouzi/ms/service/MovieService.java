@@ -57,6 +57,21 @@ public class MovieService {
         return found;
     }
 
+    public MovieRecord records(User user) {
+        Long userId = user.getId();
+
+        MovieRecord record = MovieRecord.builder()
+                .total(movieRepository.countTotalMoviesByUser(userId))
+                .watched(movieRepository.countWatchedMoviesByUser(userId))
+                .genre(movieRepository.findMostWatchedGenreByUser(userId))
+                .latest(movieRepository.findLatestAddedMovieByUser(userId))
+                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, 10))
+                .build();
+
+        log.info("Recorded a new movie record: {}", record);
+        return record;
+    }
+
     public void watch(Movie movie) {
         movie.setWatchedAt(LocalDateTime.now());
     }

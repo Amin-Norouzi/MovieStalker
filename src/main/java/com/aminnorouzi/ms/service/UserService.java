@@ -3,17 +3,13 @@ package com.aminnorouzi.ms.service;
 import com.aminnorouzi.ms.exception.IllegalSigninException;
 import com.aminnorouzi.ms.exception.IllegalSignupException;
 import com.aminnorouzi.ms.exception.UserNotFoundException;
-import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.UserRequest;
-import com.aminnorouzi.ms.model.user.Stats;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -43,13 +39,6 @@ public class UserService {
 
         log.info("Updated an user: {}", updated);
         return updated;
-    }
-
-    // TODO
-    public Stats getStats(User user) {
-        List<Movie> movies = user.getMovies();
-
-        return Stats.of(movies);
     }
 
     public User signup(UserRequest request) {

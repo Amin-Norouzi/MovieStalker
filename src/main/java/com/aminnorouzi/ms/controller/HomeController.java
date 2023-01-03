@@ -2,7 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.user.Stats;
+import com.aminnorouzi.ms.model.movie.MovieRecord;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
@@ -57,7 +57,7 @@ public class HomeController extends Controller {
 
     @Override
     protected void configure() {
-        Stats stats = (Stats) getInput();
+        MovieRecord record = libraryService.records(getUser());
 
         Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
         image.progressProperty().addListener((observable, oldValue, progress) -> {
@@ -68,14 +68,14 @@ public class HomeController extends Controller {
         });
 
         initWatchedChart(getUser().getMovies());
-        initRecentWatched(stats.getWatchedList());
+        initRecentWatched(record.getPlaylist());
 
         fullName.setText(getUser().getFullName());
 
-        totalCount.setText(String.valueOf(stats.getTotal()));
-        watchedCount.setText(String.valueOf(stats.getWatched()));
-        latestMovie.setText(stats.getLatest().getTitle());
-        favouriteGenre.setText(stats.getGenre());
+        totalCount.setText(String.valueOf(record.getTotal()));
+        watchedCount.setText(String.valueOf(record.getWatched()));
+        latestMovie.setText(record.getLatest().getTitle());
+        favouriteGenre.setText(record.getGenre());
     }
 
     private void initRecentWatched(List<Movie> movies) {

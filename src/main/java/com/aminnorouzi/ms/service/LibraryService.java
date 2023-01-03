@@ -1,9 +1,6 @@
 package com.aminnorouzi.ms.service;
 
-import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.movie.MovieRequest;
-import com.aminnorouzi.ms.model.movie.Query;
-import com.aminnorouzi.ms.model.movie.Search;
+import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import lombok.AllArgsConstructor;
@@ -59,6 +56,10 @@ public class LibraryService {
 
     public List<Search> search(Query query) {
         return movieService.search(query);
+    }
+
+    public MovieRecord records(User user) {
+        return movieService.records(user);
     }
 
     public void watch(Movie movie) {

@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name = "users") // Why users? Because "user" is a reserved word in MySQL
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)

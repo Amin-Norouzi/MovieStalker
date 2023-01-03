@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +29,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EntityListeners(AuditingEntityListener.class)
-public class Movie {
+public class Movie implements Serializable {
 
     @Id
     @JsonIgnore
@@ -90,7 +91,10 @@ public class Movie {
     @JsonProperty("genres")
     @Column(name = "genre")
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
+    @CollectionTable(name = "movie_genres", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            @JoinColumn(name = "movie_id", referencedColumnName = "id")
+    })
     private List<String> genres;
 
     private LocalDateTime watchedAt;

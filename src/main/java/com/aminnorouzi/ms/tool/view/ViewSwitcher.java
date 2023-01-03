@@ -17,6 +17,10 @@ import org.springframework.stereotype.Component;
 @Setter(AccessLevel.PROTECTED)
 public class ViewSwitcher {
 
+    /*
+        TODO: cache properly and optimize code base.
+     */
+
     private final ApplicationContext context;
 
     private final ViewLoader viewLoader;
