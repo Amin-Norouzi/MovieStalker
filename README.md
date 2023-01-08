@@ -1,4 +1,4 @@
-# MovieStalker (working on project)
+# MovieStalker (readme will be updated)
 
 It will available for: (with native installers)
 - windows
