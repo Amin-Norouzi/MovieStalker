@@ -29,7 +29,7 @@ public class MovieService {
             entry("tv", "tv"));
 
     public Movie add(MovieRequest request) {
-        Movie movie = request.getMovie();
+        Movie movie = find(request.getSearch());
         verify(movie.getTmdbId());
 
         User user = request.getUser();
@@ -38,7 +38,7 @@ public class MovieService {
         Movie added = movieRepository.save(movie);
 
         log.info("Added a new movie: {}", added);
-        return movie;
+        return added;
     }
 
     private void verify(Long tmdbId) {
@@ -47,7 +47,7 @@ public class MovieService {
         });
     }
 
-    public Movie find(Search search) {
+    private Movie find(Search search) {
         String type = types.get(search.getMediaType());
 
         Movie found = movieClient.get(search.getTmdbId(), type);
@@ -57,27 +57,38 @@ public class MovieService {
         return found;
     }
 
-    public MovieRecord records(User user) {
+    public MovieRecord report(User user) {
         Long userId = user.getId();
+        int limit = 10;
 
-        MovieRecord record = MovieRecord.builder()
+        MovieRecord data = MovieRecord.builder()
                 .total(movieRepository.countTotalMoviesByUser(userId))
                 .watched(movieRepository.countWatchedMoviesByUser(userId))
                 .genre(movieRepository.findMostWatchedGenreByUser(userId))
                 .latest(movieRepository.findLatestAddedMovieByUser(userId))
-                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, 10))
+                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, limit))
                 .build();
 
-        log.info("Recorded a new movie record: {}", record);
-        return record;
+        Boolean isAvailable = data.getPlaylist().size() == limit;
+        data.setIsAvailable(isAvailable);
+
+        log.info("Reported a movie record: {}", data);
+        return data;
     }
 
-    public void watch(Movie movie) {
-        movie.setWatchedAt(LocalDateTime.now());
+    public Movie watch(Movie request) {
+        request.setWatchedAt(LocalDateTime.now());
+
+        Movie updated = movieRepository.save(request);
+
+        log.info("Watched a movie: {}", updated);
+        return updated;
     }
 
     public void unwatch(Movie movie) {
         movie.setWatchedAt(null);
+
+        log.info("Unwatched a movie: {}", movie);
     }
 
     public void delete(Movie movie) {
@@ -92,9 +103,9 @@ public class MovieService {
     public List<Search> search(Query query) {
         List<Search> result = movieClient.search(query.getTitle())
                 .getResults().stream()
-                .filter(s -> s.getPoster() != null)
-                .filter(s -> s.getOverview() != null)
-                .filter(s -> s.getReleased() != null)
+                .filter(s -> s.getPoster() != null &&
+                        s.getOverview() != null &&
+                        s.getReleased() != null)
                 .toList();
 
         if (result.isEmpty()) {

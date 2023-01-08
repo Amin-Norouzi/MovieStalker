@@ -16,14 +16,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.HomeController">
+<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.impl.HomeController">
    <children>
       <BorderPane>
           <left>
               <fx:include source="sidebar-view.fxml" />
           </left>
          <center>
-            <ScrollPane hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="pane" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                <content>
                   <VBox spacing="20.0" style="-fx-background-color: white;">
                      <children>

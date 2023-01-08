@@ -1,8 +1,10 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
@@ -12,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -24,7 +27,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 @Component
 @FxmlView("/view/home-view.fxml")
@@ -46,18 +48,24 @@ public class HomeController extends Controller {
     private Label totalCount;
     @FXML
     private Label watchedCount;
+    @FXML
+    private ScrollPane pane;
 
     private final ViewLoader viewLoader;
 
-    public HomeController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
-                              LibraryService libraryService, ViewLoader viewLoader) {
-        super(configuration, switcher, notificationService, libraryService);
+    public HomeController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                          LibraryService library, ActivityService activity, ViewLoader viewLoader) {
+        super(context, switcher, notification, library, activity);
         this.viewLoader = viewLoader;
     }
 
+
     @Override
     protected void configure() {
-        MovieRecord record = libraryService.records(getUser());
+        MovieRecord data = library.report(getUser());
+        if (!data.getIsAvailable()) {
+            return;
+        }
 
         Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
         image.progressProperty().addListener((observable, oldValue, progress) -> {
@@ -68,14 +76,14 @@ public class HomeController extends Controller {
         });
 
         initWatchedChart(getUser().getMovies());
-        initRecentWatched(record.getPlaylist());
+        initRecentWatched(data.getPlaylist());
 
         fullName.setText(getUser().getFullName());
 
-        totalCount.setText(String.valueOf(record.getTotal()));
-        watchedCount.setText(String.valueOf(record.getWatched()));
-        latestMovie.setText(record.getLatest().getTitle());
-        favouriteGenre.setText(record.getGenre());
+        totalCount.setText(String.valueOf(data.getTotal()));
+        watchedCount.setText(String.valueOf(data.getWatched()));
+        latestMovie.setText(data.getLatest().getTitle());
+        favouriteGenre.setText(data.getGenre());
     }
 
     private void initRecentWatched(List<Movie> movies) {
@@ -139,6 +147,6 @@ public class HomeController extends Controller {
 
     @FXML
     private void onSeeAll(MouseEvent event) {
-        getSwitcher().switchTo(View.LIBRARY);
+        switchTo(View.LIBRARY);
     }
 }

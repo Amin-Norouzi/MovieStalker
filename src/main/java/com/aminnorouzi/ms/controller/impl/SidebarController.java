@@ -1,5 +1,6 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class SidebarController extends Controller {
 
     public SidebarController(ApplicationContext configuration, ViewSwitcher switcher,
-                           NotificationService notificationService, LibraryService libraryService) {
+                             NotificationService notificationService, LibraryService libraryService) {
         super(configuration, switcher, notificationService, libraryService);
     }
 
@@ -26,16 +27,16 @@ public class SidebarController extends Controller {
 
     @FXML
     private void onHome(ActionEvent event) {
-        getSwitcher().switchTo(View.HOME);
+        switchTo(View.HOME);
     }
 
     @FXML
     private void onLibrary(ActionEvent event) {
-        getSwitcher().switchTo(View.LIBRARY);
+        switchTo(View.LIBRARY);
     }
 
     @FXML
     private void onLogout(ActionEvent event) {
-        getSwitcher().switchTo(View.SIGNIN);
+        switchTo(View.SIGNIN);
     }
 }

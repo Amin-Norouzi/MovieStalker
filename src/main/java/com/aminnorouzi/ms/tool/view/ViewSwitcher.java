@@ -28,16 +28,14 @@ public class ViewSwitcher {
 
     private View current;
 
-    private Scene scene;
-
     @Getter(AccessLevel.PRIVATE)
     private Stage stage;
 
     public void initialize(Stage stage) {
         if (stage != null) {
-            this.stage = stage;
+            stage.setScene(new Scene(new Pane()));
 
-            this.scene = new Scene(new Pane());
+            this.stage = stage;
             this.current = View.EMPTY;
         }
     }
@@ -52,19 +50,15 @@ public class ViewSwitcher {
         CacheKey key = setup(view, input);
 
         if (viewCacher.contains(key)) {
-            System.out.println("loading from cache");
+            System.out.println(view + ": loading from cache");
             root = viewCacher.get(key);
         } else {
-            System.out.println("loading from loader");
+            System.out.println(view + ": loading from loader");
             root = viewLoader.load(view);
         }
 
         cacheup(key, root);
         showup(view, root);
-    }
-
-    public void switchTo(View view) {
-       switchTo(view, null);
     }
 
     private CacheKey setup(View view, Object input) {
@@ -81,10 +75,9 @@ public class ViewSwitcher {
     }
 
     private void showup(View view, Parent root) {
-        scene.setRoot(root);
+        stage.getScene().setRoot(root);
 
         stage.setTitle(view.getTitle());
-        stage.setScene(scene);
         stage.show();
     }
 

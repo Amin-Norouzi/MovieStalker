@@ -4,6 +4,7 @@ import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ public class ViewCacher {
     }
 
     @Data
+    @EqualsAndHashCode
     @AllArgsConstructor
     public static class CacheKey {
 

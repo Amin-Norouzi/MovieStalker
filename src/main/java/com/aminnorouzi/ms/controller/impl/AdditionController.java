@@ -1,9 +1,11 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -27,15 +29,12 @@ import java.util.Set;
 @FxmlView("/view/addition-view.fxml")
 public class AdditionController extends Controller {
 
-    private final LibraryController libraryController;
-
     @FXML
     private TextField titleField;
 
-    public AdditionController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
-                              LibraryService libraryService, LibraryController libraryController) {
-        super(configuration, switcher, notificationService, libraryService);
-        this.libraryController = libraryController;
+    public AdditionController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                              LibraryService library, ActivityService activity) {
+        super(context, switcher, notification, library, activity);
     }
 
     @Override
@@ -51,9 +50,7 @@ public class AdditionController extends Controller {
         File directory = directoryChooser.showDialog(stage);
 
         if (directory != null) {
-            List<File> files = libraryService.read(directory);
-
-            Set<Query> queries = libraryService.convert(files);
+            Set<Query> queries = library.generate(directory);
             queries.forEach(query -> new Thread(() -> addMovieToLibrary(query)).start());
         }
     }
@@ -71,31 +68,29 @@ public class AdditionController extends Controller {
             ListView<String> listView = new ListView<>();
             listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-            List<Search> searches = libraryService.search(query);
+            List<Search> searches = library.search(query);
             searches.forEach(search -> {
                 String row = search.getTitle() + " - " + search.getReleased().getYear();
                 listView.getItems().add(row);
                 rows.put(row + searches.indexOf(search), search);
             });
 
-            notificationService.showList(listView, "Select a Movie", () -> {
+            notification.showList(listView, "Select a Movie", () -> {
                 String selected = listView.getSelectionModel().getSelectedItem();
                 String row = selected + listView.getItems().indexOf(selected);
 
                 Search search = rows.get(row);
-
-                Movie movie = libraryService.find(search);
                 try {
-                    Movie added = libraryService.add(getUser(), movie);
-                    libraryController.addToScene(added, true);
+                    Movie added = library.add(getUser(), search);
+                    setUser(added.getUser());
 
-                    notificationService.show("info", ("Movie added: " + added.getTitle().toLowerCase()));
+                    notification.show("info", ("Movie added: " + added.getTitle().toLowerCase()));
                 } catch (RuntimeException exception) {
-                    notificationService.showError(exception.getMessage());
+                    notification.showError(exception.getMessage());
                 }
             });
         } catch (RuntimeException exception) {
-            notificationService.showError(exception.getMessage());
+            notification.showError(exception.getMessage());
         }
     }
 }

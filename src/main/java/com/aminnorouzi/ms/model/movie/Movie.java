@@ -106,8 +106,6 @@ public class Movie implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    // TODO: generate equals and hashcode methods properly
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

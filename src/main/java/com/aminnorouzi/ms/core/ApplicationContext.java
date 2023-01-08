@@ -1,12 +1,16 @@
 package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.controller.SidebarController;
+import com.aminnorouzi.ms.controller.impl.SidebarController;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+
+/*
+    TODO: delete this class
+ */
 
 @Data
 @Configuration

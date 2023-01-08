@@ -22,23 +22,28 @@ public class FileService {
     @Value("#{'${movie.validation.formats}'.split(',')}")
     private Set<String> formats;
 
-    public List<File> read(File directory) {
+    public Set<Query> generate(File directory) {
+        List<File> files = read(directory);
+        return convert(files);
+    }
+
+    private List<File> read(File directory) {
         return Arrays.stream(Objects.requireNonNull(directory.listFiles()))
                 .filter(File::isFile)
                 .filter(this::verify)
                 .sorted().toList();
     }
 
-    public Set<Query> convert(List<File> files) {
+    private Set<Query> convert(List<File> files) {
         Set<Query> queries = new HashSet<>();
 
-        Set<String> names = generate(files);
+        Set<String> names = extract(files);
         names.forEach(name -> queries.add(build(name)));
 
         return queries;
     }
 
-    private Set<String> generate(List<File> files) {
+    private Set<String> extract(List<File> files) {
         Set<String> result = new HashSet<>();
         for (File file : files) {
             String name = file.getName();
@@ -98,7 +103,7 @@ public class FileService {
                 .build();
     }
 
-    public boolean verify(File file) {
+    private boolean verify(File file) {
         for (String format : formats) {
             if (file.getName().endsWith(format)) {
                 return true;

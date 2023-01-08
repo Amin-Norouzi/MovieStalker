@@ -1,28 +1,29 @@
 package com.aminnorouzi.ms.core;
 
-import com.aminnorouzi.ms.MovieStalkerApplication.MovieStalkerIntegrationApplication.StageReadyEvent;
-import com.aminnorouzi.ms.tool.view.View;
-import com.aminnorouzi.ms.tool.view.ViewSwitcher;
+import com.aminnorouzi.ms.MovieStalkerApplication;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
-@Data
-@Component
-@RequiredArgsConstructor
-public class ApplicationInitializer implements ApplicationListener<StageReadyEvent> {
+public class ApplicationInitializer extends Application {
 
-    private final ViewSwitcher switcher;
+    private ConfigurableApplicationContext context;
 
     @Override
-    public void onApplicationEvent(@NotNull StageReadyEvent event) {
-        View view = View.getDefault();
-        Stage stage = event.getDefault(event);
+    public void start(Stage stage) {
+        context.publishEvent(new StageReadyEvent(stage));
+    }
 
-        switcher.initialize(stage);
-        switcher.switchTo(view, null);
+    @Override
+    public void init() {
+        context = new SpringApplicationBuilder(MovieStalkerApplication.class).run();
+    }
+
+    @Override
+    public void stop() {
+        context.close();
+        Platform.exit();
     }
 }

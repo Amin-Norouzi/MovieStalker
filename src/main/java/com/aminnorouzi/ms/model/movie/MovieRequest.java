@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class MovieRequest {
 
     private User user;
-    private Movie movie;
+    private Search search;
 }

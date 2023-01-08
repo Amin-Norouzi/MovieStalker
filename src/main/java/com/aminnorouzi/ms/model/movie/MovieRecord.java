@@ -18,4 +18,6 @@ public class MovieRecord {
     private String genre;
     private Movie latest;
     private List<Movie> playlist;
+
+    private Boolean isAvailable;
 }

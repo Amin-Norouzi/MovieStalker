@@ -1,8 +1,10 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.user.UserRequest;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
@@ -27,10 +29,11 @@ public class SigninController extends Controller {
     @FXML
     private Button signinButton;
 
-    public SigninController(ApplicationContext configuration, ViewSwitcher switcher,
-                            NotificationService notificationService, LibraryService libraryService) {
-        super(configuration, switcher, notificationService, libraryService);
+    public SigninController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                            LibraryService library, ActivityService activity) {
+        super(context, switcher, notification, library, activity);
     }
+
 
     @Override
     protected void configure() {
@@ -48,17 +51,17 @@ public class SigninController extends Controller {
                 .build();
 
         try {
-            User found = libraryService.signin(request);
+            User found = activity.signin(request);
 
             getContext().initialize(found.getId());
-            getSwitcher().switchTo(View.HOME);
+            switchTo(View.HOME);
         } catch (Exception exception) {
-            notificationService.showError(exception.getMessage());
+            notification.showError(exception.getMessage());
         }
     }
 
     @FXML
     private void onSignup(MouseEvent event) {
-        getSwitcher().switchTo(View.SIGNUP);
+        switchTo(View.SIGNUP);
     }
 }

@@ -1,15 +1,17 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.movie.MovieInput;
-import com.aminnorouzi.ms.model.movie.Type;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.util.GraphicsManager;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
+import com.aminnorouzi.ms.util.GraphicsManager;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +27,7 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 import lombok.Getter;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -37,16 +40,16 @@ import java.util.Map;
 @FxmlView("/view/library-view.fxml")
 public class LibraryController extends Controller {
 
-    private final Map<Rectangle, Movie> contents = new LinkedHashMap<>();
+//    private final LibraryTaskService task = new LibraryTaskService();
 
-    private boolean isOnBoth = true;
+    private final Map<Rectangle, Movie> contents = new LinkedHashMap<>();
 
     @FXML
     private TilePane body;
 
-    public LibraryController(ApplicationContext configuration, ViewSwitcher switcher,
-                             NotificationService notificationService, LibraryService libraryService) {
-        super(configuration, switcher, notificationService, libraryService);
+    public LibraryController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                             LibraryService library, ActivityService activity) {
+        super(context, switcher, notification, library, activity);
     }
 
     private final EventHandler<MouseEvent> mouseClickEventHandler = event -> {
@@ -54,9 +57,8 @@ public class LibraryController extends Controller {
             Rectangle clickedRectangle = (Rectangle) event.getSource();
             if (contents.containsKey(clickedRectangle)) {
                 Movie movie = contents.get(clickedRectangle);
-                MovieInput input = MovieInput.of(clickedRectangle, movie);
 
-                getSwitcher().switchTo(View.MOVIE, input);
+                switchTo(View.MOVIE, movie);
             }
         }
     };
@@ -93,8 +95,19 @@ public class LibraryController extends Controller {
 
         User user = getUser();
         List<Movie> movies = user.getMovies();
+        movies.forEach(movie -> {
+            int index = movies.indexOf(movie) + 1;
+            System.out.println("#" + index + " " + movie.getTitle());
+        });
 
-        movies.forEach(movie -> addToScene(movie, false));
+        System.out.println();
+
+        movies.forEach(movie -> {
+//            addToScene(movie, false);
+            LibraryTaskService task = new LibraryTaskService();
+            task.setMovie(movie);
+            task.restart();
+        });
     }
 
     public void addToScene(Movie movie, boolean index) {
@@ -122,42 +135,39 @@ public class LibraryController extends Controller {
 
     @FXML
     private void onAddition(ActionEvent event) {
-        getSwitcher().switchTo(View.ADDITION);
+        switchTo(View.ADDITION);
     }
 
-    @FXML
-    private void onBoth(ActionEvent event) {
-        if (!isOnBoth) {
-            body.getChildren().clear();
+    @Getter
+    @Setter
+    public class LibraryTaskService extends Service<Rectangle> {
 
-            contents.values().forEach(m-> System.out.println(m.getTitle()));
+        private Movie movie;
 
-            body.getChildren().addAll(contents.keySet());
+        @Override
+        protected Task<Rectangle> createTask() {
+            return new Task<>() {
+
+                @Override
+                protected Rectangle call() throws Exception {
+//                    Image image = new Image(movie.getPoster(), 200, 300, false, false, false);
+//                    return GraphicsManager.roundImage(image);
+                    return new Rectangle();
+                }
+
+                @Override
+                protected void succeeded() {
+                    Rectangle rec = getValue();
+                    rec.setCursor(Cursor.HAND);
+                    rec.setOnMouseEntered(mouseEnterEventHandler);
+                    rec.setOnMouseExited(mouseExitEventHandler);
+                    rec.setOnMouseClicked(mouseClickEventHandler);
+
+                    contents.put(rec, movie);
+                    body.getChildren().add(rec);
+                    System.out.println(movie.getTitle() + " added to scene.");
+                }
+            };
         }
-    }
-
-    @FXML
-    private void onMovies(ActionEvent event) {
-        isOnBoth = false;
-        body.getChildren().clear();
-
-        contents.values().forEach(m-> System.out.println(m.getTitle()));
-
-        contents.entrySet().stream()
-                .filter(entry -> entry.getValue().getType().equals(Type.MOVIE))
-                .forEach(entry -> body.getChildren().add(entry.getKey()));
-
-    }
-
-    @FXML
-    private void onSeries(ActionEvent event) {
-        isOnBoth = false;
-        body.getChildren().clear();
-
-        contents.values().forEach(m-> System.out.println(m.getTitle()));
-
-        contents.entrySet().stream()
-                .filter(entry -> entry.getValue().getType().equals(Type.TV))
-                .forEach(entry -> body.getChildren().add(entry.getKey()));
     }
 }

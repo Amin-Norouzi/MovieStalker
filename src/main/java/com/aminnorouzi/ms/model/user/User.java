@@ -44,20 +44,22 @@ public class User implements Serializable {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public void addMovie(Movie movie) {
+    public User addMovie(Movie movie) {
         if (movies == null) {
             movies = new ArrayList<>();
         }
         movies.add(movie);
         movie.setUser(this);
+
+        return this;
     }
 
-    public void removeMovie(Movie movie) {
+    public User removeMovie(Movie movie) {
         movies.remove(movie);
         movie.setUser(null);
-    }
 
-    // TODO: generate equals and hashcode methods properly
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

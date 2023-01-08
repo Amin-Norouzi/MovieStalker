@@ -1,8 +1,10 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.movie.MovieInput;
+import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
@@ -47,24 +49,20 @@ public class MovieController extends Controller {
     @FXML
     private Button watch;
 
-    private final LibraryController libraryController;
-
-    private MovieInput input;
     private Movie movie;
 
     @Value("${movie.client.api.imdb-base-url}")
     private String imdbBaseUrl;
 
-    public MovieController(ApplicationContext configuration, ViewSwitcher switcher, NotificationService notificationService,
-                             LibraryService libraryService, LibraryController libraryController) {
-        super(configuration, switcher, notificationService, libraryService);
-        this.libraryController = libraryController;
+    public MovieController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                           LibraryService library, ActivityService activity) {
+        super(context, switcher, notification, library, activity);
     }
+
 
     @Override
     protected void configure() {
-        input = (MovieInput) getInput();
-        movie = input.getMovie();
+        movie = (Movie) getInput();
 
         initMovie(movie);
     }
@@ -115,7 +113,9 @@ public class MovieController extends Controller {
         if (hours != 0) {
             builder.append(hours).append("h ");
         }
-        builder.append(minutes).append("m");
+        if (minutes != 0) {
+            builder.append(minutes).append("m");
+        }
 
         runtime.setText(builder.toString());
     }
@@ -133,15 +133,36 @@ public class MovieController extends Controller {
         }
     }
 
+    // TODO: there is a bug here. if we don't set the updated user from service
+    // to the controller, the view cacher will not work as expected.
+
+    // here it will properly
     @FXML
     private void onWatch(ActionEvent event) {
-        libraryService.watch(movie);
-        changeState(true);
+//        execute(new Task<>() {
+//            @Override
+//            protected User call() throws Exception {
+//                changeState(true);
+//                User user = libraryService.watch(movie);
+//                user.setFullName("new full name is amin");
+//                return user;
+//            }
+//        });
+        User current = getUser();
+
+        User updated = library.watch(movie);
+
+        if (current.equals(updated)) {
+            System.out.println("equals");
+        }
+        changeState(false);
     }
 
     @FXML
     private void onUnwatch(ActionEvent event) {
-        libraryService.unwatch(movie);
+        // but here it won't update the user object
+        User updated = library.unwatch(movie);
+
         changeState(false);
     }
 
@@ -157,20 +178,19 @@ public class MovieController extends Controller {
 
     @FXML
     private void onDelete(ActionEvent event) {
-        notificationService.showConfirmation("Are you sure you want to delete this?", () -> {
+        notification.showConfirmation("Are you sure you want to delete this?", () -> {
             try {
-                libraryService.delete(movie);
-                libraryController.getContents().remove(input.getRectangle());
+                library.delete(movie);
 
-                getSwitcher().switchTo(View.LIBRARY);
+                switchTo(View.LIBRARY);
             } catch (RuntimeException exception) {
-                notificationService.showError(exception.getMessage());
+                notification.showError(exception.getMessage());
             }
         });
     }
 
     @FXML
     private void onBack(MouseEvent event) {
-        getSwitcher().switchTo(View.LIBRARY);
+        switchTo(View.LIBRARY);
     }
 }
