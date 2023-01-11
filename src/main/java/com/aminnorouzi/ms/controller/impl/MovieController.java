@@ -139,23 +139,12 @@ public class MovieController extends Controller {
     // here it will properly
     @FXML
     private void onWatch(ActionEvent event) {
-//        execute(new Task<>() {
-//            @Override
-//            protected User call() throws Exception {
-//                changeState(true);
-//                User user = libraryService.watch(movie);
-//                user.setFullName("new full name is amin");
-//                return user;
-//            }
-//        });
-        User current = getUser();
+        library.watch(movie);
 
-        User updated = library.watch(movie);
-
-        if (current.equals(updated)) {
-            System.out.println("equals");
-        }
-        changeState(false);
+//        if (current.equals(updated)) {
+//            System.out.println("equals");
+//        }
+        changeState(true);
     }
 
     @FXML
@@ -180,10 +169,12 @@ public class MovieController extends Controller {
     private void onDelete(ActionEvent event) {
         notification.showConfirmation("Are you sure you want to delete this?", () -> {
             try {
-                library.delete(movie);
+                User user = library.delete(movie);
+                setUser(user);
 
                 switchTo(View.LIBRARY);
             } catch (RuntimeException exception) {
+                exception.printStackTrace();
                 notification.showError(exception.getMessage());
             }
         });

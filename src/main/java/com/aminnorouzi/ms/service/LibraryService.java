@@ -2,7 +2,6 @@ package com.aminnorouzi.ms.service;
 
 import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.model.user.UserRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +15,17 @@ public class LibraryService {
 
     private final FileService fileService;
     private final MovieService movieService;
+    private final UserService userService;
 
-    public Movie add(User user, Search search) {
+    public User add(User user, Search search) {
         MovieRequest movieRequest = MovieRequest.builder()
                 .user(user)
                 .search(search)
                 .build();
 
-        return movieService.add(movieRequest);
+        Movie added = movieService.add(movieRequest);
+
+        return userService.update(added.getUser());
     }
 
     public List<Search> search(Query query) {
@@ -31,21 +33,22 @@ public class LibraryService {
     }
 
     public User watch(Movie movie) {
-        Movie updated = movieService.watch(movie);
+        movieService.watch(movie);
 
-        return updated.getUser();
+        return userService.update(movie.getUser());
     }
 
     public User unwatch(Movie movie) {
         movieService.unwatch(movie);
 
-        return movie.getUser();
+        return userService.update(movie.getUser());
     }
 
     public User delete(Movie movie) {
+        User user = movie.getUser();
         movieService.delete(movie);
 
-        return movie.getUser();
+        return userService.update(user);
     }
 
     public MovieRecord report(User user) {

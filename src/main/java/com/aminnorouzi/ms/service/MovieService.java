@@ -76,13 +76,10 @@ public class MovieService {
         return data;
     }
 
-    public Movie watch(Movie request) {
+    public void watch(Movie request) {
         request.setWatchedAt(LocalDateTime.now());
 
-        Movie updated = movieRepository.save(request);
-
-        log.info("Watched a movie: {}", updated);
-        return updated;
+        log.info("Watched a movie: {}", request);
     }
 
     public void unwatch(Movie movie) {

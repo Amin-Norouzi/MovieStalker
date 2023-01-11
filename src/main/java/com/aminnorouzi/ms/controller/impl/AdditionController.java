@@ -5,6 +5,7 @@ import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
@@ -81,10 +82,10 @@ public class AdditionController extends Controller {
 
                 Search search = rows.get(row);
                 try {
-                    Movie added = library.add(getUser(), search);
-                    setUser(added.getUser());
+                    User user = library.add(getUser(), search);
+                    setUser(user);
 
-                    notification.show("info", ("Movie added: " + added.getTitle().toLowerCase()));
+                    notification.show("info", ("Movie added to your library."));
                 } catch (RuntimeException exception) {
                     notification.showError(exception.getMessage());
                 }
