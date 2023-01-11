@@ -2,6 +2,7 @@ package com.aminnorouzi.ms.controller.impl;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Component;
 @FxmlView("/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
-    public SidebarController(ApplicationContext configuration, ViewSwitcher switcher,
-                             NotificationService notificationService, LibraryService libraryService) {
-        super(configuration, switcher, notificationService, libraryService);
+    public SidebarController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                            LibraryService library, ActivityService activity) {
+        super(context, switcher, notification, library, activity);
     }
 
     @Override

@@ -40,8 +40,7 @@
                               <Font name="Arial" size="13.0" />
                           </font>
                       </PasswordField>
-                      <Button mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
-      <!--                        disable="${usernameField.text.blank || passwordField.text.blank || fullNameField.text.blank}">-->
+                      <Button fx:id="signupButton" mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
                           <VBox.margin>
                               <Insets top="10.0" />
                           </VBox.margin>
