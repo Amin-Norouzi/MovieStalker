@@ -19,7 +19,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 @Component
-@FxmlView("/view/signup-view.fxml")
+@FxmlView("/templates/view/signup-view.fxml")
 public class SignupController extends Controller {
 
     @FXML

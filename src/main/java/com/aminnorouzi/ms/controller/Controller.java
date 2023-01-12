@@ -64,7 +64,7 @@ public abstract class Controller {
     }
 
     protected void switchTo(View view, Object input) {
-        context.setUser(user);
+        context.setUser(getUser());
         switcher.switchTo(view, input);
     }
 

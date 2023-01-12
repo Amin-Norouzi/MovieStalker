@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@FxmlView("/view/movie-view.fxml")
+@FxmlView("/templates/view/movie-view.fxml")
 public class MovieController extends Controller {
 
     @FXML
@@ -133,24 +133,18 @@ public class MovieController extends Controller {
         }
     }
 
-    // TODO: there is a bug here. if we don't set the updated user from service
-    // to the controller, the view cacher will not work as expected.
-
-    // here it will properly
     @FXML
     private void onWatch(ActionEvent event) {
-        library.watch(movie);
+        User user = library.watch(movie);
+        setUser(user);
 
-//        if (current.equals(updated)) {
-//            System.out.println("equals");
-//        }
         changeState(true);
     }
 
     @FXML
     private void onUnwatch(ActionEvent event) {
-        // but here it won't update the user object
-        User updated = library.unwatch(movie);
+        User user = library.unwatch(movie);
+        setUser(user);
 
         changeState(false);
     }

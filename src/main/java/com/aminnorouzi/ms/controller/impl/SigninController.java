@@ -19,7 +19,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 @Component
-@FxmlView("/view/signin-view.fxml")
+@FxmlView("/templates/view/signin-view.fxml")
 public class SigninController extends Controller {
 
     @FXML

@@ -13,7 +13,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 @Component
-@FxmlView("/view/sidebar-view.fxml")
+@FxmlView("/templates/view/sidebar-view.fxml")
 public class SidebarController extends Controller {
 
     public SidebarController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,

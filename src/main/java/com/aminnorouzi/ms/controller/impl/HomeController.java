@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-@FxmlView("/view/home-view.fxml")
+@FxmlView("/templates/view/home-view.fxml")
 public class HomeController extends Controller {
 
     @FXML
@@ -89,7 +89,7 @@ public class HomeController extends Controller {
     private void initRecentWatched(List<Movie> movies) {
         AtomicInteger count = new AtomicInteger(1);
         movies.forEach(movie -> {
-            HBox root = (HBox) viewLoader.load("/view/item/watched-item.fxml");
+            HBox root = (HBox) viewLoader.load("/templates/item/watched-item.fxml");
 
             Image image = new Image(movie.getBackdrop(), true);
             image.progressProperty().addListener((observable, oldValue, progress) -> {

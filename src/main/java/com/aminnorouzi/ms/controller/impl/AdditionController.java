@@ -2,7 +2,6 @@ package com.aminnorouzi.ms.controller.impl;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.core.ApplicationContext;
-import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.model.user.User;
@@ -27,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-@FxmlView("/view/addition-view.fxml")
+@FxmlView("/templates/view/addition-view.fxml")
 public class AdditionController extends Controller {
 
     @FXML
@@ -86,6 +85,8 @@ public class AdditionController extends Controller {
                     setUser(user);
 
                     notification.show("info", ("Movie added to your library."));
+
+                    titleField.clear();
                 } catch (RuntimeException exception) {
                     notification.showError(exception.getMessage());
                 }

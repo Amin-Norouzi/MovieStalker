@@ -23,18 +23,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.apache.commons.collections.map.AbstractOrderedMapDecorator;
-import org.controlsfx.control.GridCell;
-import org.controlsfx.control.GridView;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -44,7 +39,7 @@ import java.util.Map;
 
 @Getter
 @Component
-@FxmlView("/view/library-view.fxml")
+@FxmlView("/templates/view/library-view.fxml")
 public class LibraryController extends Controller {
 
     private final Map<Rectangle, Movie> contents = new LinkedHashMap<>();
@@ -68,6 +63,7 @@ public class LibraryController extends Controller {
         }
     };
 
+    // TODO: contains design part of program
     private final EventHandler<MouseEvent> mouseEnterEventHandler = event -> {
         Rectangle clickedRectangle = (Rectangle) event.getSource();
         if (contents.containsKey(clickedRectangle)) {
@@ -80,7 +76,6 @@ public class LibraryController extends Controller {
             clickedRectangle.setEffect(new DropShadow(35, 10, 15, Color.GRAY));
         }
     };
-
     private final EventHandler<MouseEvent> mouseExitEventHandler = event -> {
         Rectangle clickedRectangle = (Rectangle) event.getSource();
         if (contents.containsKey(clickedRectangle)) {
@@ -100,8 +95,7 @@ public class LibraryController extends Controller {
 
         List<Movie> movies = user.getMovies().stream()
                 .sorted(Comparator.comparing(Movie::getCreatedAt)
-                        .reversed())
-                .toList();
+                        .reversed()).toList();
 
         movies.forEach(movie -> {
             Rectangle rectangle = GraphicsManager.getARectangle();
