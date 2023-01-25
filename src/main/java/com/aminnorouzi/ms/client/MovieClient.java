@@ -12,6 +12,9 @@ public interface MovieClient {
     @GetMapping("${movie.client.api.get-search}")
     SearchResponse search(@PathVariable("query") String query);
 
+    @GetMapping("${movie.client.api.get-find}")
+    SearchResponse find(@PathVariable("imdbId") String imdbId);
+
     @GetMapping("${movie.client.api.get-movie}")
     Movie get(@PathVariable("tmdbId") Long tmdbId, @PathVariable("type") String type);
 }
