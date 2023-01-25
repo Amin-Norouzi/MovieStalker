@@ -7,13 +7,13 @@ import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
@@ -29,9 +29,9 @@ import org.springframework.stereotype.Component;
 public class MovieController extends Controller {
 
     @FXML
-    private Rectangle poster;
+    private Rectangle posterPic;
     @FXML
-    private ImageView backdrop;
+    private ImageView backdropPic;
     @FXML
     private Label seasons;
     @FXML
@@ -54,21 +54,24 @@ public class MovieController extends Controller {
     @Value("${movie.client.api.imdb-base-url}")
     private String imdbBaseUrl;
 
-    public MovieController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                           LibraryService library, ActivityService activity) {
-        super(context, switcher, notification, library, activity);
-    }
+    private final ImageService imageService;
 
+    public MovieController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
+                           LibraryService library, ActivityService activity, ImageService imageService) {
+        super(context, switcher, notification, library, activity);
+        this.imageService = imageService;
+    }
 
     @Override
     protected void configure() {
         movie = (Movie) getInput();
 
-        initMovie(movie);
-    }
+        imageService.load(movie.getBackdrop()).thenAccept(image -> backdropPic.setImage(image));
 
-    private void initMovie(Movie movie) {
-        initImages(movie);
+        imageService.load(movie.getPoster()).thenAccept(image -> {
+            ImagePattern pattern = new ImagePattern(image);
+            posterPic.setFill(pattern);
+        });
 
         title.setText(movie.getTitle());
         release.setText(String.valueOf(movie.getReleased()));
@@ -80,29 +83,8 @@ public class MovieController extends Controller {
         initRuntime(movie);
 
         if (movie.getWatchedAt() != null) {
-            changeState(true);
+            watch.setText("Watched");
         }
-    }
-
-    private void initImages(Movie movie) {
-        Image backdropImage = new Image(movie.getBackdrop(),
-                800, 600, false, false, true);
-        backdropImage.progressProperty().addListener((observable, oldValue, progress) -> {
-            if ((Double) progress == 1.0 && !backdropImage.isError()) {
-                backdrop.setImage(backdropImage);
-            }
-        });
-
-        Image posterImage = new Image(movie.getPoster(),
-                200, 300, false, false, true);
-
-        posterImage.progressProperty().addListener((observable, oldValue, progress) -> {
-            if ((Double) progress == 1.0 && !posterImage.isError()) {
-                ImagePattern pattern = new ImagePattern(posterImage);
-
-                poster.setFill(pattern);
-            }
-        });
     }
 
     private void initRuntime(Movie movie) {
@@ -135,10 +117,19 @@ public class MovieController extends Controller {
 
     @FXML
     private void onWatch(ActionEvent event) {
+        User current = getUser();
         User user = library.watch(movie);
+
+        // the result is true! NOW works fine thanks to user equals and hashcode methods.
+        if (user.equals(current)) {
+            System.out.println("equals 🎊");
+        } else {
+            System.out.println("nah bro 🥹");
+        }
+
         setUser(user);
 
-        changeState(true);
+        watch.setText("Watched");
     }
 
     @FXML
@@ -146,17 +137,7 @@ public class MovieController extends Controller {
         User user = library.unwatch(movie);
         setUser(user);
 
-        changeState(false);
-    }
-
-    private void changeState(boolean watched) {
-        if (watched) {
-            watch.setDisable(true);
-            watch.setText("Watched");
-        } else {
-            watch.setDisable(false);
-            watch.setText("Watch Now");
-        }
+        watch.setText("Watch Now");
     }
 
     @FXML

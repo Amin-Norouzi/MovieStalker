@@ -46,7 +46,13 @@ public class Search {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SearchResponse {
 
-        @JsonAlias({"results", "tv_results", "movie_results"})
+        @JsonProperty("results")
         private List<Search> results;
+
+        @JsonProperty("movie_results")
+        private List<Search> movies;
+
+        @JsonProperty("tv_results")
+        private List<Search> tvs;
     }
 }
