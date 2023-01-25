@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -57,5 +58,11 @@ public class LibraryService {
 
     public Set<Query> generate(File directory) {
         return fileService.generate(directory);
+    }
+
+    public List<Movie> sort(List<Movie> movies) {
+        return movies.stream()
+                .sorted(Comparator.comparing(Movie::getCreatedAt)
+                        .reversed()).toList();
     }
 }

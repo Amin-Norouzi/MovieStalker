@@ -15,22 +15,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ViewCacher {
 
-    private static final Map<CacheKey, Parent> caches = new HashMap<>();
+    private static final Map<CacheKey, Parent> cache = new HashMap<>();
 
     public void cache(CacheKey key, Parent root) {
-        caches.computeIfAbsent(key, k -> root);
+        cache.computeIfAbsent(key, k -> root);
     }
 
     public boolean contains(CacheKey key) {
-        return caches.containsKey(key);
+        return cache.containsKey(key);
     }
 
     public Parent get(CacheKey key) {
-        return caches.get(key);
+        return cache.get(key);
     }
 
     public void cleanup() {
-        caches.clear();
+        cache.clear();
     }
 
     @Data

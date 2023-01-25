@@ -13,13 +13,7 @@ public class WatchedNode extends HBox {
 
     private static final String PATH = "/templates/node/watched-node.fxml";
 
-    private Movie movie;
-    private Integer count;
-
     public WatchedNode(Movie movie, Integer count) {
-        this.movie = movie;
-        this.count = count;
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PATH));
             fxmlLoader.setRoot(this);

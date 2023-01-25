@@ -20,7 +20,8 @@ public class UserService {
 
     @Transactional
     public User update(User request) {
-        User user = getById(request.getId());
+        // TODO: for JPA use .getReferenceById(customerId) as it does does not bring object into memory and instead a reference
+        User user = userRepository.getReferenceById(request.getId());
 
         if (request.getFullName() != null &&
                 !request.getFullName().equals(user.getFullName())) {

@@ -7,17 +7,15 @@ import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import com.aminnorouzi.ms.util.GraphicsManager;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
@@ -28,8 +26,8 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 import lombok.Getter;
-import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -47,9 +45,12 @@ public class LibraryController extends Controller {
     @FXML
     private TilePane body;
 
+    private final ImageService imageService;
+
     public LibraryController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                             LibraryService library, ActivityService activity) {
+                             LibraryService library, ActivityService activity, ImageService imageService) {
         super(context, switcher, notification, library, activity);
+        this.imageService = imageService;
     }
 
     private final EventHandler<MouseEvent> mouseClickEventHandler = event -> {
@@ -93,60 +94,27 @@ public class LibraryController extends Controller {
     protected void configure() {
         User user = getUser();
 
-        List<Movie> movies = user.getMovies().stream()
-                .sorted(Comparator.comparing(Movie::getCreatedAt)
-                        .reversed()).toList();
-
+        List<Movie> movies = library.sort(user.getMovies());
         movies.forEach(movie -> {
             Rectangle rectangle = GraphicsManager.getARectangle();
 
             body.getChildren().add(rectangle);
             contents.put(rectangle, movie);
 
-            LibraryTaskService task = new LibraryTaskService();
-            task.setRectangle(rectangle);
-            task.setMovie(movie);
-            task.restart();
+            imageService.load(movie.getPoster()).thenAccept(image -> {
+                ImagePattern pattern = new ImagePattern(image);
+
+                rectangle.setFill(pattern);
+                rectangle.setCursor(Cursor.HAND);
+                rectangle.setOnMouseEntered(mouseEnterEventHandler);
+                rectangle.setOnMouseExited(mouseExitEventHandler);
+                rectangle.setOnMouseClicked(mouseClickEventHandler);
+            });
         });
     }
 
     @FXML
     private void onAddition(ActionEvent event) {
         switchTo(View.ADDITION);
-    }
-
-    @Setter
-    @Getter
-    public class LibraryTaskService extends Service<Image> {
-
-        private Movie movie;
-        private Rectangle rectangle;
-
-        @Override
-        protected Task<Image> createTask() {
-            return new Task<>() {
-
-                @Override
-                protected Image call() throws Exception {
-                    return new Image(movie.getPoster(), 200, 300, false, false, false);
-                }
-
-                @Override
-                protected void succeeded() {
-                    ImagePattern image = new ImagePattern(getValue());
-
-                    rectangle.setFill(image);
-                    rectangle.setCursor(Cursor.HAND);
-                    rectangle.setOnMouseEntered(mouseEnterEventHandler);
-                    rectangle.setOnMouseExited(mouseExitEventHandler);
-                    rectangle.setOnMouseClicked(mouseClickEventHandler);
-                }
-
-                @Override
-                protected void failed() {
-                    // loads no poster movie image
-                }
-            };
-        }
     }
 }

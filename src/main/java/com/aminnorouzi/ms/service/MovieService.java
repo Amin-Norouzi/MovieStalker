@@ -4,6 +4,7 @@ import com.aminnorouzi.ms.client.MovieClient;
 import com.aminnorouzi.ms.exception.DuplicatedMovieException;
 import com.aminnorouzi.ms.exception.MovieNotFoundException;
 import com.aminnorouzi.ms.model.movie.*;
+import com.aminnorouzi.ms.model.movie.Search.SearchResponse;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -104,8 +105,12 @@ public class MovieService {
         List<Search> found;
         if (query.getImdb() != null) {
             String imdbId = extract(query.getImdb());
-            found = movieClient.find(imdbId).getResults();
-            System.out.println(found);
+            SearchResponse response = movieClient.find(imdbId);
+            if (response.getMovies() != null) {
+                found = response.getMovies();
+            } else {
+                found = response.getTvs();
+            }
         } else {
             found = movieClient.search(query.getTitle()).getResults();
         }

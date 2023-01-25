@@ -9,6 +9,8 @@ import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,9 +25,9 @@ import org.springframework.stereotype.Component;
 public class SigninController extends Controller {
 
     @FXML
-    private TextField usernameField;
+    private MFXTextField usernameField;
     @FXML
-    private PasswordField passwordField;
+    private MFXPasswordField passwordField;
     @FXML
     private Button signinButton;
 

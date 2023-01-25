@@ -19,8 +19,18 @@ public class ViewLoader {
         try {
             return fxWeaver.loadView(view.getController());
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new IllegalViewException("Could not load view: " + view.getTitle());
+        }
+    }
+
+    public Parent load(String path) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(path));
+
+            return fxmlLoader.load();
+        } catch (Exception exception) {
+            throw new IllegalViewException("Could not load path: " + path);
         }
     }
 }

@@ -29,7 +29,7 @@ public class ApplicationContext {
     }
 
     public void load(Controller controller) {
-        if (id != null && !(controller instanceof SidebarController)) {
+        if (id != null) {
             user = userService.getById(id);
             controller.setUser(user);
             controller.setInput(value);
