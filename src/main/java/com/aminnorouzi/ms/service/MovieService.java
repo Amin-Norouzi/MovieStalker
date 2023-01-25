@@ -11,8 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.Map.entry;
 
@@ -98,8 +101,16 @@ public class MovieService {
     }
 
     public List<Search> search(Query query) {
-        List<Search> result = movieClient.search(query.getTitle())
-                .getResults().stream()
+        List<Search> found;
+        if (query.getImdb() != null) {
+            String imdbId = extract(query.getImdb());
+            found = movieClient.find(imdbId).getResults();
+            System.out.println(found);
+        } else {
+            found = movieClient.search(query.getTitle()).getResults();
+        }
+
+        List<Search> result = found.stream()
                 .filter(s -> s.getPoster() != null &&
                         s.getOverview() != null &&
                         s.getReleased() != null)
@@ -111,5 +122,16 @@ public class MovieService {
 
         log.info("Searched a query: query={}, result={}", query, result);
         return result;
+    }
+
+    private String extract(String imdbUrl) {
+        Pattern pattern = Pattern.compile("(tt\\d[0-9]*)");
+        Matcher matcher = pattern.matcher(imdbUrl);
+
+        if (matcher.find()) {
+            return matcher.group();
+        }
+
+        throw new RuntimeException("Failed to extract imdb id!");
     }
 }

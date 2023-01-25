@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
