@@ -106,7 +106,7 @@ public class MovieService {
         if (query.getImdb() != null) {
             String imdbId = extract(query.getImdb());
             SearchResponse response = movieClient.find(imdbId);
-            if (response.getMovies() != null) {
+            if (!response.getMovies().isEmpty()) {
                 found = response.getMovies();
             } else {
                 found = response.getTvs();
