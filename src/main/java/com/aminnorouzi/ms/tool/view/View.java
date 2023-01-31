@@ -1,28 +1,30 @@
 package com.aminnorouzi.ms.tool.view;
 
-import com.aminnorouzi.ms.controller.impl.*;
+import com.aminnorouzi.ms.controller.*;
 import lombok.Getter;
 
 @Getter
 public enum View {
 
-    HOME(HomeController.class, "Home"),
-    LIBRARY(LibraryController.class, "Library"),
-    MOVIE(MovieController.class, "Movie"),
-    SIDEBAR(SidebarController.class, "Sidebar"),
-    SIGNIN(SigninController.class, "Sign in"),
-    SIGNUP(SignupController.class, "Sign up"),
-    ADDITION(AdditionController.class, "Addition"),
-//    OFFLINE(null, "/view/offline-view.fxml"),
+    HOME(HomeController.class, "Home", "/templates/view/home-view.fxml", true),
+    LIBRARY(LibraryController.class, "Library", "/templates/view/library-view.fxml", true),
+    MOVIE(MovieController.class, "Movie", "/templates/view/movie-view.fxml", false),
+    SIGNIN(SigninController.class, "Sign in", "/templates/view/signin-view.fxml", false),
+    SIGNUP(SignupController.class, "Sign up", "/templates/view/signup-view.fxml", false),
+    ADDITION(AdditionController.class, "Addition", "/templates/view/addition-view.fxml", true),
 
-    EMPTY(null, null);
+    EMPTY(null, null, null, false);
 
     private final Class<?> controller;
     private final String title;
+    private final String path;
+    private final boolean hasSidebar;
 
-    View(Class<?> controller, String title) {
+    View(Class<?> controller, String title, String path, boolean hasSidebar) {
         this.controller = controller;
         this.title = title;
+        this.path = path;
+        this.hasSidebar = hasSidebar;
     }
 
     public static View getDefault() {

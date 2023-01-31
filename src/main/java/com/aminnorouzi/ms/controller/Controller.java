@@ -1,13 +1,15 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.node.SidebarNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -20,24 +22,28 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public abstract class Controller {
 
-    private final ApplicationContext context;
-
     @Getter(AccessLevel.NONE)
     private final ViewSwitcher switcher;
 
     protected final NotificationService notification;
     protected final LibraryService library;
     protected final ActivityService activity;
+    protected final ImageService image;
 
+    private View view;
     private User user;
     private Object input;
 
     @FXML
     private StackPane root;
+    @FXML
+    private BorderPane content;
 
     @FXML
     protected void initialize() {
-        context.load(this);
+        if (view.isHasSidebar()) {
+            content.setLeft(new SidebarNode(this));
+        }
 
         notification.initialize(root);
 
@@ -59,13 +65,12 @@ public abstract class Controller {
 //        setUser(request);
 //    }
 
-    protected void switchTo(View view) {
+    public void switchTo(View view) {
         switchTo(view, null);
     }
 
-    protected void switchTo(View view, Object input) {
-        context.setUser(getUser());
-        switcher.switchTo(view, input);
+    public void switchTo(View view, Object input) {
+        switcher.switchTo(view, getUser(), input);
     }
 
     protected abstract void configure();

@@ -1,7 +1,6 @@
-package com.aminnorouzi.ms.controller.impl;
+package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
@@ -27,10 +26,8 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.shape.StrokeType;
 import lombok.Getter;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,13 +42,6 @@ public class LibraryController extends Controller {
     @FXML
     private TilePane body;
 
-    private final ImageService imageService;
-
-    public LibraryController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                             LibraryService library, ActivityService activity, ImageService imageService) {
-        super(context, switcher, notification, library, activity);
-        this.imageService = imageService;
-    }
 
     private final EventHandler<MouseEvent> mouseClickEventHandler = event -> {
         if (event.getButton() == MouseButton.PRIMARY) {
@@ -90,6 +80,10 @@ public class LibraryController extends Controller {
         }
     };
 
+    public LibraryController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+        super(switcher, notification, library, activity, image);
+    }
+
     @Override
     protected void configure() {
         User user = getUser();
@@ -101,7 +95,7 @@ public class LibraryController extends Controller {
             body.getChildren().add(rectangle);
             contents.put(rectangle, movie);
 
-            imageService.load(movie.getPoster()).thenAccept(image -> {
+            image.load(movie.getPoster()).thenAccept(image -> {
                 ImagePattern pattern = new ImagePattern(image);
 
                 rectangle.setFill(pattern);

@@ -1,6 +1,5 @@
 package com.aminnorouzi.ms.tool.view;
 
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.tool.view.ViewCacher.CacheKey;
 import javafx.scene.Parent;
@@ -16,12 +15,6 @@ import org.springframework.stereotype.Component;
 @Getter(AccessLevel.NONE)
 @Setter(AccessLevel.PROTECTED)
 public class ViewSwitcher {
-
-    /*
-        TODO: cache properly and optimize code base.
-     */
-
-    private final ApplicationContext context;
 
     private final ViewLoader viewLoader;
     private final ViewCacher viewCacher;
@@ -40,32 +33,25 @@ public class ViewSwitcher {
         }
     }
 
-    public void switchTo(View view, Object input) {
+    public void switchTo(View view, User user, Object input) {
         if (current.equals(view)) return;
         if (view.equals(View.SIGNIN)) {
             cleanup();
         }
 
         Parent root;
-        CacheKey key = setup(view, input);
+//        CacheKey key = CacheKey.of(view, user, input)
 
-        if (viewCacher.contains(key)) {
-            System.out.println(view + ": loading from cache");
-            root = viewCacher.get(key);
-        } else {
-            System.out.println(view + ": loading from loader");
-            root = viewLoader.load(view);
-        }
+//        if (viewCacher.contains(key)) {
+//            System.out.println(view + ": loading from cache");
+//            root = viewCacher.get(key);
+//        } else {
+//            System.out.println(view + ": loading from loader");
+            root = viewLoader.load(view, user, input);
+//        }
 
-        cacheup(key, root);
+//        cacheup(key, root);
         showup(view, root);
-    }
-
-    private CacheKey setup(View view, Object input) {
-        context.setValue(input);
-        User user = context.getUser();
-
-        return new CacheKey(view, user, input);
     }
 
     private void cacheup(CacheKey key, Parent root) {

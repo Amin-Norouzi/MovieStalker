@@ -1,13 +1,13 @@
-package com.aminnorouzi.ms.controller.impl;
+package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -33,9 +32,8 @@ public class AdditionController extends Controller {
     @FXML
     private TextField titleField;
 
-    public AdditionController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                              LibraryService library, ActivityService activity) {
-        super(context, switcher, notification, library, activity);
+    public AdditionController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+        super(switcher, notification, library, activity, image);
     }
 
     @Override

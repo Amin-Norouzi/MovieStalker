@@ -1,7 +1,6 @@
-package com.aminnorouzi.ms.controller.impl;
+package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
@@ -54,21 +53,17 @@ public class MovieController extends Controller {
     @Value("${movie.client.api.imdb-base-url}")
     private String imdbBaseUrl;
 
-    private final ImageService imageService;
-
-    public MovieController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                           LibraryService library, ActivityService activity, ImageService imageService) {
-        super(context, switcher, notification, library, activity);
-        this.imageService = imageService;
+    public MovieController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+        super(switcher, notification, library, activity, image);
     }
 
     @Override
     protected void configure() {
         movie = (Movie) getInput();
 
-        imageService.load(movie.getBackdrop()).thenAccept(image -> backdropPic.setImage(image));
+        image.load(movie.getBackdrop()).thenAccept(image -> backdropPic.setImage(image));
 
-        imageService.load(movie.getPoster()).thenAccept(image -> {
+        image.load(movie.getPoster()).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             posterPic.setFill(pattern);
         });

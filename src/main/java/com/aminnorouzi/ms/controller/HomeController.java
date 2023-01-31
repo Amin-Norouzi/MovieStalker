@@ -1,7 +1,5 @@
-package com.aminnorouzi.ms.controller.impl;
+package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.core.ApplicationContext;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
 import com.aminnorouzi.ms.node.WatchedNode;
@@ -50,26 +48,21 @@ public class HomeController extends Controller {
     @FXML
     private ScrollPane pane;
 
-    private final ImageService imageService;
-
-    public HomeController(ApplicationContext context, ViewSwitcher switcher, NotificationService notification,
-                          LibraryService library, ActivityService activity, ImageService imageService) {
-        super(context, switcher, notification, library, activity);
-        this.imageService = imageService;
+    public HomeController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+        super(switcher, notification, library, activity, image);
     }
 
-
     @Override
-    protected void configure() {
+    public void configure() {
         MovieRecord data = library.report(getUser());
 
         // TODO
-        if (!data.getIsAvailable()) {
-            return;
-        }
+//        if (!data.getIsAvailable()) {
+//            return;
+//        }
 
 //      Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
-        imageService.load("/templates/image/home-banner.png").thenAccept(image -> {
+        image.load("/templates/image/home-banner.png").thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             bannerPic.setFill(pattern);
         });
@@ -88,7 +81,7 @@ public class HomeController extends Controller {
     private void initRecentWatched(List<Movie> movies) {
         AtomicInteger count = new AtomicInteger(1);
         movies.forEach(movie -> {
-            WatchedNode node = new WatchedNode(movie, count.getAndIncrement());
+            WatchedNode node = new WatchedNode(movie, count.getAndIncrement(), this);
             recentMovies.getChildren().add(node);
         });
     }

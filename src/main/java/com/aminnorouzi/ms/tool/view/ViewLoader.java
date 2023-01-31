@@ -1,7 +1,8 @@
 package com.aminnorouzi.ms.tool.view;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.exception.IllegalViewException;
-import javafx.fxml.FXMLLoader;
+import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,22 +16,16 @@ public class ViewLoader {
 
     private final FxWeaver fxWeaver;
 
-    public Parent load(View view) {
+    public Parent load(View view, User user, Object input) {
         try {
+            Controller controller = (Controller) fxWeaver.getBean(view.getController());
+            controller.setView(view);
+            controller.setUser(user);
+            controller.setInput(input);
+
             return fxWeaver.loadView(view.getController());
         } catch (Exception exception) {
             throw new IllegalViewException("Could not load view: " + view.getTitle());
-        }
-    }
-
-    public Parent load(String path) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(path));
-
-            return fxmlLoader.load();
-        } catch (Exception exception) {
-            throw new IllegalViewException("Could not load path: " + path);
         }
     }
 }

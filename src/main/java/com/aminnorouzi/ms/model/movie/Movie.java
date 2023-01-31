@@ -1,6 +1,9 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.*;
+import com.aminnorouzi.ms.annotation.ArrayFirstValue;
+import com.aminnorouzi.ms.annotation.CollectionOfJson;
+import com.aminnorouzi.ms.annotation.IdFromJson;
+import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -57,11 +60,11 @@ public class Movie implements Serializable {
     @JsonProperty("overview")
     private String overview;
 
-    @FullPathUrl
+//    @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
 
-    @FullPathUrl
+//    @FullPathUrl
     @JsonProperty("backdrop_path")
     private String backdrop;
 
@@ -106,6 +109,7 @@ public class Movie implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
+    // TODO: implement a proper equals operator
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

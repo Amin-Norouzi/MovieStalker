@@ -46,27 +46,28 @@ public class User implements Serializable {
 
     public User addMovie(Movie movie) {
         if (movies == null) {
-            movies = new ArrayList<>();
+            this.movies = new ArrayList<>();
         }
-        movies.add(movie);
+        this.movies.add(movie);
         movie.setUser(this);
 
         return this;
     }
 
     public User removeMovie(Movie movie) {
-        movies.remove(movie);
+        this.movies.remove(movie);
         movie.setUser(null);
 
         return this;
     }
 
+    // TODO: implement a proper equals operator
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         User user = (User) o;
-        return id != null && Objects.equals(id, user.id);
+        return id != null && Objects.equals(id, user.id) && movies.size() == user.movies.size();
     }
 
     @Override

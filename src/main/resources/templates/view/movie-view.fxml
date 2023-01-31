@@ -19,14 +19,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.impl.MovieController">
+<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.MovieController">
     <children>
-        <ImageView fx:id="backdrop" fitHeight="700.0" fitWidth="1200.0" pickOnBounds="true" smooth="false">
+        <ImageView fx:id="backdropPic" fitHeight="832.0" fitWidth="1280.0" pickOnBounds="true" smooth="false">
             <effect>
                 <GaussianBlur radius="25.0" />
             </effect>
         </ImageView>
-        <Rectangle height="700.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0">
+        <Rectangle height="832.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1280.0">
             <fill>
                 <LinearGradient endX="1.0" endY="1.0">
                     <stops>
@@ -49,166 +49,166 @@
                 </LinearGradient>
             </fill>
         </Rectangle>
-      <VBox>
-         <StackPane.margin>
-            <Insets />
-         </StackPane.margin>
-         <children>
-            <AnchorPane style="-fx-background-color: rgb(0,0,0,0.5);">
-               <children>
-                  <Label layoutX="29.0" layoutY="6.0" onMouseClicked="#onBack" text="&lt; Back" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <font>
-                        <Font name="Arial Bold" size="10.0" />
-                     </font>
-                  </Label>
-                  <MenuButton layoutX="335.0" layoutY="24.0" mnemonicParsing="false" text="MenuButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onUnwatch" text="Unwwatch" />
-                      <MenuItem mnemonicParsing="false" onAction="#onDelete" text="Delete" />
-                    </items>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </MenuButton>
-               </children>
-            </AnchorPane>
-              <BorderPane prefHeight="660.0">
-                  <center>
-                      <VBox spacing="20.0" BorderPane.alignment="CENTER">
-                          <HBox spacing="10.0">
-                              <VBox.margin>
-                                  <Insets />
-                              </VBox.margin>
-                              <children>
-                                  <Rectangle fx:id="poster" arcHeight="30.0" arcWidth="30.0" height="300.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" width="200.0">
-                                      <fill>
-                                          <LinearGradient endX="1.0" endY="1.0">
-                                              <stops>
-                                                  <Stop>
-                                                      <color>
-                                                          <Color red="0.11999999731779099" green="0.5746666789054871" blue="1.0" opacity="0.2581261992454529" />
-                                                      </color>
-                                                  </Stop>
-                                                  <Stop offset="1.0">
-                                                      <color>
-                                                          <Color red="1.0" green="1.0" blue="1.0" />
-                                                      </color>
-                                                  </Stop>
-                                              </stops>
-                                          </LinearGradient>
-                                      </fill>
-                                  </Rectangle>
-                                  <VBox maxWidth="-Infinity" minHeight="-Infinity" spacing="5.0">
-                                      <children>
-                                          <Label fx:id="title" text="Title" textFill="WHITE">
-                                              <font>
-                                                  <Font name="Arial Bold" size="24.0" />
-                                              </font>
-                                          </Label>
-                                          <Label fx:id="release" text="Release" textFill="WHITE">
-                                              <font>
-                                                  <Font name="Arial" size="15.0" />
-                                              </font>
-                                          </Label>
-                                          <Region prefHeight="98.0" prefWidth="530.0" />
-                                          <Label fx:id="overview" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="806.0" text="Overview" textFill="WHITE" wrapText="true">
-                                              <font>
-                                                  <Font name="Arial" size="15.0" />
-                                              </font>
-                                          </Label>
-                                      </children>
-                                      <HBox.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                                      </HBox.margin>
-                                  </VBox>
-                              </children>
-                          </HBox>
-                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                        <children>
-                           <HBox alignment="CENTER">
-                              <children>
-                                 <Label text="Rating: " textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                                 <Label fx:id="rating" layoutX="570.0" layoutY="10.0" text="Rating" textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </HBox>
-                           <HBox alignment="CENTER" layoutX="10.0" layoutY="93.0">
-                              <children>
-                                 <Label text="Runtime: " textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                                 <Label fx:id="runtime" layoutX="570.0" layoutY="10.0" text="Runtime" textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </HBox>
-                           <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0">
-                              <children>
-                                 <Label fx:id="episodes" text="Episodes: " textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                                 <Label fx:id="episodes" layoutX="570.0" layoutY="10.0" text="Episodes" textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </HBox>
-                           <HBox alignment="CENTER" layoutX="10.0" layoutY="119.0">
-                              <children>
-                                 <Label text="Seasons: " textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                                 <Label fx:id="seasons" layoutX="570.0" layoutY="10.0" text="Seasons" textFill="WHITE">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </HBox>
-                           <HBox alignment="CENTER" layoutX="10.0" layoutY="127.0">
-                              <children>
-                                 <Label layoutX="570.0" layoutY="10.0" onMouseClicked="#onImdb" text="See on Imdb.com" textFill="WHITE" underline="true">
-                                    <font>
-                                       <Font name="Arial" size="18.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </HBox>
-                        </children>
-                     </VBox>
-                      </VBox>
-                  </center>
-                  <bottom>
-                  <AnchorPane BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin>
-                     <children>
-                              <Button fx:id="watch" defaultButton="true" focusTraversable="false" layoutX="1040.0" mnemonicParsing="false" onAction="#onWatch" prefWidth="120.0" text="Watch Now" />
-                     </children>
-                  </AnchorPane>
-                  </bottom>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </VBox.margin>
-              </BorderPane>
-         </children>
-      </VBox>
+        <VBox>
+            <StackPane.margin>
+                <Insets />
+            </StackPane.margin>
+            <children>
+                <AnchorPane style="-fx-background-color: rgb(0,0,0,0.5);">
+                    <children>
+                        <Label layoutX="29.0" layoutY="6.0" onMouseClicked="#onBack" text="&lt; Back" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                            <font>
+                                <Font name="Arial Bold" size="10.0" />
+                            </font>
+                        </Label>
+                        <MenuButton layoutX="335.0" layoutY="24.0" mnemonicParsing="false" text="MenuButton" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onUnwatch" text="Unwwatch" />
+                                <MenuItem mnemonicParsing="false" onAction="#onDelete" text="Delete" />
+                            </items>
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </MenuButton>
+                    </children>
+                </AnchorPane>
+                <BorderPane>
+                    <center>
+                        <VBox prefHeight="832.0" spacing="20.0" BorderPane.alignment="CENTER">
+                            <HBox spacing="10.0">
+                                <VBox.margin>
+                                    <Insets />
+                                </VBox.margin>
+                                <children>
+                                    <Rectangle fx:id="posterPic" arcHeight="30.0" arcWidth="30.0" height="300.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" width="200.0">
+                                        <fill>
+                                            <LinearGradient endX="1.0" endY="1.0">
+                                                <stops>
+                                                    <Stop>
+                                                        <color>
+                                                            <Color red="0.11999999731779099" green="0.5746666789054871" blue="1.0" opacity="0.2581261992454529" />
+                                                        </color>
+                                                    </Stop>
+                                                    <Stop offset="1.0">
+                                                        <color>
+                                                            <Color red="1.0" green="1.0" blue="1.0" />
+                                                        </color>
+                                                    </Stop>
+                                                </stops>
+                                            </LinearGradient>
+                                        </fill>
+                                    </Rectangle>
+                                    <VBox maxWidth="-Infinity" minHeight="-Infinity" spacing="5.0">
+                                        <children>
+                                            <Label fx:id="title" text="Title" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial Bold" size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <Label fx:id="release" text="Release" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="15.0" />
+                                                </font>
+                                            </Label>
+                                            <Region prefHeight="98.0" prefWidth="530.0" />
+                                            <Label fx:id="overview" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="806.0" text="Overview" textFill="WHITE" wrapText="true">
+                                                <font>
+                                                    <Font name="Arial" size="15.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <HBox.margin>
+                                            <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                                        </HBox.margin>
+                                    </VBox>
+                                </children>
+                            </HBox>
+                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                <children>
+                                    <HBox alignment="CENTER">
+                                        <children>
+                                            <Label text="Rating: " textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <Label fx:id="rating" layoutX="570.0" layoutY="10.0" text="Rating" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="93.0">
+                                        <children>
+                                            <Label text="Runtime: " textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <Label fx:id="runtime" layoutX="570.0" layoutY="10.0" text="Runtime" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0">
+                                        <children>
+                                            <Label text="Episodes: " textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <Label fx:id="episodes" layoutX="570.0" layoutY="10.0" text="Episodes" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="119.0">
+                                        <children>
+                                            <Label text="Seasons: " textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <Label fx:id="seasons" layoutX="570.0" layoutY="10.0" text="Seasons" textFill="WHITE">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="127.0">
+                                        <children>
+                                            <Label layoutX="570.0" layoutY="10.0" onMouseClicked="#onImdb" text="See on Imdb.com" textFill="WHITE" underline="true">
+                                                <font>
+                                                    <Font name="Arial" size="18.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                        </VBox>
+                    </center>
+                    <bottom>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets />
+                            </BorderPane.margin>
+                            <children>
+                                <Button fx:id="watch" defaultButton="true" focusTraversable="false" layoutX="1040.0" mnemonicParsing="false" onAction="#onWatch" prefWidth="120.0" text="Watch Now" AnchorPane.rightAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                    </bottom>
+                    <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </VBox.margin>
+                </BorderPane>
+            </children>
+        </VBox>
     </children>
 </StackPane>

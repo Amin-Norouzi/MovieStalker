@@ -22,6 +22,6 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Stage stage = event.getDefault(event);
 
         switcher.initialize(stage);
-        switcher.switchTo(view, null);
+        switcher.switchTo(view, null,null);
     }
 }
