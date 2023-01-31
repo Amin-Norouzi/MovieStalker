@@ -9,7 +9,7 @@
 <fx:root fx:id="root" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="470.0" spacing="25.0"
       xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.HBox">
     <children>
-        <Rectangle fx:id="poster" arcHeight="10.0" arcWidth="10.0" fill="DODGERBLUE" height="70.0" stroke="BLACK"
+        <Rectangle fx:id="poster" onMouseClicked="#onMovie" arcHeight="10.0" arcWidth="10.0" fill="DODGERBLUE" height="70.0" stroke="BLACK"
                    strokeType="INSIDE" strokeWidth="0.0" width="140.0"/>
         <Label fx:id="rank" text="1">
             <font>
