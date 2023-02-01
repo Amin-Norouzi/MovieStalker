@@ -1,9 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
@@ -80,8 +78,7 @@ public class AdditionController extends Controller {
 
                 Search search = rows.get(row);
                 try {
-                    User user = library.add(getUser(), search);
-                    setUser(user);
+                    execute(() -> library.add(getUser(), search));
 
                     notification.show("info", ("Movie added to your library."));
 

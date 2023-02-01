@@ -1,11 +1,10 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -61,9 +60,11 @@ public class MovieController extends Controller {
     protected void configure() {
         movie = (Movie) getInput();
 
-        image.load(movie.getBackdrop()).thenAccept(image -> backdropPic.setImage(image));
+        ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 1280, 832, true);
+        image.load(backdropInfo).thenAccept(image -> backdropPic.setImage(image));
 
-        image.load(movie.getPoster()).thenAccept(image -> {
+        ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true);
+        image.load(posterInfo).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             posterPic.setFill(pattern);
         });
@@ -112,25 +113,14 @@ public class MovieController extends Controller {
 
     @FXML
     private void onWatch(ActionEvent event) {
-        User current = getUser();
-        User user = library.watch(movie);
-
-        // the result is true! NOW works fine thanks to user equals and hashcode methods.
-        if (user.equals(current)) {
-            System.out.println("equals 🎊");
-        } else {
-            System.out.println("nah bro 🥹");
-        }
-
-        setUser(user);
+        execute(() -> library.watch(movie));
 
         watch.setText("Watched");
     }
 
     @FXML
     private void onUnwatch(ActionEvent event) {
-        User user = library.unwatch(movie);
-        setUser(user);
+        execute(() -> library.unwatch(movie));
 
         watch.setText("Watch Now");
     }
@@ -139,8 +129,7 @@ public class MovieController extends Controller {
     private void onDelete(ActionEvent event) {
         notification.showConfirmation("Are you sure you want to delete this?", () -> {
             try {
-                User user = library.delete(movie);
-                setUser(user);
+                execute(() -> library.delete(movie));
 
                 switchTo(View.LIBRARY);
             } catch (RuntimeException exception) {

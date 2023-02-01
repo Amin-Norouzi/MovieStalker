@@ -1,11 +1,11 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -95,7 +95,8 @@ public class LibraryController extends Controller {
             body.getChildren().add(rectangle);
             contents.put(rectangle, movie);
 
-            image.load(movie.getPoster()).thenAccept(image -> {
+            ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true);
+            image.load(posterInfo).thenAccept(image -> {
                 ImagePattern pattern = new ImagePattern(image);
 
                 rectangle.setFill(pattern);

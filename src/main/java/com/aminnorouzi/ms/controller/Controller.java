@@ -17,6 +17,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.Callable;
+
 @Data
 @Component
 @RequiredArgsConstructor
@@ -50,20 +52,14 @@ public abstract class Controller {
         configure();
     }
 
-//    protected void execute(Task<User> task) {
-//        Thread thread = new Thread(() -> {
-//            task.run();
-//            Platform.runLater(() -> update(task.getValue()));
-//        });
-//
-//        thread.setDaemon(true);
-//        thread.start();
-//    }
-//
-//    protected void update(User request) {
-//        System.out.println(request.getFullName());
-//        setUser(request);
-//    }
+    protected void execute(Callable<User> callable) {
+        try {
+            User updated = callable.call();
+            setUser(updated);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void switchTo(View view) {
         switchTo(view, null);

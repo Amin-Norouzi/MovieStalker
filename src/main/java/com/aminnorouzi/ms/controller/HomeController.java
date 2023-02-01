@@ -6,6 +6,7 @@ import com.aminnorouzi.ms.node.WatchedNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -61,8 +62,9 @@ public class HomeController extends Controller {
 //            return;
 //        }
 
-//      Image image = new Image("/templates/image/home-banner.png", 300, 960, false, false, true);
-        image.load("/templates/image/home-banner.png").thenAccept(image -> {
+        ImageInfo bannerInfo = new ImageInfo("/templates/image/home-banner.png",
+                300, 960, true);
+        image.load(bannerInfo).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             bannerPic.setFill(pattern);
         });

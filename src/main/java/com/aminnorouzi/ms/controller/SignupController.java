@@ -1,7 +1,5 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
@@ -48,15 +46,14 @@ public class SignupController extends Controller {
 
     @FXML
     private void onSignup(ActionEvent event) {
-        UserRequest userRequest = UserRequest.builder()
+        UserRequest request = UserRequest.builder()
                 .fullName(fullNameField.getText().toLowerCase())
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
                 .build();
 
         try {
-            User created = activity.signup(userRequest);
-            setUser(created);
+            execute(() -> activity.signup(request));
 
             switchTo(View.HOME);
         } catch (RuntimeException exception) {

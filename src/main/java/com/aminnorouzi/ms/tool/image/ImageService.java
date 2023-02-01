@@ -3,9 +3,9 @@ package com.aminnorouzi.ms.tool.image;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,11 +17,16 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class ImageService {
 
-    private String url = "https://image.tmdb.org/t/p/w400%s";
-    private String directory = "res%s";
-    private String type = "jpg";
+    @Value("${image.service.url}")
+    private String url;
 
-    private final ImageCacher imageCacher;
+    @Value("${image.service.directory}")
+    private String directory;
+
+    @Value("${image.service.type}")
+    private String type;
+
+    private final ImageCacher cacher;
 
     static {
         // https://stackoverflow.com/a/22742898/11552184
@@ -29,38 +34,37 @@ public class ImageService {
     }
 
     // TODO: handle exceptions
-    public CompletableFuture<Image> load(String filename) {
-        if (exists(filename)) {
-            return CompletableFuture.supplyAsync(()-> find(filename));
+    public CompletableFuture<Image> load(ImageInfo info) {
+        if (exists(info.getName())) {
+            return CompletableFuture.supplyAsync(() -> find(info));
         }
-
-        System.out.println("loaded from url");
-        return CompletableFuture.supplyAsync(()-> download(filename));
+        return CompletableFuture.supplyAsync(() -> download(info));
     }
 
-    private Image find(String filename) {
-        if (imageCacher.contains(filename)) {
-            System.out.println("loaded from cache");
-            return imageCacher.get(filename);
+    private Image find(ImageInfo info) {
+        if (cacher.contains(info.getName())) {
+            return cacher.get(info.getName());
         }
 
-        System.out.println("loaded from disk");
-        File file = new File(format(directory, filename));
+        File file = new File(format(directory, info.getName()));
 
-        Image loaded = new Image(file.toURI().toString());
-        imageCacher.cache(filename, loaded);
+        Image loaded = new Image(file.toURI().toString(), info.getWidth(), info.getHeight(),
+                false, false);
+        cacher.cache(info.getName(), loaded);
 
         return loaded;
     }
 
-    private Image download(String filename) {
-        File file = new File(format(directory, filename));
+    private Image download(ImageInfo info) {
+        File file = new File(format(directory, info.getName()));
         try {
-            BufferedImage image = ImageIO.read(new URL(format(url, filename)));
-            ImageIO.write(image, type, file);
+            BufferedImage image = ImageIO.read(new URL(format(url, info.getName())));
+            if (info.isCacheable()) {
+                ImageIO.write(image, type, file);
+            }
 
             Image downloaded = SwingFXUtils.toFXImage(image, null);
-            imageCacher.cache(filename, downloaded);
+            cacher.cache(info.getName(), downloaded);
 
             return downloaded;
         } catch (IOException e) {

@@ -1,6 +1,5 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.FullPathUrl;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -32,7 +31,7 @@ public class Search {
     @JsonProperty("overview")
     private String overview;
 
-    @FullPathUrl
+//    @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
 

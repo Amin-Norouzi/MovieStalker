@@ -1,7 +1,5 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
@@ -49,8 +47,7 @@ public class SigninController extends Controller {
                 .build();
 
         try {
-            User found = activity.signin(request);
-            setUser(found);
+            execute(() -> activity.signin(request));
 
             switchTo(View.HOME);
         } catch (Exception exception) {

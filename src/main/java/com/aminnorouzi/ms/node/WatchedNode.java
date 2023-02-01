@@ -3,9 +3,8 @@ package com.aminnorouzi.ms.node;
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.exception.IllegalViewException;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.tool.image.ImageService;
+import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.view.View;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -32,7 +31,8 @@ public class WatchedNode extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.load();
 
-            controller.getImage().load(movie.getBackdrop()).thenAccept(image -> {
+            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 140, 70, true);
+            controller.getImage().load(backdropInfo).thenAccept(image -> {
                 ((Rectangle) lookup("#poster")).setFill(new ImagePattern(image));
             });
 
