@@ -10,6 +10,7 @@ import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,8 @@ public class SignupController extends Controller {
     private PasswordField passwordField;
     @FXML
     private Button signupButton;
+    @FXML
+    private CheckBox privacyBox;
 
     public SignupController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
         super(switcher, notification, library, activity, image);
@@ -41,7 +44,8 @@ public class SignupController extends Controller {
                 .or(usernameField.textProperty().length().lessThan(5))
                 .or(usernameField.textProperty().length().greaterThan(16))
                 .or(passwordField.textProperty().length().lessThan(4))
-                .or(passwordField.textProperty().length().greaterThan(32)));
+                .or(passwordField.textProperty().length().greaterThan(32))
+                .or(privacyBox.selectedProperty().not()));
     }
 
     @FXML

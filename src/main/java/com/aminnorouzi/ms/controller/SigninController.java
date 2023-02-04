@@ -7,11 +7,11 @@ import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
-import io.github.palexdev.materialfx.controls.MFXPasswordField;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -21,9 +21,9 @@ import org.springframework.stereotype.Component;
 public class SigninController extends Controller {
 
     @FXML
-    private MFXTextField usernameField;
+    private TextField usernameField;
     @FXML
-    private MFXPasswordField passwordField;
+    private PasswordField passwordField;
     @FXML
     private Button signinButton;
 
@@ -51,7 +51,8 @@ public class SigninController extends Controller {
 
             switchTo(View.HOME);
         } catch (Exception exception) {
-            notification.showError(exception.getMessage());
+            exception.printStackTrace();
+            notification.showError(exception.getMessage().toString());
         }
     }
 

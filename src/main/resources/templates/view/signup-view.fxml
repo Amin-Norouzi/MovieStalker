@@ -1,69 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane fx:id="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SignupController">
-   <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
-          <center>
-              <VBox alignment="CENTER" fillWidth="false" minHeight="-Infinity" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-                  <children>
-                      <Label text="Create New Account!" textAlignment="CENTER">
-                          <font>
-                              <Font name="Arial Bold" size="26.0" />
-                          </font>
-                          <VBox.margin>
-                              <Insets bottom="20.0" />
-                          </VBox.margin>
-                      </Label>
-                      <TextField fx:id="fullNameField" prefHeight="34.0" prefWidth="220.0" promptText="Full Name">
-                          <font>
-                              <Font name="Arial" size="13.0" />
-                          </font>
-                      </TextField>
-                      <TextField fx:id="usernameField" prefHeight="34.0" prefWidth="220.0" promptText="Username">
-                          <font>
-                              <Font name="Arial" size="13.0" />
-                          </font>
-                      </TextField>
-                      <PasswordField fx:id="passwordField" prefHeight="34.0" prefWidth="220.0" promptText="Password">
-                          <font>
-                              <Font name="Arial" size="13.0" />
-                          </font>
-                      </PasswordField>
-                      <Button fx:id="signupButton" mnemonicParsing="false" onAction="#onSignup" prefWidth="220.0" text="Sign up">
-                          <VBox.margin>
-                              <Insets top="10.0" />
-                          </VBox.margin>
-                          <font>
-                              <Font name="Arial" size="13.0" />
-                          </font>
-                      </Button>
-                      <Label onMouseClicked="#onSignin" text="Already have an account? Sign in" />
-                  </children>
-                  <BorderPane.margin>
-                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                  </BorderPane.margin>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-              </VBox>
-          </center>
-      
-          <!--    <fx:script>-->
-          <!--        function isValid(String val) {-->
-          <!--        usernameField.setText("not  valid");-->
-          <!--        }-->
-          <!--    </fx:script>-->
-      </BorderPane>
-   </children>
+<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/signup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SignupController">
+    <children>
+        <HBox>
+            <children>
+                <VBox alignment="CENTER" fillWidth="false" prefWidth="640.0">
+                    <children>
+                        <ImageView fitHeight="714.0" fitWidth="541.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../image/signup-pic.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" fillWidth="false" prefWidth="640.0">
+                    <children>
+                        <VBox fillWidth="false" spacing="10.0">
+                            <children>
+                                <VBox spacing="11.0">
+                                    <children>
+                                        <Label text="Welcome to Movie Stalker!" textAlignment="CENTER" textFill="#1c1818">
+                                            <font>
+                                                <Font name="Poppins SemiBold" size="36.0" />
+                                            </font>
+                                        </Label>
+                                        <Label prefHeight="24.0" text="Enter your Information to create a new account" textAlignment="CENTER" textFill="#777777">
+                                            <font>
+                                                <Font name="Poppins Regular" size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <HBox>
+                                    <children>
+                                        <Label prefHeight="24.0" text="Already have an account? " textAlignment="CENTER" textFill="#1c1818">
+                                            <font>
+                                                <Font name="Poppins Regular" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label id="signupButton" fx:id="signinButton" layoutX="10.0" layoutY="10.0" onMouseClicked="#onSignin" prefHeight="24.0" text="Login" textAlignment="CENTER" textFill="#0055fb">
+                                            <font>
+                                                <Font name="Poppins Regular" size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <VBox spacing="28.0">
+                                    <children>
+                                        <Button id="google-button" fx:id="googleButton" contentDisplay="RIGHT" focusTraversable="false" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="528.0" text="Signup with Google">
+                                            <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../image/google-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <AnchorPane>
+                                            <children>
+                                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="13.5" layoutY="11.5" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0">
+                                                    <image>
+                                                        <Image url="@../image/line-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <Label layoutX="255.5" prefHeight="24.0" prefWidth="17.0" text="or" AnchorPane.leftAnchor="255.5" AnchorPane.rightAnchor="255.5" />
+                                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="314.5" layoutY="11.5" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                                                    <image>
+                                                        <Image url="@../image/line-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </AnchorPane>
+                                        <VBox spacing="22.0">
+                                            <children>
+                                                <TextField id="username-field" fx:id="fullNameField" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Full name">
+                                                    <opaqueInsets>
+                                                        <Insets left="50.0" />
+                                                    </opaqueInsets>
+                                                    <cursor>
+                                                        <Cursor fx:constant="DEFAULT" />
+                                                    </cursor>
+                                                    <padding>
+                                                        <Insets left="48.0" />
+                                                    </padding>
+                                                </TextField>
+                                                <TextField id="username-field" fx:id="usernameField" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Username">
+                                                    <opaqueInsets>
+                                                        <Insets left="50.0" />
+                                                    </opaqueInsets>
+                                                    <cursor>
+                                                        <Cursor fx:constant="DEFAULT" />
+                                                    </cursor>
+                                                    <padding>
+                                                        <Insets left="48.0" />
+                                                    </padding>
+                                                </TextField>
+                                                <PasswordField id="password-field" fx:id="passwordField" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Password">
+                                                    <opaqueInsets>
+                                                        <Insets />
+                                                    </opaqueInsets>
+                                                    <padding>
+                                                        <Insets left="48.0" />
+                                                    </padding>
+                                                </PasswordField>
+                                                <Button id="signin-button" fx:id="signupButton" mnemonicParsing="false" onAction="#onSignup" prefHeight="56.0" prefWidth="528.0" text="Signup" />
+                                                <AnchorPane>
+                                                    <VBox.margin>
+                                                        <Insets top="2.0" />
+                                                    </VBox.margin>
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" maxWidth="528.0" spacing="8.0" AnchorPane.leftAnchor="0.0">
+                                                            <children>
+                                                                <CheckBox id="remenber-box" fx:id="privacyBox" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="528.0" text="Creating an account means you’re okay with our Terms of Service, Privacy Policy" wrapText="true" />
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </AnchorPane>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
 </StackPane>

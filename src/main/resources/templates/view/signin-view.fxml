@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
-<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/signin-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SigninController">
@@ -45,7 +44,7 @@
                                     <Font name="Poppins Regular" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="24.0" text="Signup" textAlignment="CENTER" textFill="#0055fb">
+                              <Label id="signupButton" fx:id="signupButton" layoutX="10.0" layoutY="10.0" onMouseClicked="#onSignup" prefHeight="24.0" text="Signup" textAlignment="CENTER" textFill="#0055fb">
                                  <font>
                                     <Font name="Poppins Regular" size="18.0" />
                                  </font>
@@ -57,59 +56,61 @@
                         </HBox>
                         <VBox spacing="28.0">
                            <children>
-                              <MFXButton prefHeight="56.0" prefWidth="528.0" rippleColor="WHITE" style="-fx-border-color: #F2F2F2; -fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-radius: 5;" text="Login with Google" textFill="#161b2c">
-                                 <font>
-                                    <Font name="Poppins Medium" size="16.0" />
-                                 </font>
-                              </MFXButton>
-                              <HBox alignment="CENTER" prefHeight="24.0" prefWidth="528.0" spacing="42.0">
+                              <Button id="google-button" fx:id="googleButton" contentDisplay="RIGHT" focusTraversable="false" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="528.0" text="Login with Google">
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/google-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <AnchorPane>
                                  <children>
-                                    <Line endX="100.0" startX="-125.874755859375" startY="-0.20710676908493042" stroke="#777777" />
-                                    <Label prefHeight="24.0" prefWidth="17.0" text="or" textFill="#1c1818">
-                                       <font>
-                                          <Font name="Poppins Regular" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Line endX="100.0" startX="-100.0" stroke="#777777" />
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="13.5" layoutY="11.5" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0">
+                                       <image>
+                                          <Image url="@../image/line-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="255.5" prefHeight="24.0" prefWidth="17.0" text="or" AnchorPane.leftAnchor="255.5" AnchorPane.rightAnchor="255.5" />
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="314.5" layoutY="11.5" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+                                       <image>
+                                          <Image url="@../image/line-icon.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
-                              </HBox>
+                              </AnchorPane>
                               <VBox spacing="22.0">
                                  <children>
-                                    <MFXTextField id="usernameField" fx:id="usernameField" floatMode="BORDER" floatingText="Username" prefHeight="56.0" prefWidth="528.0">
-                                       <font>
-                                          <Font name="Poppins Regular" size="16.0" />
-                                       </font>
-                                    </MFXTextField>
-                                    <MFXPasswordField id="passwordField" fx:id="passwordField" floatMode="BORDER" floatingText="Password" prefHeight="56.0" prefWidth="528.0">
-                                       <font>
-                                          <Font name="Poppins Regular" size="16.0" />
-                                       </font>
-                                    </MFXPasswordField>
-                                          <Button id="signinButton" fx:id="signinButton" mnemonicParsing="false" onAction="#onSignin" prefHeight="56.0" prefWidth="528.0" text="Login">
-                                              <font>
-                                                  <Font name="Poppins Medium" size="16.0" />
-                                              </font>
-                                          </Button>
+                                    <TextField id="username-field" fx:id="usernameField" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Username">
+                                       <opaqueInsets>
+                                          <Insets left="50.0" />
+                                       </opaqueInsets>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                       <padding>
+                                          <Insets left="48.0" />
+                                       </padding></TextField>
+                                    <PasswordField id="password-field" fx:id="passwordField" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Password">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="48.0" />
+                                       </padding></PasswordField>
+                                          <Button id="signin-button" fx:id="signinButton" mnemonicParsing="false" onAction="#onSignin" prefHeight="56.0" prefWidth="528.0" text="Login" />
                                     <AnchorPane>
                                        <VBox.margin>
                                           <Insets top="2.0" />
                                        </VBox.margin>
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" spacing="8.0" AnchorPane.leftAnchor="0.0">
-                                             <children>
-                                                <MFXCheckbox contentDisposition="CENTER" prefHeight="24.0" prefWidth="24.0" />
-                                                <Label prefHeight="24.0" text="Remember Me?" textAlignment="CENTER" textFill="#1c1818">
-                                                   <font>
-                                                      <Font name="Poppins Regular" size="16.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <Label layoutX="386.0" prefHeight="24.0" text="Forget your password?" textAlignment="CENTER" textFill="#1c1818" AnchorPane.rightAnchor="0.0">
+                                          <HBox alignment="CENTER_LEFT" spacing="8.0" AnchorPane.leftAnchor="0.0" />
+                                          <Label layoutX="386.0" prefHeight="24.0" text="Forget your password?" textAlignment="CENTER" textFill="#1c1818" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font name="Poppins Regular" size="16.0" />
                                              </font>
                                           </Label>
+                                          <CheckBox id="remenber-box" fx:id="rememberCheckBox" graphicTextGap="8.0" layoutX="-5.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" text="Remember Me?" AnchorPane.leftAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -125,9 +126,9 @@
             </VBox>
             <VBox alignment="CENTER" fillWidth="false" prefWidth="640.0">
                <children>
-                  <ImageView fitHeight="714.0" fitWidth="541.0" pickOnBounds="true">
+                  <ImageView fitHeight="714.0" fitWidth="541.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/signin-image.jpg" />
+                        <Image url="@../image/signin-pic.png" />
                      </image>
                   </ImageView>
                </children>
