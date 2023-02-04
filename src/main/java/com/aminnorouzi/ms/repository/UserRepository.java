@@ -13,10 +13,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
     @NotNull
-    @Query("select u from User u left join fetch u.movies")
+    @Query("select u from User u left join fetch u.movies where u.id = ?1")
     Optional<User> findById(@NotNull Long id);
 
-    @Query("select u from User u left join fetch u.movies")
     Optional<User> findByUsername(String username);
 
     boolean existsByUsername(String username);

@@ -3,13 +3,15 @@ package com.aminnorouzi.ms.service;
 import com.aminnorouzi.ms.exception.IllegalSigninException;
 import com.aminnorouzi.ms.exception.IllegalSignupException;
 import com.aminnorouzi.ms.exception.UserNotFoundException;
-import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -42,6 +44,7 @@ public class UserService {
         return updated;
     }
 
+    @Transactional
     public User signup(UserRequest request) {
         verify(request);
 
@@ -49,6 +52,7 @@ public class UserService {
                 .username(request.getUsername())
                 .password(request.getPassword())
                 .fullName(request.getFullName())
+                .movies(new ArrayList<>())
                 .build();
 
         User created = userRepository.save(user);
@@ -64,13 +68,15 @@ public class UserService {
         }
     }
 
+    @Transactional
     public User signin(UserRequest userRequest) {
         User found = getByUsername(userRequest.getUsername());
-
         verify(userRequest, found);
 
-        log.info("Signed in for user: {}", found);
-        return found;
+        User validated = getById(found.getId());
+
+        log.info("Signed in for user: {}", validated);
+        return validated;
     }
 
     private void verify(UserRequest request, User user) {
@@ -85,12 +91,11 @@ public class UserService {
         User found = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", id)));
 
-        found.getMovies();
-
         log.info("Found a user: {}", found);
         return found;
     }
 
+    @Transactional
     public User getByUsername(String username) {
         User found = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", username)));

@@ -55,6 +55,10 @@ public class HomeController extends Controller {
 
     @Override
     public void configure() {
+        if (getUser().getMovies().isEmpty()) {
+            return;
+        }
+
         MovieRecord data = library.report(getUser());
 
         // TODO
