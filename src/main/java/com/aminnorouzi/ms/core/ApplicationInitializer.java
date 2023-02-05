@@ -1,15 +1,22 @@
 package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.MovieStalkerApplication;
+import com.aminnorouzi.ms.tool.view.View;
+import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 public class ApplicationInitializer extends Application {
 
@@ -33,20 +40,42 @@ public class ApplicationInitializer extends Application {
     }
 
     public static void loadFonts() {
-        List<String> fonts = getFonts();
+        List<String> fonts = List.of("Poppins-Bold.ttf", "Poppins-Medium.ttf", "Poppins-Regular.ttf",
+                "Poppins-SemiBold.ttf");
         for (String font : fonts) {
             Font.loadFont(ApplicationInitializer.class
                     .getResourceAsStream("/templates/font/" + font), 52);
         }
     }
 
-    public static List<String> getFonts() {
-        List<String> fonts = new ArrayList<>();
-        fonts.add("Poppins-Bold.ttf");
-        fonts.add("Poppins-Medium.ttf");
-        fonts.add("Poppins-Regular.ttf");
-        fonts.add("Poppins-SemiBold.ttf");
+    @Component
+    @RequiredArgsConstructor
+    public static class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
 
-        return fonts;
+        private final ViewSwitcher switcher;
+
+        @Override
+        public void onApplicationEvent(StageReadyEvent event) {
+            View view = View.getDefault();
+            Stage stage = event.getDefault(event);
+
+            stage.getIcons().add(new Image(Objects.requireNonNull(PrimaryStageInitializer.class
+                    .getResourceAsStream("/templates/image/application-icon.png"))));
+
+            if (Taskbar.isTaskbarSupported()) {
+                var taskbar = Taskbar.getTaskbar();
+
+                if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                    final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                    var dockIcon = defaultToolkit.getImage(getClass().
+                            getResource("/templates/image/application-icon.png"));
+                    taskbar.setIconImage(dockIcon);
+                }
+
+            }
+
+            switcher.initialize(stage);
+            switcher.switchTo(view, null, null);
+        }
     }
 }
