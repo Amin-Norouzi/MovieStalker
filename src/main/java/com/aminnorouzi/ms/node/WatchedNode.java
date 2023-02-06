@@ -31,7 +31,7 @@ public class WatchedNode extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.load();
 
-            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 140, 70, true);
+            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 420, 210, true);
             controller.getImage().load(backdropInfo).thenAccept(image -> {
                 ((Rectangle) lookup("#poster")).setFill(new ImagePattern(image));
             });

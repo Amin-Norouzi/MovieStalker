@@ -57,9 +57,7 @@ public class SignupController extends Controller {
                 .build();
 
         try {
-            execute(() -> activity.signup(request));
-
-            switchTo(View.HOME);
+            execute(() -> activity.signup(request), View.HOME);
         } catch (RuntimeException exception) {
             notification.showError(exception.getMessage());
         }

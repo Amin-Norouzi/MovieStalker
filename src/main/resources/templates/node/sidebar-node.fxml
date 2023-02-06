@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<fx:root fx:id="root"  xmlns="http://javafx.com/javafx/19"
-         xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.AnchorPane">
+
+<fx:root fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="253.0" spacing="10.0" stylesheets="@../style/sidebar-style.css" type="VBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox alignment="CENTER" spacing="10.0">
-            <children>
-                <Label text="Movie Stalker">
-                    <VBox.margin>
-                        <Insets bottom="20.0"/>
-                    </VBox.margin>
-                    <font>
-                        <Font name="Arial Bold" size="20.0"/>
-                    </font>
-                </Label>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#onHome" prefHeight="30.0"
-                        prefWidth="160.0" text="Home"/>
-                <Button disable="true" focusTraversable="false" layoutX="30.0" layoutY="73.0" mnemonicParsing="false"
-                        onAction="#onHome" prefHeight="30.0" prefWidth="160.0" text="Discover"/>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLibrary" prefHeight="30.0"
-                        prefWidth="160.0" text="Library"/>
-                <Button disable="true" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0"
-                        prefWidth="160.0" text="Watch"/>
-                <Region prefHeight="483.0"/>
-                <Button disable="true" focusTraversable="false" layoutX="30.0" layoutY="147.0" mnemonicParsing="false"
-                        prefHeight="30.0" prefWidth="160.0" text="Settings"/>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#onLogout" prefHeight="30.0"
-                        prefWidth="160.0" text="Log out" textFill="RED"/>
-            </children>
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-        </VBox>
+        <Label text="Movie Stalker">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+            <font>
+                <Font name="Arial Bold" size="20.0" />
+            </font>
+        </Label>
+      <VBox fx:id="container" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="198.0" spacing="9.0">
+         <children>
+              <Button id="home-button" fx:id="homeButton" focusTraversable="false" mnemonicParsing="false" onAction="#onHome" prefHeight="48.0" prefWidth="198.0" text="Home">
+               <padding>
+                  <Insets right="8.0" />
+               </padding>
+            </Button>
+              <Button id="discover-button" fx:id="discoverButton" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="198.0" text="Discover" />
+              <Button id="library-button" fx:id="libraryButton" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" onAction="#onLibrary" prefHeight="48.0" prefWidth="198.0" text="Library" />
+              <Button id="watch-button" fx:id="watchButton" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="198.0" text="Watch" />
+              <Region prefHeight="483.0" prefWidth="198.0" />
+              <Button id="logout-button" fx:id="logoutBotton" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" onAction="#onLogout" prefHeight="48.0" prefWidth="198.0" text="Logout" />
+         </children>
+      </VBox>
     </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
 </fx:root>

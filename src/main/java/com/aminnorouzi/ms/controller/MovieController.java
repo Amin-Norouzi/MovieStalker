@@ -129,9 +129,7 @@ public class MovieController extends Controller {
     private void onDelete(ActionEvent event) {
         notification.showConfirmation("Are you sure you want to delete this?", () -> {
             try {
-                execute(() -> library.delete(movie));
-
-                switchTo(View.LIBRARY);
+                execute(() -> library.delete(movie), View.LIBRARY);
             } catch (RuntimeException exception) {
                 exception.printStackTrace();
                 notification.showError(exception.getMessage());
@@ -141,6 +139,6 @@ public class MovieController extends Controller {
 
     @FXML
     private void onBack(MouseEvent event) {
-        switchTo(View.LIBRARY);
+        switchTo(View.PREVIOUS);
     }
 }

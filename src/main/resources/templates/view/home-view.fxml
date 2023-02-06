@@ -7,131 +7,77 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.HomeController">
+<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.HomeController">
     <children>
         <BorderPane fx:id="content">
             <center>
-                <ScrollPane fx:id="pane" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;"
-                            vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                <ScrollPane fx:id="pane" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                     <content>
-                        <VBox spacing="20.0" style="-fx-background-color: white;">
+                        <VBox prefWidth="1027.0" spacing="30.0" style="-fx-background-color: white;">
                             <children>
-                                <StackPane prefHeight="150.0" prefWidth="300.0">
-                                    <children>
-                                        <Rectangle fx:id="bannerPic" arcHeight="30.0" arcWidth="30.0" fill="DODGERBLUE"
-                                                   height="300.0" smooth="false" stroke="BLACK" strokeType="INSIDE"
-                                                   strokeWidth="0.0" width="960.0"/>
-                                        <VBox alignment="BOTTOM_LEFT" prefHeight="250.0" prefWidth="300.0"
-                                              spacing="5.0">
-                                            <children>
-                                                <HBox prefWidth="300.0">
-                                                    <children>
-                                                        <Label text="Hello, " textFill="WHITE">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="26.0"/>
-                                                            </font>
-                                                        </Label>
-                                                        <Label fx:id="fullName" text="full name" textFill="WHITE">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="26.0"/>
-                                                            </font>
-                                                        </Label>
-                                                    </children>
-                                                </HBox>
-                                                <Label text="Did you know that we are building this application just for you?"
-                                                       textFill="WHITE">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="26.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Button focusTraversable="false" mnemonicParsing="false"
-                                                        prefHeight="26.0" prefWidth="180.0"
-                                                        style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: black;"
-                                                        text="Learn More">
-                                                    <VBox.margin>
-                                                        <Insets top="20.0"/>
-                                                    </VBox.margin>
-                                                    <font>
-                                                        <Font name="Arial Bold" size="13.0"/>
-                                                    </font>
-                                                </Button>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="20.0" left="20.0"/>
-                                            </padding>
-                                        </VBox>
-                                    </children>
-                                </StackPane>
+                        <HBox prefWidth="947.0">
+                           <children>
+                              <TextField id="search-field" focusTraversable="false" prefHeight="56.0" prefWidth="528.0" promptText="Search title..." />
+                              <Region prefWidth="291.0" />
+                              <HBox spacing="16.0">
+                                 <children>
+                                    <Button id="setting-button" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" />
+                                    <Button id="notification-button" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <ImageView fitHeight="329.0" fitWidth="947.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/home-pic.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
                                 <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                             <children>
-                                                <Label text="Overview">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="16.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Region prefHeight="20.0" prefWidth="838.5"/>
-                                                <Label onMouseClicked="#onSeeAll" text="See All" textFill="#047dff">
-                                                    <font>
-                                                        <Font name="Arial" size="16.0"/>
-                                                    </font>
-                                                </Label>
+                                                <Label text="Overview" />
+                                                <Region prefHeight="20.0" prefWidth="838.5" />
                                             </children>
                                         </HBox>
-                                        <HBox prefHeight="170.0" prefWidth="200.0" spacing="20.0">
+                                        <HBox prefHeight="170.0" spacing="20.0">
                                             <children>
                                                 <VBox alignment="CENTER" prefWidth="225.0">
                                                     <children>
-                                                        <Label text="Total Movies"/>
-                                                        <Label fx:id="totalCount" text="total-count">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="24.0"/>
-                                                            </font>
-                                                        </Label>
+                                                        <Label text="Total Movies" />
+                                                        <Label fx:id="totalCount" text="total-count" />
                                                     </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0"
-                                                      prefWidth="225.0">
+                                                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefWidth="225.0">
                                                     <children>
-                                                        <Label text="Watched Movies"/>
-                                                        <Label fx:id="watchedCount" text="watched-count">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="24.0"/>
-                                                            </font>
-                                                        </Label>
+                                                        <Label text="Watched Movies" />
+                                                        <Label fx:id="watchedCount" text="watched-count" />
                                                     </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="255.0" layoutY="10.0"
-                                                      prefWidth="225.0">
+                                                <VBox alignment="CENTER" layoutX="255.0" layoutY="10.0" prefWidth="225.0">
                                                     <children>
-                                                        <Label text="Latest Movie"/>
-                                                        <Label fx:id="latestMovie" text="latest-movie">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="24.0"/>
-                                                            </font>
-                                                        </Label>
+                                                        <Label text="Latest Movie" />
+                                                        <Label fx:id="latestMovie" text="latest-movie" />
                                                     </children>
                                                 </VBox>
-                                                <VBox alignment="CENTER" layoutX="500.0" layoutY="10.0"
-                                                      prefWidth="225.0">
+                                                <VBox alignment="CENTER" layoutX="500.0" layoutY="10.0" prefWidth="225.0">
                                                     <children>
-                                                        <Label text="Favourite genre"/>
-                                                        <Label fx:id="favouriteGenre" text="favourite-genre">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="24.0"/>
-                                                            </font>
-                                                        </Label>
+                                                        <Label text="Favourite genre" />
+                                                        <Label fx:id="favouriteGenre" text="favourite-genre" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -142,55 +88,37 @@
                                     <children>
                                         <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                             <children>
-                                                <Label text="Recently Watched">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="16.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Region prefHeight="20.0" prefWidth="771.0"/>
-                                                <Label onMouseClicked="#onSeeAll" text="See All" textFill="#047dff">
-                                                    <font>
-                                                        <Font name="Arial" size="16.0"/>
-                                                    </font>
-                                                </Label>
+                                                <Label text="Recently Watched" />
+                                                <Region prefHeight="20.0" prefWidth="771.0" />
                                             </children>
                                         </HBox>
-                                        <TilePane fx:id="recentMovies" prefHeight="200.0"/>
+                                        <TilePane fx:id="recentMovies" prefHeight="200.0" />
                                     </children>
                                 </VBox>
                                 <VBox layoutX="10.0" layoutY="550.0" prefHeight="300.0" spacing="10.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="200.0">
                                             <children>
-                                                <Label text="New Movies">
-                                                    <font>
-                                                        <Font name="Arial Bold" size="16.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Region prefHeight="20.0" prefWidth="817.0"/>
-                                                <Label onMouseClicked="#onSeeAll" text="See All" textFill="#047dff">
-                                                    <font>
-                                                        <Font name="Arial" size="16.0"/>
-                                                    </font>
-                                                </Label>
+                                                <Label text="New Movies" />
+                                                <Region prefHeight="20.0" prefWidth="817.0" />
                                             </children>
                                         </HBox>
-                                        <LineChart fx:id="chart">
+                                        <LineChart fx:id="chart" minHeight="-Infinity" prefHeight="300.0">
                                             <xAxis>
-                                                <CategoryAxis label="Date" side="BOTTOM"/>
+                                                <CategoryAxis label="Date" side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
-                                                <NumberAxis label="Count" side="LEFT"/>
+                                                <NumberAxis label="Count" side="LEFT" />
                                             </yAxis>
                                         </LineChart>
                                     </children>
                                 </VBox>
                             </children>
+                     <padding>
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+                     </padding>
                         </VBox>
                     </content>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-                    </padding>
                 </ScrollPane>
             </center>
         </BorderPane>

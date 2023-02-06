@@ -1,0 +1,121 @@
+.root {
+    -fx-background-color: #F7F6F9;
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #1C1818;
+}
+
+.button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+
+    -fx-background-color: none;
+    -fx-border-color: none;
+    -fx-text-fill: #1C1818;
+}
+
+.button:hover {
+    -fx-background-color: #454242;
+    -fx-text-fill: #FFFFFF;
+}
+
+/*Workaround for .button:pressed which doesn't work*/
+
+#home-button-clicked {
+    -fx-background-color: #1C1818;
+    -fx-text-fill: #FFFFFF;
+
+    -fx-background-image: url('../image/home-w-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 98px 0px 52px;
+}
+
+#library-button-clicked {
+    -fx-background-color: #1C1818;
+    -fx-text-fill: #FFFFFF;
+
+    -fx-background-image: url('../image/library-w-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 91px 0px 52px;
+}
+
+/*#discover-button-clicked and #watch-button-clicked are disabled by default*/
+
+#home-button {
+    -fx-background-image: url('../image/home-b-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 98px 0px 52px;
+}
+
+#home-button:hover {
+    -fx-background-image: url('../image/home-w-icon.png');
+    -fx-background-size: 24px;
+}
+
+#discover-button {
+    -fx-background-image: url('../image/discover-b-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 76px 0px 52px;
+}
+
+#discover-button:hover {
+    -fx-background-image: url('../image/discover-w-icon.png');
+    -fx-background-size: 24px;
+}
+
+#library-button {
+    -fx-background-image: url('../image/library-b-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 91px 0px 52px;
+}
+
+#library-button:hover {
+    -fx-background-image: url('../image/library-w-icon.png');
+    -fx-background-size: 24px;
+}
+
+#watch-button {
+    -fx-background-image: url('../image/watch-b-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 93px 0px 52px;
+}
+
+#watch-button:hover {
+    -fx-background-image: url('../image/watch-w-icon.png');
+    -fx-background-size: 24px;
+}
+
+#logout-button {
+    -fx-background-image: url('../image/logout-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 91px 0px 52px;
+
+    -fx-text-fill: #D90437;
+}

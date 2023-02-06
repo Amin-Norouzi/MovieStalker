@@ -36,6 +36,8 @@ public abstract class Controller {
     private User user;
     private Object input;
 
+    private boolean changed = false;
+
     @FXML
     private StackPane root;
     @FXML
@@ -53,9 +55,19 @@ public abstract class Controller {
     }
 
     protected void execute(Callable<User> callable) {
+        execute(callable, null);
+    }
+
+    protected void execute(Callable<User> callable, View view) {
         try {
             User updated = callable.call();
+
             setUser(updated);
+            setChanged(true);
+
+            if (view != null) {
+                switchTo(view);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

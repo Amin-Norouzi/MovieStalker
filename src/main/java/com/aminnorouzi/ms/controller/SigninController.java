@@ -47,9 +47,7 @@ public class SigninController extends Controller {
                 .build();
 
         try {
-            execute(() -> activity.signin(request));
-
-            switchTo(View.HOME);
+            execute(() -> activity.signin(request), View.HOME);
         } catch (Exception exception) {
             exception.printStackTrace();
             notification.showError(exception.getMessage().toString());

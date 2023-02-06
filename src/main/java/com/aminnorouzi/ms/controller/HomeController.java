@@ -31,11 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HomeController extends Controller {
 
     @FXML
-    private Rectangle bannerPic;
-    @FXML
     private Label favouriteGenre;
-    @FXML
-    private Label fullName;
     @FXML
     private Label latestMovie;
     @FXML
@@ -66,17 +62,8 @@ public class HomeController extends Controller {
 //            return;
 //        }
 
-        ImageInfo bannerInfo = new ImageInfo("/templates/image/home-banner.png",
-                300, 960, true);
-        image.load(bannerInfo).thenAccept(image -> {
-            ImagePattern pattern = new ImagePattern(image);
-            bannerPic.setFill(pattern);
-        });
-
         initWatchedChart(getUser().getMovies());
         initRecentWatched(data.getPlaylist());
-
-        fullName.setText(getUser().getFullName());
 
         totalCount.setText(String.valueOf(data.getTotal()));
         watchedCount.setText(String.valueOf(data.getWatched()));
