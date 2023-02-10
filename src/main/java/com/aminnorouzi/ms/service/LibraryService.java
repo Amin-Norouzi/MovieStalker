@@ -34,14 +34,20 @@ public class LibraryService {
     }
 
     public User watch(Movie movie) {
-        movieService.watch(movie);
+        if (movie.getWatchedAt() != null) {
+            return movie.getUser();
+        }
 
+        movieService.watch(movie);
         return userService.update(movie.getUser());
     }
 
     public User unwatch(Movie movie) {
-        movieService.unwatch(movie);
+        if (movie.getWatchedAt() == null) {
+            return movie.getUser();
+        }
 
+        movieService.unwatch(movie);
         return userService.update(movie.getUser());
     }
 

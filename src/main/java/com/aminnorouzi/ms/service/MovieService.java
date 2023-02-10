@@ -86,10 +86,10 @@ public class MovieService {
         log.info("Watched a movie: {}", request);
     }
 
-    public void unwatch(Movie movie) {
-        movie.setWatchedAt(null);
+    public void unwatch(Movie request) {
+        request.setWatchedAt(null);
 
-        log.info("Unwatched a movie: {}", movie);
+        log.info("Unwatched a movie: {}", request);
     }
 
     public void delete(Movie movie) {
