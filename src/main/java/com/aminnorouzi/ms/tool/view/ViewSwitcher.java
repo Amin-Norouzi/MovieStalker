@@ -1,7 +1,6 @@
 package com.aminnorouzi.ms.tool.view;
 
 import com.aminnorouzi.ms.model.user.User;
-import com.aminnorouzi.ms.tool.view.ViewCacher.CacheKey;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -12,14 +11,15 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @RequiredArgsConstructor
-@Getter(AccessLevel.NONE)
+@Getter(AccessLevel.PROTECTED)
 @Setter(AccessLevel.PROTECTED)
 public class ViewSwitcher {
 
-    private final ViewLoader viewLoader;
-    private final ViewCacher viewCacher;
+    private final ViewLoader loader;
+    private final ViewCacher cacher;
 
     private View current;
+    private View previous;
 
     @Getter(AccessLevel.PRIVATE)
     private Stage stage;
@@ -39,24 +39,29 @@ public class ViewSwitcher {
             cleanup();
         }
 
-        Parent root;
-//        CacheKey key = CacheKey.of(view, user, input)
+        if (view.equals(View.PREVIOUS)) {
+            view = getPrevious();
+        }
 
-//        if (viewCacher.contains(key)) {
-//            System.out.println(view + ": loading from cache");
-//            root = viewCacher.get(key);
-//        } else {
-//            System.out.println(view + ": loading from loader");
-            root = viewLoader.load(view, user, input);
-//        }
+        CacheKey key = CacheKey.of(view, user, input);
+        Parent root = load(key, user);
 
-//        cacheup(key, root);
+        cacheup(key, root);
         showup(view, root);
     }
 
-    private void cacheup(CacheKey key, Parent root) {
-        viewCacher.cache(key, root);
+    private Parent load(CacheKey key, User user) {
+        if (cacher.contains(key)) {
+            return cacher.get(key);
+        }
 
+        return loader.load(key.getView(), user, key.getInput());
+    }
+
+    private void cacheup(CacheKey key, Parent root) {
+        cacher.cache(key, root);
+
+        setPrevious(getCurrent());
         setCurrent(key.getView());
     }
 
@@ -69,6 +74,6 @@ public class ViewSwitcher {
 
     private void cleanup() {
         setCurrent(View.getEmpty());
-        viewCacher.cleanup();
+        cacher.cleanup();
     }
 }
