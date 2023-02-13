@@ -4,8 +4,8 @@ import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.tool.image.ImageService;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,19 +24,14 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-@FxmlView("/templates/view/addition-view.fxml")
-public class AdditionController extends Controller {
+@FxmlView("/templates/view/discover-view.fxml")
+public class DiscoverController extends Controller {
 
     @FXML
     private TextField titleField;
 
-    public AdditionController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+    public DiscoverController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
-    }
-
-    @Override
-    protected void configure() {
-
     }
 
     @FXML
