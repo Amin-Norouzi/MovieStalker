@@ -1,0 +1,55 @@
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+#title-label {
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 24px;
+}
+
+.button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#next-button {
+    -fx-background-image: url('../image/next-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#previous-button {
+    -fx-background-image: url('../image/previous-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#watch-button {
+    -fx-background-image: url('../image/watch-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#watch-button-container {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+}

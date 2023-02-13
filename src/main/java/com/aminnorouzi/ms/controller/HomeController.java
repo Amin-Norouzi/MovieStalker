@@ -2,12 +2,12 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
+import com.aminnorouzi.ms.node.SliderNode;
 import com.aminnorouzi.ms.node.WatchedNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.tool.image.ImageInfo;
-import com.aminnorouzi.ms.tool.image.ImageService;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
@@ -16,13 +16,13 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -44,8 +44,10 @@ public class HomeController extends Controller {
     private Label watchedCount;
     @FXML
     private ScrollPane pane;
+    @FXML
+    private HBox sliderContainer;
 
-    public HomeController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+    public HomeController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
     }
 
@@ -56,6 +58,17 @@ public class HomeController extends Controller {
         }
 
         MovieRecord data = library.report(getUser());
+
+        int count = 1;
+        List<Movie> sliders = new ArrayList<>();
+        for (Movie movie : data.getPlaylist()) {
+            if (count <= 5) {
+                sliders.add(movie);
+            }
+
+            count++;
+        }
+        sliderContainer.getChildren().add(new SliderNode(sliders, this));
 
         // TODO
 //        if (!data.getIsAvailable()) {
