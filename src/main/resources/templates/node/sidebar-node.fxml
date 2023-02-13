@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0"
-         prefWidth="265.0" stylesheets="@../style/sidebar-style.css" type="HBox" xmlns="http://javafx.com/javafx/19"
-         xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="265.0" stylesheets="@../style/sidebar-style.css" type="HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <VBox alignment="CENTER">
         <padding>
-            <Insets bottom="16.0" left="24.0" right="24.0" top="16.0"/>
+            <Insets bottom="16.0" left="24.0" right="24.0" top="16.0" />
         </padding>
         <VBox spacing="12.0">
             <VBox.margin>
-                <Insets bottom="20.0"/>
+                <Insets bottom="20.0" />
             </VBox.margin>
-            <Label id="title-label" text="Movie Stalker"/>
+            <Label id="title-label" text="Movie Stalker" />
             <ImageView fitHeight="1.0" fitWidth="216.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../image/sidebar-h-line-icon.png"/>
+                <Image url="@../image/sidebar-h-line-icon.png" />
             </ImageView>
         </VBox>
         <VBox alignment="CENTER" fillWidth="false">
             <VBox spacing="24.0">
-                <Button id="home-button" fx:id="homeButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY"
-                        focusTraversable="false" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
-                        onAction="#onHome" prefHeight="48.0" prefWidth="216.0" text="Home"/>
-                <Button id="discover-button" fx:id="discoverButton" alignment="BASELINE_LEFT"
-                        contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0"
-                        mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onDiscover"
-                        prefHeight="48.0" prefWidth="216.0" text="Discover"/>
-                <Button id="library-button" fx:id="libraryButton" alignment="BASELINE_LEFT"
-                        contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0"
-                        mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onLibrary"
-                        prefHeight="48.0" prefWidth="216.0" text="Library"/>
-                <Button id="watch-button" fx:id="watchButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY"
-                        focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="48.0"
-                        prefWidth="216.0" text="Watch"/>
+                <Button id="home-button" fx:id="homeButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHome" prefHeight="48.0" prefWidth="216.0" text="Home" />
+                <Button id="discover-button" fx:id="discoverButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onDiscover" prefHeight="48.0" prefWidth="216.0" text="Discover" />
+                <Button id="library-button" fx:id="libraryButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onLibrary" prefHeight="48.0" prefWidth="216.0" text="Library" />
+                <Button id="watch-button" fx:id="watchButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="216.0" text="Watch" />
             </VBox>
-            <Region prefHeight="402.0" prefWidth="216.0"/>
-            <Button id="logout-button" fx:id="logoutButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY"
-                    focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false"
-                    nodeOrientation="LEFT_TO_RIGHT" onAction="#onLogout" prefHeight="48.0" prefWidth="216.0"
-                    text="Logout"/>
+            <Region prefHeight="402.0" prefWidth="216.0" />
+            <Button id="logout-button" fx:id="logoutButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onLogout" prefHeight="48.0" prefWidth="216.0" text="Logout" />
         </VBox>
     </VBox>
     <ImageView fitHeight="832.0" fitWidth="1.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../image/sidebar-v-line-icon.png"/>
-        </image>
+        <Image url="@../image/sidebar-v-line-icon.png"/>
     </ImageView>
 </fx:root>
