@@ -83,13 +83,8 @@ public class SliderNode extends StackPane implements Loadable {
 
     @FXML
     private void onWatch(MouseEvent event) {
-        Movie to = controller.getUser().getMovies().stream()
-                .filter(m -> m.getId().equals(current.getId()))
-                .findFirst()
-                .orElse(current);
-
         thread.interrupt();
-        controller.switchTo(View.MOVIE, to);
+        controller.switchTo(View.MOVIE, current.getId());
     }
 
     @FXML

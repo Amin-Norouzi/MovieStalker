@@ -61,12 +61,7 @@ public class MovieNode extends StackPane implements Loadable {
 
     @FXML
     private void onMovie(MouseEvent event) {
-        Movie to = controller.getUser().getMovies().stream()
-                .filter(m -> m.getId().equals(movie.getId()))
-                .findFirst()
-                .orElse(movie);
-
-        controller.switchTo(View.MOVIE, to);
+        controller.switchTo(View.MOVIE, movie.getId());
     }
 }
 

@@ -9,7 +9,6 @@ import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -20,10 +19,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Transactional
     public User update(User request) {
-        // TODO: for JPA use .getReferenceById(customerId) as it does does not bring object into memory and instead a reference
-        User user = userRepository.getReferenceById(request.getId());
+        User user = getById(request.getId());
 
         if (request.getFullName() != null &&
                 !request.getFullName().equals(user.getFullName())) {
@@ -44,7 +41,6 @@ public class UserService {
         return updated;
     }
 
-    @Transactional
     public User signup(UserRequest request) {
         verify(request);
 
@@ -61,14 +57,13 @@ public class UserService {
         return created;
     }
 
-    private void verify(UserRequest request) {
+    public void verify(UserRequest request) {
         boolean existing = userRepository.existsByUsername(request.getUsername());
         if (existing) {
             throw new IllegalSignupException(String.format("Username: %s already exists!", request.getUsername()));
         }
     }
 
-    @Transactional
     public User signin(UserRequest userRequest) {
         User found = getByUsername(userRequest.getUsername());
         verify(userRequest, found);
@@ -79,14 +74,13 @@ public class UserService {
         return validated;
     }
 
-    private void verify(UserRequest request, User user) {
+    public void verify(UserRequest request, User user) {
         boolean equals = user.getPassword().equals(request.getPassword());
         if (!equals) {
             throw new IllegalSigninException("Incorrect username or password!");
         }
     }
 
-    @Transactional
     public User getById(Long id) {
         User found = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", id)));
@@ -95,7 +89,6 @@ public class UserService {
         return found;
     }
 
-    @Transactional
     public User getByUsername(String username) {
         User found = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", username)));

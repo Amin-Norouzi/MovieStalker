@@ -20,7 +20,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users") // Why users? Because "user" is a reserved word in MySQL
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
@@ -34,7 +34,9 @@ public class User implements Serializable {
     @Column(unique = true)
     private String username;
 
+    @ToString.Exclude
     private String password;
+
     private String fullName;
 
     @ToString.Exclude
@@ -44,34 +46,30 @@ public class User implements Serializable {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public User addMovie(Movie movie) {
+    public void addMovie(Movie movie) {
         if (movies == null) {
             this.movies = new ArrayList<>();
         }
         this.movies.add(movie);
         movie.setUser(this);
-
-        return this;
     }
 
-    public User removeMovie(Movie movie) {
+    public void removeMovie(Movie movie) {
         this.movies.remove(movie);
         movie.setUser(null);
-
-        return this;
     }
 
-    // TODO: implement a proper equals operator
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return id != null && Objects.equals(id, user.id) && movies.size() == user.movies.size();
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+//    // TODO: implement a proper equals operator
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+//        User user = (User) o;
+//        return id != null && Objects.equals(id, user.id);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
+//    }
 }

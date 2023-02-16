@@ -9,6 +9,7 @@ import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,10 +28,6 @@ public class MovieService {
 
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
-
-    private final Map<String, String> types = Map.ofEntries(
-            entry("movie", "movie"),
-            entry("tv", "tv"));
 
     public Movie add(MovieRequest request) {
         Movie movie = find(request.getSearch());
@@ -52,7 +49,7 @@ public class MovieService {
     }
 
     private Movie find(Search search) {
-        String type = types.get(search.getMediaType());
+        String type = search.getMediaType();
 
         Movie found = movieClient.get(search.getTmdbId(), type);
         found.setType(Type.of(type));
@@ -96,7 +93,7 @@ public class MovieService {
         User user = movie.getUser();
         user.removeMovie(movie);
 
-        movieRepository.delete(movie);
+//        movieRepository.delete(movie);
 
         log.info("Deleted a movie: {}", movie);
     }
@@ -129,9 +126,9 @@ public class MovieService {
         return result;
     }
 
-    private String extract(String imdbUrl) {
+    private String extract(String url) {
         Pattern pattern = Pattern.compile("(tt\\d[0-9]*)");
-        Matcher matcher = pattern.matcher(imdbUrl);
+        Matcher matcher = pattern.matcher(url);
 
         if (matcher.find()) {
             return matcher.group();
