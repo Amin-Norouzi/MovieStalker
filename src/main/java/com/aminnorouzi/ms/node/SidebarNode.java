@@ -1,11 +1,9 @@
 package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.exception.IllegalViewException;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -13,9 +11,8 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SidebarNode extends HBox implements Initializable {
+public class SidebarNode extends HBox implements Loadable {
 
-    private static final String PATH = "/templates/node/sidebar-node.fxml";
     private final Controller controller;
 
     @FXML
@@ -28,15 +25,7 @@ public class SidebarNode extends HBox implements Initializable {
     public SidebarNode(Controller controller) {
         this.controller = controller;
 
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PATH));
-            fxmlLoader.setRoot(this);
-            fxmlLoader.setController(this);
-            fxmlLoader.load();
-
-        } catch (Exception exception) {
-            throw new IllegalViewException(exception.getMessage());
-        }
+        load(this);
     }
 
     @Override
@@ -49,6 +38,11 @@ public class SidebarNode extends HBox implements Initializable {
             case "discoverButton" -> discoverButton.setId(String.format(id, title));
             case "libraryButton" -> libraryButton.setId(String.format(id, title));
         }
+    }
+
+    @Override
+    public String getPath() {
+        return "/templates/node/sidebar-node.fxml";
     }
 
     @FXML

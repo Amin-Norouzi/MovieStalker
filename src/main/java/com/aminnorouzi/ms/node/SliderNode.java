@@ -1,7 +1,6 @@
 package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.exception.IllegalViewException;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.image.ImageInfo.Type;
@@ -10,13 +9,13 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import lombok.Setter;
@@ -27,9 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Setter
-public class SliderNode extends StackPane implements Initializable {
-
-    private static final String PATH = "/templates/node/slider-node.fxml";
+public class SliderNode extends StackPane implements Loadable {
 
     private static final Integer FIRST_INDEX = 0;
     private static final Integer LAST_INDEX = 4;
@@ -37,6 +34,7 @@ public class SliderNode extends StackPane implements Initializable {
     private final Controller controller;
     private final List<Movie> movies;
 
+    private Thread thread;
     private Movie current;
     private boolean reset = false;
 
@@ -52,15 +50,7 @@ public class SliderNode extends StackPane implements Initializable {
         this.movies = movies;
         this.current = movies.get(0);
 
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PATH));
-            fxmlLoader.setRoot(this);
-            fxmlLoader.setController(this);
-            fxmlLoader.load();
-
-        } catch (Exception exception) {
-            throw new IllegalViewException(exception.getMessage());
-        }
+        load(this);
     }
 
     @Override
@@ -68,8 +58,8 @@ public class SliderNode extends StackPane implements Initializable {
         Thread background = new Thread(() -> {
             while (true) {
                 show(current);
-
                 delay();
+
                 if (reset) {
                     delay();
                     reset = false;
@@ -81,12 +71,25 @@ public class SliderNode extends StackPane implements Initializable {
 
         background.setName("background-task-slider");
         background.setDaemon(true);
-        background.start();
+
+        setThread(background);
+        thread.start();
+    }
+
+    @Override
+    public String getPath() {
+        return "/templates/node/slider-node.fxml";
     }
 
     @FXML
     private void onWatch(MouseEvent event) {
-        controller.switchTo(View.MOVIE, current);
+        Movie to = controller.getUser().getMovies().stream()
+                .filter(m -> m.getId().equals(current.getId()))
+                .findFirst()
+                .orElse(current);
+
+        thread.interrupt();
+        controller.switchTo(View.MOVIE, to);
     }
 
     @FXML
@@ -116,9 +119,9 @@ public class SliderNode extends StackPane implements Initializable {
     private void show(Movie movie) {
         Platform.runLater(() -> {
             setCurrent(movie);
+            backdropPic.setFill(Color.GRAY);
 
-            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 969, 432,
-                    true, Type.BACKDROP);
+            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 969, 432, true, Type.BACKDROP);
             controller.getImage().load(backdropInfo).thenAccept(image -> {
                 backdropPic.setFill(new ImagePattern(image));
             });
@@ -157,7 +160,7 @@ public class SliderNode extends StackPane implements Initializable {
     private void delay() {
         try {
             if (Thread.currentThread().getName().equals("background-task-slider")) {
-                Thread.sleep(Duration.ofSeconds(2));
+                Thread.sleep(Duration.ofSeconds(5));
             }
         } catch (InterruptedException ignored) {}
     }
