@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Rectangle?>
+
+<fx:root fx:id="root" accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" onMouseClicked="#onMovie" prefHeight="333.0" prefWidth="181.0"
+         stylesheets="@../style/movie-node-style.css" type="StackPane" xmlns="http://javafx.com/javafx/19"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <VBox spacing="8.0">
+        <Rectangle fx:id="posterPic" arcHeight="4.0" arcWidth="4.0" fill="DODGERBLUE" height="236.0"
+                   stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="181.0"/>
+        <VBox spacing="8.0">
+            <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="22.0" spacing="5.0">
+                <Label fx:id="yearLabel" text="Year"/>
+                <Ellipse fill="#eeeeee" radiusX="3.0" radiusY="3.0" stroke="BLACK" strokeType="INSIDE"
+                         strokeWidth="0.0"/>
+                <Label fx:id="genreLabel" text="Genre"/>
+            </HBox>
+            <Label id="title-label" fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="59.0" text="Title"
+                   wrapText="true"/>
+        </VBox>
+    </VBox>
+</fx:root>

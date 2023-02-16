@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.MovieController">
+<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/movie-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.MovieController">
     <children>
         <ImageView fx:id="backdropPic" fitHeight="832.0" fitWidth="1280.0" pickOnBounds="true" smooth="false">
             <effect>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="969.0" stylesheets="@../style/slider-style.css" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="969.0" stylesheets="@../style/slider-node-style.css" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Rectangle fx:id="backdropPic" arcHeight="10.0" arcWidth="10.0" fill="DODGERBLUE" height="432.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="969.0" />
         <Rectangle arcHeight="10.0" arcWidth="10.0" height="432.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="969.0" />

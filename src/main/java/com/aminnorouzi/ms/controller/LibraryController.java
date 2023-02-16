@@ -5,13 +5,11 @@ import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageInfo;
-import com.aminnorouzi.ms.tool.image.ImageService;
-import com.aminnorouzi.ms.tool.view.View;
+import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import com.aminnorouzi.ms.util.GraphicsManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.layout.TilePane;
@@ -25,6 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.aminnorouzi.ms.tool.image.ImageInfo.*;
+
 @Getter
 @Component
 @FxmlView("/templates/view/library-view.fxml")
@@ -34,9 +34,9 @@ public class LibraryController extends Controller {
     private final Map<Rectangle, Movie> contents = new LinkedHashMap<>();
 
     @FXML
-    private TilePane body;
+    private TilePane contentPane;
 
-    public LibraryController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+    public LibraryController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
     }
 
@@ -48,10 +48,10 @@ public class LibraryController extends Controller {
         movies.forEach(movie -> {
             Rectangle rectangle = GraphicsManager.getARectangle();
 
-            body.getChildren().add(rectangle);
+            contentPane.getChildren().add(rectangle);
             contents.put(rectangle, movie);
 
-            ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true);
+            ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true, Type.POSTER);
             image.load(posterInfo).thenAccept(image -> {
                 ImagePattern pattern = new ImagePattern(image);
 
@@ -63,10 +63,5 @@ public class LibraryController extends Controller {
                 rectangle.setOnMouseClicked(handler.onMouseClicked());
             });
         });
-    }
-
-    @FXML
-    private void onAddition(ActionEvent event) {
-        switchTo(View.ADDITION);
     }
 }

@@ -12,15 +12,15 @@
     -fx-animated: none;
     -fx-effect: none;
 
-    -fx-background-radius: 46px;
-    -fx-border-radius: 46px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
 
     -fx-background-color: #FFFFFF;
     -fx-border-color: #F2F2F2;
     -fx-border-width: 1.5px;
 }
 
-#search-field {
+.text-field {
     -fx-font-family: "Poppins Regular";
     -fx-font-size: 16px;
 
@@ -38,11 +38,11 @@
     -fx-padding: 0px 0px 0px 48px;
 }
 
-#search-field:hover {
+.text-field:hover {
     -fx-border-color: #0055FB;
 }
 
-#search-field:focused {
+.text-field:focused {
     -fx-border-color: #0055FB;
     -fx-text-fill: #1C1818;
     -fx-effect: dropshadow(gaussian, #E3EDFF, 5, 3, 0, 0);
@@ -50,40 +50,7 @@
 }
 
 /*TODO: it won't work*/
-#search-field:filled {
+.text-field:filled {
     -fx-border-color: #F2F2F2;
     -fx-text-fill: #1C1818;
-}
-
-#setting-button {
-    -fx-background-image: url('../image/setting-icon.png');
-    -fx-background-size: 24px 24px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
-#notification-button {
-    -fx-background-image: url('../image/notification-icon.png');
-    -fx-background-size: 24px 24px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
-#stats-pane {
-    -fx-background-color: #FAFAFA;
-    -fx-background-radius: 8px;
-}
-
-#stats-header-label {
-    -fx-font-family: "Poppins Medium";
-    -fx-font-size: 18px;
-
-    -fx-text-fill: #0055FB;
-}
-
-#stats-count-label {
-    -fx-font-family: "Poppins SemiBold";
-    -fx-font-size: 36px;
-
-    -fx-text-fill: #000000;
 }

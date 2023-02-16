@@ -3,8 +3,8 @@ package com.aminnorouzi.ms.controller;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.service.NotificationService;
-import com.aminnorouzi.ms.tool.image.ImageService;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -32,7 +32,7 @@ public class SignupController extends Controller {
     @FXML
     private CheckBox privacyBox;
 
-    public SignupController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+    public SignupController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
     }
 

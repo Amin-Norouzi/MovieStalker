@@ -1,0 +1,31 @@
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #1C1818;
+}
+
+.button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-color: none;
+    -fx-border-color: none;
+
+    -fx-text-fill: #0055FB;
+
+    -fx-background-image: url('../image/arrow-r-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right;
+
+    -fx-padding: 0px 0px 0px 0px;
+}
+
+.label {
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 21px;
+}

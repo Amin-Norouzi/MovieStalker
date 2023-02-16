@@ -3,9 +3,9 @@ package com.aminnorouzi.ms.controller;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.service.NotificationService;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageInfo;
-import com.aminnorouzi.ms.tool.image.ImageService;
+import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import static com.aminnorouzi.ms.tool.image.ImageInfo.*;
 
 @Slf4j
 @Component
@@ -52,7 +54,7 @@ public class MovieController extends Controller {
     @Value("${movie.client.api.imdb-base-url}")
     private String imdbBaseUrl;
 
-    public MovieController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageService image) {
+    public MovieController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
     }
 
@@ -60,10 +62,10 @@ public class MovieController extends Controller {
     protected void configure() {
         movie = (Movie) getInput();
 
-        ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 1280, 832, true);
+        ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 1280, 832, true, Type.BACKDROP);
         image.load(backdropInfo).thenAccept(image -> backdropPic.setImage(image));
 
-        ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true);
+        ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true, Type.POSTER);
         image.load(posterInfo).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             posterPic.setFill(pattern);
