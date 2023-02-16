@@ -10,24 +10,23 @@ import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @FxmlView("/templates/view/home-view.fxml")
 public class HomeController extends Controller {
 
+    @FXML
+    private TextField searchField;
     @FXML
     private Label todayLabel;
     @FXML
@@ -71,6 +70,15 @@ public class HomeController extends Controller {
         totalLabel.setText(String.valueOf(data.getTotal()));
         watchedLabel.setText(String.valueOf(data.getWatched()));
         todayLabel.setText(String.valueOf(0));
+    }
+
+    @FXML
+    private void onSearch(ActionEvent event) {
+        String text = searchField.getText();
+        if (!text.isBlank()) {
+            switchTo(View.DISCOVER, text);
+            searchField.clear();
+        }
     }
 
 //    private void initWatchedChart(List<Movie> movies) {

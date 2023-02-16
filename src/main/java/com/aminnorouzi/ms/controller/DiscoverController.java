@@ -4,8 +4,8 @@ import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +28,20 @@ import java.util.Set;
 public class DiscoverController extends Controller {
 
     @FXML
-    private TextField titleField;
+    private TextField searchField;
 
     public DiscoverController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
+    }
+
+    @Override
+    protected void configure() {
+        String text = (String) getInput();
+        if (text != null) {
+            searchField.setText(text);
+            searchField.setFocusTraversable(true);
+            searchField.positionCaret(text.length());
+        }
     }
 
     @FXML
@@ -49,8 +59,13 @@ public class DiscoverController extends Controller {
 
     @FXML
     private void onSearch(ActionEvent event) {
-        Query query = Query.of(titleField.getText());
-        addMovieToLibrary(query);
+        String text = searchField.getText();
+        if (!text.isBlank()) {
+            Query query = Query.of(text);
+            addMovieToLibrary(query);
+        } else {
+            notification.showError("You should type something first!");
+        }
     }
 
     private void addMovieToLibrary(Query query) {
@@ -77,7 +92,7 @@ public class DiscoverController extends Controller {
 
                     notification.show("info", ("Movie added to your library."));
 
-                    titleField.clear();
+                    searchField.clear();
                 } catch (RuntimeException exception) {
                     notification.showError(exception.getMessage());
                 }

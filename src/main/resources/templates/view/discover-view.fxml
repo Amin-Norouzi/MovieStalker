@@ -9,20 +9,28 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../style/discover-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.DiscoverController">
+<StackPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../style/discover-style.css"
+           xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.aminnorouzi.ms.controller.DiscoverController">
     <BorderPane fx:id="layout">
         <center>
             <AnchorPane>
-                <HBox alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <HBox alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <VBox alignment="CENTER" fillWidth="false" prefWidth="500.0" spacing="20.0">
-                        <HBox alignment="CENTER" spacing="5.0">
-                            <TextField fx:id="titleField" prefHeight="56.0" prefWidth="264.0" promptText="Movie title" />
-                            <Button mnemonicParsing="false" onAction="#onSearch" prefHeight="56.0" prefWidth="84.0" text="Search" />
-                        </HBox>
+                        <VBox spacing="16.0">
+                            <TextField fx:id="searchField" focusTraversable="false" prefHeight="56.0"
+                                       promptText="Movie title or IMDB"/>
+                            <Button mnemonicParsing="false" onAction="#onSearch" prefHeight="56.0" prefWidth="340.0"
+                                    text="Search"/>
+                        </VBox>
                     </VBox>
-                    <VBox alignment="CENTER" fillWidth="false" layoutX="210.0" layoutY="60.0" prefWidth="500.0" spacing="10.0" style="-fx-background-color: D7E0EA;">
-                        <Label prefWidth="160.0" text="You can choose a directoey where your movies are located." wrapText="true" />
-                        <Button fx:id="chooseButton" mnemonicParsing="false" onAction="#onChoose" prefWidth="160.0" text="Choose" />
+                    <VBox alignment="CENTER" fillWidth="false" layoutX="210.0" layoutY="60.0" prefWidth="500.0"
+                          spacing="16.0" style="-fx-background-color: D7E0EA;">
+                        <Label prefHeight="60.0" prefWidth="340.0"
+                               text="You can choose a directory where your movies are located." wrapText="true"/>
+                        <Button mnemonicParsing="false" onAction="#onChoose" prefHeight="56.0" prefWidth="340.0"
+                                text="Choose"/>
                     </VBox>
                 </HBox>
             </AnchorPane>
