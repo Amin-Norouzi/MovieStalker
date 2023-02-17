@@ -6,6 +6,7 @@ import com.aminnorouzi.ms.exception.UserNotFoundException;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.repository.UserRepository;
+import com.aminnorouzi.ms.util.PasswordUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordUtil passwordUtil;
 
     public User update(User request) {
         User user = getById(request.getId());
@@ -44,9 +46,11 @@ public class UserService {
     public User signup(UserRequest request) {
         verify(request);
 
+        String password = passwordUtil.hash(request.getPassword());
+
         User user = User.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(password)
                 .fullName(request.getFullName())
                 .movies(new ArrayList<>())
                 .build();
@@ -75,7 +79,10 @@ public class UserService {
     }
 
     public void verify(UserRequest request, User user) {
-        boolean equals = user.getPassword().equals(request.getPassword());
+        String password = request.getPassword();
+        String hashed = user.getPassword();
+
+        boolean equals = passwordUtil.validate(password, hashed);
         if (!equals) {
             throw new IllegalSigninException("Incorrect username or password!");
         }
