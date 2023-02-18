@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="312.0" stylesheets="@../style/genre-node-style.css" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fx:id="genrePic" arcHeight="10.0" arcWidth="10.0" fill="DODGERBLUE" height="158.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="312.0" />
+      <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#00000080" height="158.0" layoutX="10.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="312.0" />
+      <HBox alignment="CENTER">
+         <children>
+            <Label fx:id="genreLabel" text="Genre" />
+         </children>
+      </HBox>
+   </children>
+</fx:root>

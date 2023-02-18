@@ -1,0 +1,70 @@
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #1C1818;
+}
+
+.button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-radius: 46px;
+    -fx-border-radius: 46px;
+
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F2F2F2;
+    -fx-border-width: 1.5px;
+}
+
+#search-field {
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+
+    -fx-background-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-border-radius: 5px;
+    -fx-border-color: #F2F2F2;
+    -fx-text-fill: #787B7C;
+
+    -fx-background-image: url('../image/search-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 16px;
+
+    -fx-padding: 0px 0px 0px 48px;
+}
+
+#search-field:hover {
+    -fx-border-color: #0055FB;
+}
+
+#search-field:focused {
+    -fx-border-color: #0055FB;
+    -fx-text-fill: #1C1818;
+    -fx-effect: dropshadow(gaussian, #E3EDFF, 5, 3, 0, 0);
+    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
+}
+
+/*TODO: it won't work*/
+#search-field:filled {
+    -fx-border-color: #F2F2F2;
+    -fx-text-fill: #1C1818;
+}
+
+#setting-button {
+    -fx-background-image: url('../image/setting-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#notification-button {
+    -fx-background-image: url('../image/notification-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}

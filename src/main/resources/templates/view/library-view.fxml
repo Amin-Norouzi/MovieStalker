@@ -4,17 +4,17 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 
 <StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/library-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.LibraryController">
     <BorderPane fx:id="layout">
         <center>
-            <ScrollPane hbarPolicy="NEVER" hmax="0.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-                <TilePane fx:id="contentPane" hgap="16.0" prefHeight="832.0" prefWidth="1016.0" style="-fx-background-color: white;" tileAlignment="TOP_CENTER" vgap="24.0">
+            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                <VBox fx:id="contentPane" style="-fx-background-color: white;">
                <padding>
                   <Insets bottom="16.0" left="24.0" right="23.0" top="16.0" />
                </padding>
-                </TilePane>
+                </VBox>
             </ScrollPane>
         </center>
     </BorderPane>

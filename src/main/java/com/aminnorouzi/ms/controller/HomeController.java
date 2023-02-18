@@ -2,18 +2,17 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
+import com.aminnorouzi.ms.node.GenreNode;
+import com.aminnorouzi.ms.node.MovieNode;
 import com.aminnorouzi.ms.node.SectionNode;
 import com.aminnorouzi.ms.node.SliderNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
-import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -25,8 +24,6 @@ import java.util.List;
 @FxmlView("/templates/view/home-view.fxml")
 public class HomeController extends Controller {
 
-    @FXML
-    private TextField searchField;
     @FXML
     private Label todayLabel;
     @FXML
@@ -62,23 +59,16 @@ public class HomeController extends Controller {
 
         contentPane.getChildren().add(1, new SliderNode(sliders, this));
 
-        sectionPane.getChildren().add(new SectionNode(this, "Recently Watched", sliders));
-        sectionPane.getChildren().add(new SectionNode(this, "Recently Watched", sliders));
-        sectionPane.getChildren().add(new SectionNode(this, "Recently Watched", sliders));
-        sectionPane.getChildren().add(new SectionNode(this, "Recently Watched", sliders));
+        sectionPane.getChildren().addAll(
+                new SectionNode(this, "Recently Added to Library", sliders, (c, v) -> new MovieNode(c, (Movie) v)),
+                new SectionNode(this, "Favorite Genres", data.getGenres(), (c, v) -> new GenreNode(c, (String) v)),
+                new SectionNode(this, "Recently Watched", sliders, (c, v) -> new MovieNode(c, (Movie) v)),
+                new SectionNode(this, "Trending Movies", sliders, (c, v) -> new MovieNode(c, (Movie) v))
+        );
 
         totalLabel.setText(String.valueOf(data.getTotal()));
         watchedLabel.setText(String.valueOf(data.getWatched()));
         todayLabel.setText(String.valueOf(0));
-    }
-
-    @FXML
-    private void onSearch(ActionEvent event) {
-        String text = searchField.getText();
-        if (!text.isBlank()) {
-            switchTo(View.DISCOVER, text);
-            searchField.clear();
-        }
     }
 
 //    private void initWatchedChart(List<Movie> movies) {

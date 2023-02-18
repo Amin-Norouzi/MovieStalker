@@ -1,0 +1,12 @@
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 14px;
+    -fx-text-fill: #797979;
+}
+
+.label {
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 21px;
+    -fx-text-fill: #FFFFFF;
+}
