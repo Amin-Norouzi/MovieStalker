@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<fx:root type="HBox" fx:id="root" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="969.0" stylesheets="@../style/header-node-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField id="search-field" fx:id="searchField" focusTraversable="false" onAction="#onSearch" prefHeight="56.0" prefWidth="528.0" promptText="Search title..." />
+      <Region prefWidth="312.0" />
+      <HBox spacing="16.0">
+         <children>
+            <Button id="setting-button" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" />
+            <Button id="notification-button" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" />
+         </children>
+      </HBox>
+   </children>
+</fx:root>

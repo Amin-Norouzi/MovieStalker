@@ -6,24 +6,26 @@ import lombok.Getter;
 @Getter
 public enum View {
 
-    HOME(HomeController.class, "Home", true),
-    LIBRARY(LibraryController.class, "Library", true),
-    MOVIE(MovieController.class, "Movie", false),
-    SIGNIN(SigninController.class, "Sign in", false),
-    SIGNUP(SignupController.class, "Sign up", false),
-    DISCOVER(DiscoverController.class, "Discover", true),
+    HOME(HomeController.class, "Home", true, true),
+    LIBRARY(LibraryController.class, "Library", true, true),
+    MOVIE(MovieController.class, "Movie", false, false),
+    SIGNIN(SigninController.class, "Sign in", false, false),
+    SIGNUP(SignupController.class, "Sign up", false, false),
+    DISCOVER(DiscoverController.class, "Discover", true, false),
 
-    PREVIOUS(null, null, false),
-    EMPTY(null, null, false);
+    PREVIOUS(null, null, false, false),
+    EMPTY(null, null, false, false);
 
     private final Class<?> controller;
     private final String title;
-    private final boolean hasSidebar;
+    private final Boolean hasSidebar;
+    private final Boolean hasHeader;
 
-    View(Class<?> controller, String title, boolean hasSidebar) {
+    View(Class<?> controller, String title, boolean hasSidebar, boolean hasHeader) {
         this.controller = controller;
         this.title = title;
         this.hasSidebar = hasSidebar;
+        this.hasHeader = hasHeader;
     }
 
     public static View getDefault() {

@@ -2,18 +2,17 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
-import com.aminnorouzi.ms.node.GenreNode;
-import com.aminnorouzi.ms.node.MovieNode;
-import com.aminnorouzi.ms.node.SectionNode;
-import com.aminnorouzi.ms.node.SliderNode;
+import com.aminnorouzi.ms.node.*;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +29,6 @@ public class HomeController extends Controller {
     private Label totalLabel;
     @FXML
     private Label watchedLabel;
-    @FXML
-    private VBox contentPane;
     @FXML
     private VBox sectionPane;
 
@@ -57,7 +54,7 @@ public class HomeController extends Controller {
             count++;
         }
 
-        contentPane.getChildren().add(1, new SliderNode(sliders, this));
+        getContent().getChildren().add(1, new SliderNode(sliders, this));
 
         sectionPane.getChildren().addAll(
                 new SectionNode(this, "Recently Added to Library", sliders, (c, v) -> new MovieNode(c, (Movie) v)),
@@ -69,6 +66,13 @@ public class HomeController extends Controller {
         totalLabel.setText(String.valueOf(data.getTotal()));
         watchedLabel.setText(String.valueOf(data.getWatched()));
         todayLabel.setText(String.valueOf(0));
+
+        TranslateTransition transition = new TranslateTransition();
+        transition.setFromY(350);
+        transition.setToY(0);
+        transition.setDuration(Duration.seconds(0.5));
+        transition.setNode(getContent());
+        transition.play();
     }
 
 //    private void initWatchedChart(List<Movie> movies) {

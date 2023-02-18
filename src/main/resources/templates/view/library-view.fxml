@@ -10,7 +10,7 @@
     <BorderPane fx:id="layout">
         <center>
             <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-                <VBox fx:id="contentPane" style="-fx-background-color: white;">
+                <VBox fx:id="content" spacing="30.0" style="-fx-background-color: white;">
                <padding>
                   <Insets bottom="16.0" left="24.0" right="23.0" top="16.0" />
                </padding>

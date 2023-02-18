@@ -15,7 +15,7 @@
             <center>
                 <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                     <content>
-                        <VBox fx:id="contentPane" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
+                        <VBox fx:id="content" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
                             <children>
                                   <HBox id="stats-pane" alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="969.0">
                                       <children>

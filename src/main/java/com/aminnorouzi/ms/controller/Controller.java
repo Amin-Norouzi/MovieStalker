@@ -1,7 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
-import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.node.HeaderNode;
 import com.aminnorouzi.ms.node.SidebarNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
@@ -12,6 +12,7 @@ import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -19,7 +20,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Data
@@ -43,12 +43,13 @@ public class Controller implements Switchable {
     private StackPane root;
     @FXML
     private BorderPane layout;
+    @FXML
+    private Pane content;
 
     @FXML
     protected void initialize() {
-        if (view.isHasSidebar()) {
-            layout.setLeft(new SidebarNode(this));
-        }
+        if (view.getHasSidebar()) layout.setLeft(new SidebarNode(this));
+        if (view.getHasHeader()) content.getChildren().add(0, new HeaderNode(this));
 
         notification.initialize(root);
 
