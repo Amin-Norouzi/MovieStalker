@@ -17,3 +17,27 @@
     -fx-text-fill: #1C1818;
 }
 
+.button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-color: none;
+    -fx-border-color: none;
+
+    -fx-background-image: url('../image/play-icon.png');
+    -fx-background-size: 72px 72px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#hover-pane {
+    -fx-opacity: 0;
+}
+
+#hover-pane:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 1;
+}

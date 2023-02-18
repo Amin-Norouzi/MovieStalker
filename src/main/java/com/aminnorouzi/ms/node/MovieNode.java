@@ -5,10 +5,9 @@ import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -60,7 +59,7 @@ public class MovieNode extends StackPane implements Loadable {
     }
 
     @FXML
-    private void onMovie(MouseEvent event) {
+    private void onMovie(ActionEvent event) {
         controller.switchTo(View.MOVIE, movie.getId());
     }
 }
