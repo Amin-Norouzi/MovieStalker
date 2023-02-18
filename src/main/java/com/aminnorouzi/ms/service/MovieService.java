@@ -9,17 +9,14 @@ import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.util.Map.entry;
 
 @Slf4j
 @Service
@@ -28,6 +25,7 @@ public class MovieService {
 
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
+    private final Clock clock;
 
     public Movie add(MovieRequest request) {
         Movie movie = find(request.getSearch());
@@ -60,21 +58,29 @@ public class MovieService {
 
     public MovieRecord report(User user) {
         Long userId = user.getId();
-        int limit = 10;
+        int playlistLimit = 10;
+        int genresLimit = 6;
 
         MovieRecord data = MovieRecord.builder()
                 .total(movieRepository.countTotalMoviesByUser(userId))
                 .watched(movieRepository.countWatchedMoviesByUser(userId))
-                .genre(movieRepository.findMostWatchedGenreByUser(userId))
-                .latest(movieRepository.findLatestAddedMovieByUser(userId))
-                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, limit))
+                .genres(movieRepository.findMostWatchedGenresByUser(userId, genresLimit))
+                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, playlistLimit))
+//                .trending(track(LocalDate.now(clock)))
                 .build();
 
-        Boolean isAvailable = data.getPlaylist().size() == limit;
+        Boolean isAvailable = data.getPlaylist().size() == playlistLimit;
         data.setIsAvailable(isAvailable);
 
         log.info("Reported a movie record: {}", data);
         return data;
+    }
+
+    private List<Search> track(LocalDate date) {
+        return movieClient.trending().getResults().stream()
+                .filter(s -> s.getMediaType().equals("movie") ||
+                        s.getMediaType().equals("tv"))
+                .limit(10).toList();
     }
 
     public void watch(Movie request) {

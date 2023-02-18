@@ -17,4 +17,7 @@ public interface MovieClient {
 
     @GetMapping("${movie.client.api.get-movie}")
     Movie get(@PathVariable("tmdbId") Long tmdbId, @PathVariable("type") String type);
+
+    @GetMapping("${movie.client.api.get-trending}")
+    SearchResponse trending();
 }
