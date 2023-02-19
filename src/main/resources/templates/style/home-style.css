@@ -5,6 +5,15 @@
     -fx-text-fill: #1C1818;
 }
 
+#stats-pane {
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 8px;
+
+    -fx-border-color: none;
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+}
+
 #stats-header-label {
     -fx-font-family: "Poppins Medium";
     -fx-font-size: 18px;

@@ -4,14 +4,13 @@ import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SidebarNode extends HBox implements Loadable {
+public class SidebarNode extends StackPane implements Loadable {
 
     private final Controller controller;
 

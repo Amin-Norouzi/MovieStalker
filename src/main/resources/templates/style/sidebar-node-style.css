@@ -3,8 +3,14 @@
     -fx-font-family: "Poppins Regular";
     -fx-font-size: 16px;
     -fx-text-fill: #1C1818;
+}
 
-    -fx-effect: dropshadow(gaussian, rgba(204, 204, 204, 0.08), 19, 0, 4, 0);
+#side-pane {
+    -fx-effect: dropshadow(gaussian, rgba(204, 204, 204, 0.2), 15, 0.5, 3, 0);
+    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
+
+    /*-fx-border-width: 0 1 0 0;*/
+    /*-fx-border-color: #EFF2FA;*/
 }
 
 .button {

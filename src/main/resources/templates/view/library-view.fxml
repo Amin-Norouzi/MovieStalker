@@ -9,12 +9,15 @@
 <StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/library-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.LibraryController">
     <BorderPane fx:id="layout">
         <center>
-            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-                <VBox fx:id="content" spacing="30.0" style="-fx-background-color: white;">
+            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
+                <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
                <padding>
-                  <Insets bottom="16.0" left="24.0" right="23.0" top="16.0" />
+                  <Insets bottom="16.0" left="23.0" right="24.0" top="16.0" />
                </padding>
                 </VBox>
+            <padding>
+               <Insets bottom="16.0" left="24.0" right="23.0" top="16.0" />
+            </padding>
             </ScrollPane>
         </center>
     </BorderPane>
