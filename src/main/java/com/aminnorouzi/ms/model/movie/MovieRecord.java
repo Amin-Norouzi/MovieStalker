@@ -17,6 +17,6 @@ public class MovieRecord {
     private Integer watched;
     private List<String> genres;
     private List<Movie> playlist;
-    private List<Search> trending;
+    private List<Movie> trending;
     private Boolean isAvailable;
 }

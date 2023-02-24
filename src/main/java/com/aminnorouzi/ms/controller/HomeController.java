@@ -1,7 +1,11 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.function.GenreFunction;
+import com.aminnorouzi.ms.function.MovieFunction;
+import com.aminnorouzi.ms.function.SearchFunction;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
+import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.node.*;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
@@ -17,6 +21,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -44,23 +49,16 @@ public class HomeController extends Controller {
 
         MovieRecord data = library.report(getUser());
 
-        int count = 1;
-        List<Movie> sliders = new ArrayList<>();
-        for (Movie movie : data.getPlaylist()) {
-            if (count <= 5) {
-                sliders.add(movie);
-            }
-
-            count++;
-        }
+        List<Movie> sliders = data.getPlaylist().stream().limit(5).toList();
+        List<Movie> trending = data.getTrending().stream().limit(5).toList();
 
         getContent().getChildren().add(1, new SliderNode(sliders, this));
 
         sectionPane.getChildren().addAll(
-                new SectionNode(this, "Recently Added to Library", sliders, (c, v) -> new MovieNode(c, (Movie) v)),
-                new SectionNode(this, "Favorite Genres", data.getGenres(), (c, v) -> new GenreNode(c, (String) v)),
-                new SectionNode(this, "Recently Watched", sliders, (c, v) -> new MovieNode(c, (Movie) v)),
-                new SectionNode(this, "Trending Movies", sliders, (c, v) -> new MovieNode(c, (Movie) v))
+                new SectionNode(this, "Recently Added to Library", sliders, new MovieFunction()),
+                new SectionNode(this, "Favorite Genres", data.getGenres(), new GenreFunction()),
+                new SectionNode(this, "Recently Watched", sliders, new MovieFunction()),
+                new SectionNode(this, "Trending Movies", trending, new MovieFunction())
         );
 
         totalLabel.setText(String.valueOf(data.getTotal()));
@@ -74,41 +72,4 @@ public class HomeController extends Controller {
         transition.setNode(getContent());
         transition.play();
     }
-
-//    private void initWatchedChart(List<Movie> movies) {
-//        XYChart.Series<String, Integer> watched = new XYChart.Series<>();
-//        watched.setName("Watched");
-//
-//        XYChart.Series<String, Integer> added = new XYChart.Series<>();
-//        added.setName("Added");
-//
-//        LocalDate now = LocalDate.now().plusDays(1);
-//
-//        for (int i = 30; i >= 1; i--) {
-//            LocalDate date = now.minusDays(i);
-//
-//            AtomicInteger watchedCount = new AtomicInteger(0);
-//            movies.forEach(m -> {
-//                if (m.getWatchedAt() != null) {
-//                    LocalDate watchedDate = m.getWatchedAt().toLocalDate();
-//                    if (watchedDate.equals(date)) {
-//                        watchedCount.getAndIncrement();
-//                    }
-//                }
-//            });
-//
-//            AtomicInteger addedCount = new AtomicInteger(0);
-//            movies.forEach(m -> {
-//                LocalDate addedDate = m.getCreatedAt().toLocalDate();
-//                if (addedDate.equals(date)) {
-//                    addedCount.getAndIncrement();
-//                }
-//            });
-//
-//            watched.getData().add(new XYChart.Data<>(date.toString(), watchedCount.get()));
-//            added.getData().add(new XYChart.Data<>(date.toString(), addedCount.get()));
-//        }
-//
-//        chart.getData().addAll(added, watched);
-//    }
 }

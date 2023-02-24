@@ -46,7 +46,7 @@ public class MovieService {
         });
     }
 
-    private Movie find(Search search) {
+    public Movie find(Search search) {
         String type = search.getMediaType();
 
         Movie found = movieClient.get(search.getTmdbId(), type);
@@ -66,7 +66,7 @@ public class MovieService {
                 .watched(movieRepository.countWatchedMoviesByUser(userId))
                 .genres(movieRepository.findMostWatchedGenresByUser(userId, genresLimit))
                 .playlist(movieRepository.findAllWatchedMoviesByUser(userId, playlistLimit))
-//                .trending(track(LocalDate.now(clock)))
+                .trending(track(LocalDate.now(clock)))
                 .build();
 
         Boolean isAvailable = data.getPlaylist().size() == playlistLimit;
@@ -76,11 +76,14 @@ public class MovieService {
         return data;
     }
 
-    private List<Search> track(LocalDate date) {
+    private List<Movie> track(LocalDate date) {
         return movieClient.trending().getResults().stream()
                 .filter(s -> s.getMediaType().equals("movie") ||
                         s.getMediaType().equals("tv"))
-                .limit(10).toList();
+                .limit(10)
+                .parallel()
+                .map(this::find)
+                .toList();
     }
 
     public void watch(Movie request) {
@@ -120,6 +123,7 @@ public class MovieService {
 
         List<Search> result = found.stream()
                 .filter(s -> s.getPoster() != null &&
+                        s.getBackdrop() != null &&
                         s.getOverview() != null &&
                         s.getReleased() != null)
                 .toList();
