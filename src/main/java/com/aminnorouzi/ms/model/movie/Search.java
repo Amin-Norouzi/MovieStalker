@@ -31,9 +31,11 @@ public class Search {
     @JsonProperty("overview")
     private String overview;
 
-//    @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
+
+    @JsonProperty("backdrop_path")
+    private String backdrop;
 
     @JsonAlias({"release_date", "first_air_date"})
     private LocalDate released;

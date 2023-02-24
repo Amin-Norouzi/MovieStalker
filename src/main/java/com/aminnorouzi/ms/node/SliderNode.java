@@ -116,7 +116,7 @@ public class SliderNode extends StackPane implements Loadable {
             setCurrent(movie);
             backdropPic.setFill(Color.GRAY);
 
-            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 969, 432, true, Type.BACKDROP);
+            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 969*2, 432*2, true, Type.BACKDROP);
             controller.getImage().load(backdropInfo).thenAccept(image -> {
                 backdropPic.setFill(new ImagePattern(image));
             });

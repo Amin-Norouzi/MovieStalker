@@ -11,16 +11,13 @@
    <children>
       <BorderPane fx:id="layout" prefHeight="200.0" prefWidth="200.0">
          <center>
-            <ScrollPane prefWidth="1015.0" BorderPane.alignment="CENTER">
-               <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0"
-                     spacing="30.0" style="-fx-background-color: white;">
+            <ScrollPane hbarPolicy="NEVER" hmax="0.0" prefWidth="1015.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+               <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
                   <padding>
-                     <Insets bottom="16.0" left="23.0" right="24.0" top="16.0"/>
+                     <Insets bottom="16.0" left="23.0" right="24.0" top="16.0" />
                   </padding>
                   <children>
-                     <TextField fx:id="searchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity"
-                                minHeight="-Infinity" minWidth="-Infinity" onAction="#onSearch" prefHeight="56.0"
-                                prefWidth="969.0" promptText="Search title or IMDB"/>
+                     <TextField fx:id="searchField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onSearch" prefHeight="56.0" prefWidth="969.0" promptText="Search title or IMDB" />
                   </children>
                </VBox>
             </ScrollPane>
