@@ -1,4 +1,5 @@
 # MovieStalker (readme will be updated)
+## Feel free to contribute! [mailto:realaminnorouzi](contact me)
 
 It will available for: (with native installers)
 - windows
