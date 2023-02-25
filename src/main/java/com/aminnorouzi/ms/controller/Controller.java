@@ -25,7 +25,7 @@ import java.util.concurrent.Callable;
 @Data
 @Component
 @RequiredArgsConstructor
-public class Controller implements Switchable {
+public class Controller implements Switchable, Executable {
 
     @Getter(AccessLevel.NONE)
     private final ViewSwitcher switcher;
@@ -58,11 +58,8 @@ public class Controller implements Switchable {
 
     protected void configure() { /* Child classes can override it to do their own configuration */}
 
-    protected void execute(Callable<User> callable) {
-        execute(callable, null);
-    }
-
-    protected void execute(Callable<User> callable, View view) {
+    @Override
+    public void execute(Callable<User> callable, View view) {
         try {
             User updated = callable.call();
             setUser(updated);
@@ -73,11 +70,6 @@ public class Controller implements Switchable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void switchTo(View view) {
-        switchTo(view, null);
     }
 
     @Override
