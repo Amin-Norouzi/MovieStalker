@@ -1,13 +1,9 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.ArrayFirstValue;
-import com.aminnorouzi.ms.annotation.CollectionOfJson;
-import com.aminnorouzi.ms.annotation.IdFromJson;
-import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
+import com.aminnorouzi.ms.annotation.*;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,7 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -60,13 +55,19 @@ public class Movie implements Serializable {
     @JsonProperty("overview")
     private String overview;
 
-//    @FullPathUrl
     @JsonProperty("poster_path")
     private String poster;
 
-//    @FullPathUrl
     @JsonProperty("backdrop_path")
     private String backdrop;
+
+    @CalculatedTime
+    @JsonAlias({"runtime", "episode_run_time"})
+    private String runtime;
+
+    @ImdbUrl
+    @JsonProperty("external_ids")
+    private String website;
 
     @JsonAlias({"release_date", "first_air_date"})
     private LocalDate released;
@@ -79,10 +80,6 @@ public class Movie implements Serializable {
     @SimpleDoubleNumber
     @JsonProperty("vote_average")
     private Double rating;
-
-    @ArrayFirstValue
-    @JsonAlias({"runtime", "episode_run_time"})
-    private Integer runtime;
 
     @JsonProperty(value = "number_of_episodes")
     private Integer episodes = 1;
