@@ -29,6 +29,12 @@ public class LibraryService {
         return userService.update(added.getUser());
     }
 
+    public User add(Movie request) {
+        Movie added = movieService.add(request);
+
+        return userService.update(added.getUser());
+    }
+
     public Movie find(Search search) {
         return movieService.find(search);
     }

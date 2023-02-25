@@ -1,8 +1,34 @@
 .root {
-    -fx-background-color: #FFFFFF;
+    /*-fx-background-color: #FFFFFF;*/
+    /*-fx-font-family: "Poppins Regular";*/
+    /*-fx-font-size: 16px;*/
+    /*-fx-text-fill: #FFFFF;*/
+}
+
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+#title-label {
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 48px;
+
+    -fx-cursor: hand;
+}
+
+#overview-label {
     -fx-font-family: "Poppins Regular";
-    -fx-font-size: 16px;
-    -fx-text-fill: #1C1818;
+    -fx-font-size: 14px;
+}
+
+#detail-header-label {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 12px;
+}
+
+#detail-content-label {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 18px;
 }
 
 .button {
@@ -12,45 +38,104 @@
     -fx-animated: none;
     -fx-effect: none;
 
-    -fx-background-radius: 46px;
-    -fx-border-radius: 46px;
+    -fx-text-fill: #FFFFFF;
+
+    /*-fx-background-radius: 46px;*/
+    /*-fx-border-radius: 46px;*/
+
+    /*-fx-background-color: #FFFFFF;*/
+    /*-fx-border-color: #F2F2F2;*/
+    /*-fx-border-width: 1.5px;*/
+}
+
+#genre-button {
+    -fx-font-size: 12px;
+
+    -fx-background-color: none;
+    -fx-background-radius: 42px;
+
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 42px;
+    -fx-border-width: 0.75px;
+
+    -fx-min-height: 27px;
+    -fx-pref-height: 27px;
+    -fx-max-height: 27px;
+
+    -fx-padding: 4px 16px 4px 16px;
+}
+
+#watch-button {
+    -fx-text-fill: #1C1818;
+
+    -fx-min-height: 56px;
+    -fx-pref-height: 56px;
+    -fx-max-height: 56px;
+
+    -fx-padding: 16px 24px 16px 56px;
 
     -fx-background-color: #FFFFFF;
-    -fx-border-color: #F2F2F2;
-    -fx-border-width: 1.5px;
-}
-
-.text-field {
-    -fx-font-family: "Poppins Regular";
-    -fx-font-size: 16px;
-
     -fx-background-radius: 5px;
-    -fx-background-color: transparent;
-    -fx-border-radius: 5px;
-    -fx-border-color: #F2F2F2;
-    -fx-text-fill: #787B7C;
 
-    -fx-background-image: url('../image/search-icon.png');
+    -fx-border-color: none;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url('../image/watch-b-icon.png');
     -fx-background-size: 24px 24px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 16px;
-
-    -fx-padding: 0px 0px 0px 48px;
+    -fx-background-position: 24px;
 }
 
-.text-field:hover {
-    -fx-border-color: #0055FB;
-}
+#add-button {
+    -fx-min-height: 56px;
+    -fx-pref-height: 56px;
+    -fx-max-height: 56px;
 
-.text-field:focused {
-    -fx-border-color: #0055FB;
-    -fx-text-fill: #1C1818;
-    -fx-effect: dropshadow(gaussian, #E3EDFF, 5, 3, 0, 0);
-    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
-}
+    -fx-padding: 16px 24px 16px 56px;
 
-/*TODO: it won't work*/
-.text-field:filled {
+    -fx-background-color: none;
+    -fx-background-radius: 5px;
+
     -fx-border-color: #F2F2F2;
-    -fx-text-fill: #1C1818;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url('../image/add-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 24px;
+}
+
+#added-button {
+    -fx-min-height: 56px;
+    -fx-pref-height: 56px;
+    -fx-max-height: 56px;
+
+    -fx-padding: 16px 24px 16px 56px;
+
+    -fx-background-color: none;
+    -fx-background-radius: 5px;
+
+    -fx-border-color: #F2F2F2;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 5px;
+
+    -fx-background-image: url('../image/added-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 24px;
+}
+
+#back-button {
+    -fx-background-color: none;
+    -fx-background-radius: 46px;
+
+    -fx-border-color: #F2F2F2;
+    -fx-border-radius: 46px;
+    -fx-border-width: 1.5px;
+
+    -fx-background-image: url('../image/back-icon.png');
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }

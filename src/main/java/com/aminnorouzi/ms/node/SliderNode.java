@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -84,7 +83,7 @@ public class SliderNode extends StackPane implements Loadable {
     @FXML
     private void onWatch(MouseEvent event) {
         thread.interrupt();
-        controller.switchTo(View.MOVIE, current.getId());
+        controller.switchTo(View.MOVIE, current);
     }
 
     @FXML

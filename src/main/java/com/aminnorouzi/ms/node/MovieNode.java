@@ -39,7 +39,7 @@ public class MovieNode extends StackPane implements Loadable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Thread background = new Thread(() -> Platform.runLater(() -> {
-            ImageInfo backdropInfo = new ImageInfo(movie.getPoster(), 181*4, 236*4, true);
+            ImageInfo backdropInfo = new ImageInfo(movie.getPoster(), 181 * 4, 236 * 4, true);
             controller.getImage().load(backdropInfo).thenAccept(image -> {
                 posterPic.setFill(new ImagePattern(image));
             });
@@ -60,7 +60,7 @@ public class MovieNode extends StackPane implements Loadable {
 
     @FXML
     private void onMovie(ActionEvent event) {
-        controller.switchTo(View.MOVIE, movie.getId());
+        controller.switchTo(View.MOVIE, movie);
     }
 }
 

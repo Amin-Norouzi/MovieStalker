@@ -2,26 +2,21 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.function.GenreFunction;
 import com.aminnorouzi.ms.function.MovieFunction;
-import com.aminnorouzi.ms.function.SearchFunction;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
-import com.aminnorouzi.ms.model.movie.Search;
-import com.aminnorouzi.ms.node.*;
+import com.aminnorouzi.ms.node.SectionNode;
+import com.aminnorouzi.ms.node.SliderNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -49,15 +44,19 @@ public class HomeController extends Controller {
 
         MovieRecord data = library.report(getUser());
 
-        List<Movie> sliders = data.getPlaylist().stream().limit(5).toList();
-        List<Movie> trending = data.getTrending().stream().limit(5).toList();
+        if (data.getPlaylist().size() != 10) return;
 
-        getContent().getChildren().add(1, new SliderNode(sliders, this));
+        List<Movie> slider = data.getTrending().subList(0, 5);
+        List<Movie> trending = data.getTrending().subList(5, 10);
+        List<Movie> watched = data.getPlaylist().subList(0, 5);
+        List<Movie> added = data.getPlaylist().subList(5, 10);
+
+        getContent().getChildren().add(1, new SliderNode(slider, this));
 
         sectionPane.getChildren().addAll(
-                new SectionNode(this, "Recently Added to Library", sliders, new MovieFunction()),
+                new SectionNode(this, "Recently Added to Library", added, new MovieFunction()),
                 new SectionNode(this, "Favorite Genres", data.getGenres(), new GenreFunction()),
-                new SectionNode(this, "Recently Watched", sliders, new MovieFunction()),
+                new SectionNode(this, "Recently Watched", watched, new MovieFunction()),
                 new SectionNode(this, "Trending Movies", trending, new MovieFunction())
         );
 
@@ -65,11 +64,11 @@ public class HomeController extends Controller {
         watchedLabel.setText(String.valueOf(data.getWatched()));
         todayLabel.setText(String.valueOf(0));
 
-        TranslateTransition transition = new TranslateTransition();
-        transition.setFromY(350);
-        transition.setToY(0);
-        transition.setDuration(Duration.seconds(0.5));
-        transition.setNode(getContent());
-        transition.play();
+//        TranslateTransition transition = new TranslateTransition();
+//        transition.setFromY(350);
+//        transition.setToY(0);
+//        transition.setDuration(Duration.seconds(0.5));
+//        transition.setNode(getContent());
+//        transition.play();
     }
 }

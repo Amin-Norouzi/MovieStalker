@@ -15,9 +15,6 @@
                   <Insets bottom="16.0" left="23.0" right="24.0" top="16.0" />
                </padding>
                 </VBox>
-            <padding>
-               <Insets bottom="16.0" left="24.0" right="23.0" top="16.0" />
-            </padding>
             </ScrollPane>
         </center>
     </BorderPane>

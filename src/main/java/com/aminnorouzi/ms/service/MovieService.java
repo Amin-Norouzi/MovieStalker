@@ -7,6 +7,7 @@ import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.movie.Search.SearchResponse;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
+import com.aminnorouzi.ms.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class MovieService {
+    private final UserRepository userRepository;
 
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
@@ -40,6 +42,18 @@ public class MovieService {
         return added;
     }
 
+    public Movie add(Movie request) {
+        verify(request.getTmdbId());
+
+        User user = request.getUser();
+        user.addMovie(request);
+
+        Movie added = movieRepository.save(request);
+
+        log.info("Added a new movie: {}", added);
+        return added;
+    }
+
     private void verify(Long tmdbId) {
         movieRepository.findByTmdbId(tmdbId).ifPresent(m -> {
             throw new DuplicatedMovieException("This movie already exists!");
@@ -49,7 +63,9 @@ public class MovieService {
     public Movie find(Search search) {
         String type = search.getMediaType();
 
-        Movie found = movieClient.get(search.getTmdbId(), type);
+        Movie found = movieRepository.findByTmdbId(search.getTmdbId()).orElseGet(
+                () -> movieClient.get(search.getTmdbId(), type));
+
         found.setType(Type.of(type));
 
         log.info("Found a new movie: {}", found);
@@ -78,10 +94,10 @@ public class MovieService {
 
     private List<Movie> track(LocalDate date) {
         return movieClient.trending().getResults().stream()
+                .parallel()
                 .filter(s -> s.getMediaType().equals("movie") ||
                         s.getMediaType().equals("tv"))
                 .limit(10)
-                .parallel()
                 .map(this::find)
                 .toList();
     }

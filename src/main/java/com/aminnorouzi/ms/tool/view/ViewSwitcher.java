@@ -1,5 +1,6 @@
 package com.aminnorouzi.ms.tool.view;
 
+import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.user.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,7 +48,7 @@ public class ViewSwitcher {
         Parent root = load(key, user);
 
         cacheup(key, root);
-        showup(view, root);
+        showup(view, root, input);
     }
 
     private Parent load(CacheKey key, User user) {
@@ -65,10 +66,15 @@ public class ViewSwitcher {
         setCurrent(key.getView());
     }
 
-    private void showup(View view, Parent root) {
+    private void showup(View view, Parent root, Object input) {
         stage.getScene().setRoot(root);
 
-        stage.setTitle(view.getTitle());
+        if (view.equals(View.MOVIE) && input instanceof Movie m) {
+            stage.setTitle(view.getTitle() + " - " + m.getTitle());
+        } else {
+            stage.setTitle(view.getTitle());
+        }
+
         stage.show();
     }
 

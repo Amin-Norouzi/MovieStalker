@@ -43,7 +43,7 @@
 }
 
 #watch-button {
-    -fx-background-image: url('../image/watch-icon.png');
+    -fx-background-image: url('../image/watch-w-icon.png');
     -fx-background-size: 24px 24px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
