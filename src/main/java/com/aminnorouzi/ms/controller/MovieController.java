@@ -18,7 +18,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static com.aminnorouzi.ms.tool.image.ImageInfo.Type;
@@ -52,9 +51,6 @@ public class MovieController extends Controller {
     private HBox genrePane;
 
     private Movie movie;
-
-    @Value("${movie.client.api.imdb-base-url}")
-    private String imdbBaseUrl;
 
     public MovieController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
@@ -90,8 +86,7 @@ public class MovieController extends Controller {
         releasedLabel.setText(String.valueOf(movie.getReleased()));
         overviewLabel.setText(movie.getOverview());
         ratingLabel.setText(String.valueOf(movie.getRating()));
-
-        initRuntime(movie);
+        runtimeLabel.setText(movie.getRuntime());
 
         if (movie.getWatchedAt() != null) {
             watchButton.setText("Watched");
@@ -103,27 +98,10 @@ public class MovieController extends Controller {
         }
     }
 
-    private void initRuntime(Movie movie) {
-        int hours = movie.getRuntime() / 60;
-        int minutes = movie.getRuntime() % 60;
-
-        StringBuilder builder = new StringBuilder();
-        if (hours != 0) {
-            builder.append(hours).append("h ");
-        }
-        if (minutes != 0) {
-            builder.append(minutes).append("m");
-        }
-
-        runtimeLabel.setText(builder.toString());
-    }
-
     @FXML
     private void onMore(MouseEvent event) {
         try {
-            String url = imdbBaseUrl + movie.getImdbId();
-            String command = "open " + url;
-
+            String command = "open " + movie.getWebsite();
             Runtime.getRuntime().exec(command);
         } catch (Exception e) {
             log.error(e.getMessage());
