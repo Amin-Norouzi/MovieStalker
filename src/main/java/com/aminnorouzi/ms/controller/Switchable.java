@@ -1,4 +1,6 @@
-package com.aminnorouzi.ms.tool.view;
+package com.aminnorouzi.ms.controller;
+
+import com.aminnorouzi.ms.tool.view.View;
 
 public interface Switchable {
 
