@@ -14,7 +14,13 @@ public class CalculatedTimeConverter extends JsonDeserializer<String> {
     public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         final ObjectCodec objectCodec = jsonParser.getCodec();
         final JsonNode node = objectCodec.readTree(jsonParser);
-        final int value = node.elements().next().asInt();
+
+        int value = 0;
+        try {
+            value = node.elements().next().asInt();
+        } catch (Exception exception) {
+            value = node.asInt();
+        }
 
         StringBuilder builder = new StringBuilder();
         int hours = value / 60;
