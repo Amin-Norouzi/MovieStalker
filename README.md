@@ -51,30 +51,37 @@ btw i am open to any suggestions and prs. if you are a java developer (experienc
     <br />
   </p>
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/signin-image.png" alt="signin" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/signin-image.png" alt="signin">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/signup-image.png" alt="signup" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/signup-image.png" alt="signup">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/home-1-image.png" alt="home1" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/home-1-image.png" alt="home1">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/home-2-image.png" alt="home2" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/home-2-image.png" alt="home2">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/library-image.png" alt="library" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/library-image.png" alt="library">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/discover-image.png" alt="discover" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/discover-image.png" alt="discover">
   </a>
+   <br />
   
   <a href="https://github.com/Amin-Norouzi/MovieStalker">
-    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/movie-image.png" alt="movie" width="80" height="80">
+    <img src="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/movie-image.png" alt="movie">
   </a>
+   <br />
 </div>
