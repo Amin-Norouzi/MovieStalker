@@ -7,7 +7,6 @@ import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.movie.Search.SearchResponse;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
-import com.aminnorouzi.ms.repository.UserRepository;
 import com.aminnorouzi.ms.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -116,8 +115,6 @@ public class MovieService {
         User user = movie.getUser();
         user.removeMovie(movie);
 
-//        movieRepository.delete(movie);
-
         log.info("Deleted a movie: {}", movie);
     }
 
@@ -151,11 +148,9 @@ public class MovieService {
     }
 
     private String extract(String url) {
-        Pattern pattern = Pattern.compile("(tt\\d[0-9]*)");
-        Matcher matcher = pattern.matcher(url);
-
-        if (matcher.find()) {
-            return matcher.group();
+        String id = stringUtil.extractImdbId(url);
+        if (id != null) {
+            return id;
         }
 
         throw new RuntimeException("Failed to extract imdb id!");
