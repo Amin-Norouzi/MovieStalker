@@ -18,17 +18,6 @@ public class LibraryService {
     private final MovieService movieService;
     private final UserService userService;
 
-    public User add(User user, Search search) {
-        MovieRequest movieRequest = MovieRequest.builder()
-                .user(user)
-                .search(search)
-                .build();
-
-        Movie added = movieService.add(movieRequest);
-
-        return userService.update(added.getUser());
-    }
-
     public User add(Movie request) {
         Movie added = movieService.add(request);
 

@@ -8,6 +8,7 @@ import com.aminnorouzi.ms.model.movie.Search.SearchResponse;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
 import com.aminnorouzi.ms.repository.UserRepository;
+import com.aminnorouzi.ms.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,20 +28,8 @@ public class MovieService {
 
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
+    private final StringUtil stringUtil;
     private final Clock clock;
-
-    public Movie add(MovieRequest request) {
-        Movie movie = find(request.getSearch());
-        verify(movie.getTmdbId());
-
-        User user = request.getUser();
-        user.addMovie(movie);
-
-        Movie added = movieRepository.save(movie);
-
-        log.info("Added a new movie: {}", added);
-        return added;
-    }
 
     public Movie add(Movie request) {
         verify(request.getTmdbId());
@@ -67,6 +56,7 @@ public class MovieService {
                 () -> movieClient.get(search.getTmdbId(), type));
 
         found.setType(Type.of(type));
+        found.setWebsite(stringUtil.generateImdbUrl(found.getImdbId()));
 
         log.info("Found a new movie: {}", found);
         return found;
