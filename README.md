@@ -1,6 +1,8 @@
 # feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
 # See daily devlogs [here](https://t.me/amindevlog/5) :) 
 
+## beta version will be out soon
+
 it will available for: (with native installers)
 - windows
 - macos
