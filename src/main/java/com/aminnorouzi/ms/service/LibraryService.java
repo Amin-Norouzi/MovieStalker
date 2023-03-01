@@ -66,8 +66,6 @@ public class LibraryService {
     }
 
     public List<Movie> sort(List<Movie> movies) {
-        return movies.stream()
-                .sorted(Comparator.comparing(Movie::getCreatedAt)
-                        .reversed()).toList();
+        return movieService.sort(movies);
     }
 }

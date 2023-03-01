@@ -68,8 +68,7 @@ public class MovieService {
         int moviesLimit = 5;
         int genresLimit = 6;
 
-        List<Movie> added = user.getMovies().stream()
-                .sorted(Comparator.comparing(Movie::getCreatedAt).reversed())
+        List<Movie> added = sort(user.getMovies()).stream()
                 .limit(moviesLimit)
                 .toList();
 
@@ -161,5 +160,11 @@ public class MovieService {
         }
 
         throw new RuntimeException("Failed to extract imdb id!");
+    }
+
+    public List<Movie> sort(List<Movie> movies) {
+        return movies.stream()
+                .sorted(Comparator.comparing(Movie::getCreatedAt).reversed())
+                .toList();
     }
 }
