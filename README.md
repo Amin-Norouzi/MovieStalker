@@ -1,6 +1,5 @@
 # feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
 
-    <br />
 
  <p align="center">
     See daily devlogs [here](https://t.me/amindevlog/5) :)
@@ -9,6 +8,7 @@
 
  <p align="center">
     beta version will be out soon!!
+    <br />
     <br />
   </p>
 
