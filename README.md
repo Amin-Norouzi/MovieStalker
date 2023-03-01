@@ -1,7 +1,16 @@
 # feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
-# See daily devlogs [here](https://t.me/amindevlog/5) :) 
 
-## beta version will be out soon
+    <br />
+
+ <p align="center">
+    See daily devlogs [here](https://t.me/amindevlog/5) :)
+    <br />
+  </p>
+
+ <p align="center">
+    beta version will be out soon!!
+    <br />
+  </p>
 
 it will available for: (with native installers)
 - windows
