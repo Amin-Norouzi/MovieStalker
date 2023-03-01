@@ -65,12 +65,8 @@ public class Movie implements Serializable {
     @JsonAlias({"runtime", "episode_run_time"})
     private String runtime;
 
-    @ImdbUrl
-    @JsonProperty("external_ids")
+    @JsonIgnore
     private String website;
-
-    @JsonAlias({"release_date", "first_air_date"})
-    private LocalDate released;
 
     @JsonIgnore
     @Column(nullable = false)
@@ -96,6 +92,9 @@ public class Movie implements Serializable {
             @JoinColumn(name = "movie_id", referencedColumnName = "id")
     })
     private List<String> genres;
+
+    @JsonAlias({"release_date", "first_air_date"})
+    private LocalDate released;
 
     private LocalDateTime watchedAt;
 

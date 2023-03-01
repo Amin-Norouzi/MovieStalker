@@ -29,7 +29,7 @@
                            <children>
                               <VBox spacing="13.0">
                                  <children>
-                                    <Label id="title-label" fx:id="titleLabel" alignment="TOP_LEFT" focusTraversable="false" onMouseClicked="#onMore" prefWidth="647.0" text="Title" wrapText="true">
+                                    <Label id="title-label" fx:id="titleLabel" focusTraversable="false" minHeight="115.0" onMouseClicked="#onMore" prefWidth="647.0" text="Title" wrapText="true">
                                        <tooltip>
                                           <Tooltip text="Click on the title to see more on IMDB" />
                                        </tooltip></Label>
