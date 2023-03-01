@@ -1,4 +1,4 @@
-# feel free to contribute! 
+# feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
 # See daily devlogs [here](https://t.me/amindevlog/5) :) 
 
 it will available for: (with native installers)
