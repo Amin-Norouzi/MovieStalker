@@ -1,16 +1,7 @@
 # feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
 
-
- <p align="center">
-    See daily devlogs [here](https://t.me/amindevlog/5) :)
-    <br />
-  </p>
-
- <p align="center">
-    beta version will be out soon!!
-    <br />
-    <br />
-  </p>
+[See daily devlogs here](https://t.me/amindevlog/5) 🍿
+beta version will be out soon!!
 
 it will available for: (with native installers)
 - windows
@@ -55,13 +46,13 @@ beside those million things i have done so far :)
 - [ ] handling caches by user 
 - [ ] ...
 
-btw i am open to any suggestions and prs. if you are a java developer (experience dosen't matter) and want to contribute, you can [contact me](mailto:realaminnorouzi@gmail.com) via email.
+📬 btw i am open to any suggestions and prs. if you are a java developer (experience dosen't matter) and want to contribute, you can [contact me](mailto:realaminnorouzi@gmail.com) via email.
 
 ### (readme will be updated)
 
 <div align="center">
   <p align="center">
-    screenshots of current design so far (it's not fully implemented yet)
+    screenshots of current design so far (it's not fully implemented yet) 😀
     <br />
   </p>
   <a href="https://github.com/Amin-Norouzi/MovieStalker/blob/master/assets/signin-image.png">
