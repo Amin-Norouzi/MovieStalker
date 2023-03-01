@@ -25,13 +25,13 @@
                   <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1120.0" spacing="34.0">
                      <children>
                         <Rectangle fx:id="posterImage" arcHeight="7.0" arcWidth="7.0" fill="#c4c4c4" height="607.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="439.0" />
-                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="647.0" spacing="40.0">
+                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="647.0" spacing="40.0">
                            <children>
                               <VBox spacing="13.0">
                                  <children>
-                                    <Label id="title-label" fx:id="titleLabel" focusTraversable="false" onMouseClicked="#onMore" prefHeight="115.0" text="Title" wrapText="true">
+                                    <Label id="title-label" fx:id="titleLabel" alignment="TOP_LEFT" focusTraversable="false" onMouseClicked="#onMore" prefWidth="647.0" text="Title" wrapText="true">
                                        <tooltip>
-                                          <Tooltip text="Click on title to see more on IMDB" />
+                                          <Tooltip text="Click on the title to see more on IMDB" />
                                        </tooltip></Label>
                                     <VBox spacing="16.0">
                                        <children>

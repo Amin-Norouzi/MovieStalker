@@ -9,6 +9,13 @@
     -fx-text-fill: #FFFFFF;
 }
 
+.tooltip {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-text-fill: #FFFFFF;
+}
+
 #title-label {
     -fx-font-family: "Poppins SemiBold";
     -fx-font-size: 48px;
