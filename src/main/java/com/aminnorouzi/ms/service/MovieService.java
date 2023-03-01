@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,18 +65,27 @@ public class MovieService {
 
     public MovieRecord report(User user) {
         Long userId = user.getId();
-        int playlistLimit = 10;
+        int moviesLimit = 5;
         int genresLimit = 6;
+
+        List<Movie> added = user.getMovies().stream()
+                .sorted(Comparator.comparing(Movie::getCreatedAt).reversed())
+                .limit(moviesLimit)
+                .toList();
+
+        List<Movie> trending = track(LocalDate.now(clock));
 
         MovieRecord data = MovieRecord.builder()
                 .total(movieRepository.countTotalMoviesByUser(userId))
                 .watched(movieRepository.countWatchedMoviesByUser(userId))
                 .genres(movieRepository.findMostWatchedGenresByUser(userId, genresLimit))
-                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, playlistLimit))
-                .trending(track(LocalDate.now(clock)))
+                .playlist(movieRepository.findAllWatchedMoviesByUser(userId, moviesLimit))
+                .added(added)
+                .trending(trending.subList(0, 5))
+                .slider(trending.subList(5, 10))
                 .build();
 
-        Boolean isAvailable = data.getPlaylist().size() == playlistLimit;
+        Boolean isAvailable = data.getPlaylist().size() == moviesLimit;
         data.setIsAvailable(isAvailable);
 
         log.info("Reported a movie record: {}", data);
