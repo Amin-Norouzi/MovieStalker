@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class MovieService {
-    private final UserRepository userRepository;
 
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
