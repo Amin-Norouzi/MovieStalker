@@ -1,6 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.model.movie.Movie;
+import com.aminnorouzi.ms.node.GenreNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageInfo;
@@ -76,10 +77,7 @@ public class MovieController extends Controller {
         });
 
         movie.getGenres().forEach(genre -> {
-            Button button = new Button(genre);
-            button.setId("genre-button");
-
-            genrePane.getChildren().add(button);
+            genrePane.getChildren().add(new GenreNode(this, genre));
         });
 
         titleLabel.setText(movie.getTitle());

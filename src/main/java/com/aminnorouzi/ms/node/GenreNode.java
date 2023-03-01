@@ -1,48 +1,31 @@
 package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
-import com.aminnorouzi.ms.tool.image.ImageInfo;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class GenreNode extends StackPane implements Loadable {
+public class GenreNode extends HBox implements Loadable {
 
     private final Controller controller;
-    private final String genre;
+    private final String title;
 
     @FXML
-    private Label genreLabel;
-    @FXML
-    private Rectangle genrePic;
+    private Button genreButton;
 
-    public GenreNode(Controller controller, String genre) {
+    public GenreNode(Controller controller, String title) {
         this.controller = controller;
-        this.genre = genre;
+        this.title = title;
 
         load(this);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Thread background = new Thread(() -> Platform.runLater(() -> {
-//            ImageInfo backdropInfo = new ImageInfo(movie.getPoster(), 181*4, 236*4, true);
-//            controller.getImage().load(backdropInfo).thenAccept(image -> {
-//                genrePic.setFill(new ImagePattern(image));
-//            });
-
-            genreLabel.setText(genre);
-        }));
-
-        background.setDaemon(true);
-        background.start();
+        genreButton.setText(title);
     }
 
     @Override

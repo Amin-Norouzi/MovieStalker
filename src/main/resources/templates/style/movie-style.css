@@ -39,30 +39,6 @@
     -fx-effect: none;
 
     -fx-text-fill: #FFFFFF;
-
-    /*-fx-background-radius: 46px;*/
-    /*-fx-border-radius: 46px;*/
-
-    /*-fx-background-color: #FFFFFF;*/
-    /*-fx-border-color: #F2F2F2;*/
-    /*-fx-border-width: 1.5px;*/
-}
-
-#genre-button {
-    -fx-font-size: 12px;
-
-    -fx-background-color: none;
-    -fx-background-radius: 42px;
-
-    -fx-border-color: #FFFFFF;
-    -fx-border-radius: 42px;
-    -fx-border-width: 0.75px;
-
-    -fx-min-height: 27px;
-    -fx-pref-height: 27px;
-    -fx-max-height: 27px;
-
-    -fx-padding: 4px 16px 4px 16px;
 }
 
 #watch-button {
