@@ -2,6 +2,7 @@ package com.aminnorouzi.ms.controller;
 
 import com.aminnorouzi.ms.function.CategoryFunction;
 import com.aminnorouzi.ms.function.MovieFunction;
+import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.model.movie.MovieRecord;
 import com.aminnorouzi.ms.node.SectionNode;
 import com.aminnorouzi.ms.node.SliderNode;
@@ -12,11 +13,14 @@ import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Setter
 @Component
 @FxmlView("/templates/view/home-view.fxml")
 public class HomeController extends Controller implements Emptiable {
@@ -30,16 +34,28 @@ public class HomeController extends Controller implements Emptiable {
     @FXML
     private VBox sectionPane;
 
+    private MovieRecord data;
+
     public HomeController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
     }
 
     @Override
     public void configure() {
-        if (getUser().getMovies().isEmpty()) return;
+        List<Movie> movies = getUser().getMovies();
 
-        // TODO: validate data before initialization
-        MovieRecord data = library.report(getUser());
+        if (movies.isEmpty()
+                || movies.size() < 10
+                || movies.stream().filter(m -> m.getWatchedAt() != null).toList().size() < 5) {
+            onEmpty(getContent(), this, "Your library doesn't have enough content!");
+            return;
+        }
+
+        setData(library.report(getUser()));
+        if (!data.getIsAvailable()) {
+            onEmpty(getContent(), this, "Your library doesn't have enough content!");
+            return;
+        }
 
         getContent().getChildren().add(1, new SliderNode(data.getSlider(), this));
         sectionPane.getChildren().addAll(
@@ -52,10 +68,5 @@ public class HomeController extends Controller implements Emptiable {
         totalLabel.setText(String.valueOf(data.getTotal()));
         watchedLabel.setText(String.valueOf(data.getWatched()));
         todayLabel.setText(String.valueOf(0));
-    }
-
-    @Override
-    public void hide(Pane content) {
-        // TODO Auto-generated method stub
     }
 }

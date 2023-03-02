@@ -1,7 +1,7 @@
 package com.aminnorouzi.ms.controller;
 
+import com.aminnorouzi.ms.function.MovieFunction;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.node.MovieNode;
 import com.aminnorouzi.ms.node.SectionNode;
 import com.aminnorouzi.ms.service.ActivityService;
@@ -20,9 +20,8 @@ import java.util.Map;
 @Getter
 @Component
 @FxmlView("/templates/view/library-view.fxml")
-public class LibraryController extends Controller {
+public class LibraryController extends Controller implements Emptiable {
 
-    //    private final LibraryMouseEventHandler handler = new LibraryMouseEventHandler(this);
     private final Map<MovieNode, Movie> contents = new LinkedHashMap<>();
 
     public LibraryController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
@@ -31,19 +30,15 @@ public class LibraryController extends Controller {
 
     @Override
     protected void configure() {
-        User user = getUser();
+        if (getUser().getMovies().isEmpty()) {
+            onEmpty(getContent(), this, "Your library has no movies!");
+            return;
+        }
 
-        List<Movie> movies = library.sort(user.getMovies());
-//        movies.forEach(movie -> {
-//            MovieNode node = new MovieNode(this, movie);
-//
-//            contentPane.getChildren().add(node);
-//            contents.put(node, movie);
-//        });
+        List<Movie> movies = library.sort(getUser().getMovies());
 
         getContent().getChildren().add(
-                new SectionNode(this, "Your Library", false, movies,
-                        (c, v) -> new MovieNode(c, (Movie) v))
+                new SectionNode(this, "Your Library", false, movies, new MovieFunction())
         );
     }
 }

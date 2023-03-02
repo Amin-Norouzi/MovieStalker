@@ -128,7 +128,7 @@
 }
 
 #watch-button {
-    -fx-background-image: url('../image/watch-b-icon.png');
+    -fx-background-image: url('../image/suggest-b-icon.png');
     -fx-background-size: 24px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 12px;

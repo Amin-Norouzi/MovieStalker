@@ -11,10 +11,8 @@ import java.util.function.BiFunction;
 @RequiredArgsConstructor
 public class SearchFunction implements BiFunction<Controller, Object, Node> {
 
-    private final Boolean forced;
-
     @Override
     public Node apply(Controller controller, Object value) {
-        return new SearchNode(controller, (Search) value, forced);
+        return new SearchNode(controller, (Search) value);
     }
 }

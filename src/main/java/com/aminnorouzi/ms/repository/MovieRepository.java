@@ -11,7 +11,8 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Optional<Movie> findByTmdbId(Long tmdbId);
+    @Query("select m from Movie m where m.tmdbId = ?1 and m.user.id = ?2")
+    Optional<Movie> findByTmdbIdAndUserId(Long tmdbId, Long userId);
 
     @Query(nativeQuery = true, value = "SELECT DISTINCT genre FROM moviestalkerdb.movie_genres WHERE user_id = ?1 \n"
             + "GROUP BY genre ORDER BY COUNT(*) DESC LIMIT ?2")

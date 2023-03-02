@@ -1,0 +1,36 @@
+.root {
+    -fx-background-color: none;
+    -fx-border-color: none;
+}
+
+#main-pane {
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 8px;
+
+    -fx-border-color: none;
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+}
+
+#message-label {
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 18px;
+
+    -fx-text-fill: #4E5279;
+}
+
+#notify-button {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-animated: none;
+    -fx-effect: none;
+
+    -fx-background-color: none;
+    -fx-border-color: none;
+
+    -fx-background-image: url('../image/notify-icon.png');
+    -fx-background-size: 50px 48px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}

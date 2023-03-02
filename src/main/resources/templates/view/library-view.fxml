@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/library-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.LibraryController">
     <BorderPane fx:id="layout">
         <center>
             <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
-                <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
+                <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
                <padding>
                   <Insets bottom="16.0" left="23.0" right="24.0" top="16.0" />
                </padding>

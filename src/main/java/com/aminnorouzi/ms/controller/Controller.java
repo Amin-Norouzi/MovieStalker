@@ -7,7 +7,6 @@ import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
-import com.aminnorouzi.ms.tool.view.Switchable;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
@@ -68,18 +67,14 @@ public class Controller implements Switchable, Executable {
                 switchTo(view);
             }
         } catch (Exception e) {
+//            notification.show(e.getMessage());
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void switchTo(View view, Object input) {
-        if (input instanceof Long value) {
-            input = getUser().getMovies().stream()
-                    .filter(m -> m.getId().equals(value))
-                    .findFirst().get();
-        }
-
         switcher.switchTo(view, getUser(), input);
     }
 }

@@ -1,6 +1,9 @@
 package com.aminnorouzi.ms.model.movie;
 
-import com.aminnorouzi.ms.annotation.*;
+import com.aminnorouzi.ms.annotation.CalculatedTime;
+import com.aminnorouzi.ms.annotation.CollectionOfJson;
+import com.aminnorouzi.ms.annotation.IdFromJson;
+import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -39,12 +42,10 @@ public class Movie implements Serializable {
 
     @NotNull
     @JsonProperty("id")
-    @Column(unique = true)
     private Long tmdbId;
 
     @NotNull
     @IdFromJson
-    @Column(unique = true)
     @JsonProperty("external_ids")
     private String imdbId;
 
@@ -105,17 +106,5 @@ public class Movie implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-//    // TODO: implement a proper equals operator
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        Movie movie = (Movie) o;
-//        return id != null && Objects.equals(id, movie.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
+    // TODO: implement a proper equals operator
 }

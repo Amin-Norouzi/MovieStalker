@@ -22,23 +22,19 @@ public class SearchNode extends StackPane implements Loadable {
 
     private final Controller controller;
     private final Search search;
-    private final Boolean forced;
 
     private Movie movie;
 
     @FXML
     private Rectangle posterPic;
     @FXML
-    private Label genreLabel;
-    @FXML
     private Label titleLabel;
     @FXML
     private Label yearLabel;
 
-    public SearchNode(Controller controller, Search search, Boolean forced) {
+    public SearchNode(Controller controller, Search search) {
         this.controller = controller;
         this.search = search;
-        this.forced = forced;
 
         load(this);
     }
@@ -46,19 +42,6 @@ public class SearchNode extends StackPane implements Loadable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Thread background = new Thread(() -> Platform.runLater(() -> {
-
-            new Thread(() -> {
-                if (forced) {
-                    setMovie(controller.getLibrary().find(search));
-                }
-
-                Platform.runLater(() -> {
-                    if (movie != null) {
-                        genreLabel.setText(movie.getGenres().get(0));
-                    }
-                });
-            }).start();
-
             ImageInfo backdropInfo = new ImageInfo(search.getPoster(), 181 * 4, 236 * 4, true);
             controller.getImage().load(backdropInfo).thenAccept(image -> {
                 posterPic.setFill(new ImagePattern(image));
@@ -79,10 +62,7 @@ public class SearchNode extends StackPane implements Loadable {
 
     @FXML
     private void onMovie(ActionEvent event) {
-        if (movie == null) {
-            setMovie(controller.getLibrary().find(search));
-        }
-
+        setMovie(controller.getLibrary().find(controller.getUser(), search));
         controller.switchTo(View.MOVIE, movie);
     }
 }

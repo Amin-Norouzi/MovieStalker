@@ -20,7 +20,7 @@ import java.util.List;
 
 @Component
 @FxmlView("/templates/view/discover-view.fxml")
-public class DiscoverController extends Controller implements Searchable {
+public class DiscoverController extends Controller implements Searchable, Emptiable {
 
     @FXML
     private TextField searchField;
@@ -36,46 +36,30 @@ public class DiscoverController extends Controller implements Searchable {
             searchField.setText(text);
             searchField.positionCaret(text.length());
 
-            search(text);
+            find(text);
         }
-    }
-
-    @FXML
-    private void onChoose(ActionEvent event) {
-//        Stage stage = (Stage) getRoot().getScene().getWindow();
-//
-//        DirectoryChooser directoryChooser = new DirectoryChooser();
-//        File directory = directoryChooser.showDialog(stage);
-//
-//        if (directory != null) {
-//            Set<Query> queries = library.generate(directory);
-//            queries.forEach(query -> new Thread(() -> addMovieToLibrary(query)).start());
-//        }
     }
 
     @FXML
     private void onSearch(ActionEvent event) {
         String text = searchField.getText();
-        if (!text.isBlank()) {
-            search(text);
-        } else {
-            notification.showError("You should type something first!");
-        }
+        if (text.isBlank()) return;
+
+        find(text);
     }
 
     @Override
-    public void search(String text) {
+    public void find(String text) {
         clear(getContent());
 
-        Query query = Query.of(text);
         Thread background = new Thread(() -> Platform.runLater(() -> {
+            Query query = Query.of(text);
+
             try {
                 List<Search> searches = library.search(query);
-
-                getContent().getChildren().add(new SectionNode(this, "Your Search Results",
-                        false, searches, new SearchFunction(false)));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                getContent().getChildren().add(new SectionNode(this, "Your Search Results", searches, new SearchFunction()));
+            } catch (Exception exception) {
+                onEmpty(getContent(), this, "No result found, try something else!");
             }
         }));
 

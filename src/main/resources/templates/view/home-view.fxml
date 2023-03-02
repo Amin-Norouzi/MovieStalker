@@ -1,78 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/home-style.css"
-           xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.aminnorouzi.ms.controller.HomeController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/home-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.HomeController">
     <BorderPane fx:id="layout">
         <center>
-            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;"
-                        vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-                <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity"
-                      prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
+            <ScrollPane focusTraversable="false" hbarPolicy="NEVER" hmax="0.0" style="-fx-background-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                <VBox fx:id="content" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1016.0" spacing="30.0" style="-fx-background-color: white;">
                     <padding>
-                        <Insets bottom="16.0" left="23.0" right="24.0" top="16.0"/>
+                        <Insets bottom="16.0" left="23.0" right="24.0" top="16.0" />
                     </padding>
-                    <HBox id="stats-pane" alignment="CENTER" fillHeight="false" maxHeight="-Infinity"
-                          maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0"
-                          prefWidth="969.0">
+                    <HBox id="stats-pane" alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="969.0">
                         <VBox.margin>
-                            <Insets bottom="18.0" top="18.0"/>
+                            <Insets bottom="18.0" top="18.0" />
                         </VBox.margin>
                         <HBox alignment="CENTER" fillHeight="false" prefWidth="766.0" spacing="110.0">
                             <AnchorPane prefHeight="109.0" prefWidth="182.0">
-                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0"
-                                      layoutY="4.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <Label id="stats-header-label" text="Total Movies"/>
+                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0" layoutY="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Label id="stats-header-label" text="Total Movies" />
                                 </HBox>
-                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0"
-                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0">
-                                    <Label id="stats-count-label" fx:id="totalLabel"
-                                           text="Total"/>
+                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    <Label id="stats-count-label" fx:id="totalLabel" text="Total" />
                                 </HBox>
                             </AnchorPane>
-                            <AnchorPane layoutX="302.0" layoutY="10.0" prefHeight="109.0"
-                                        prefWidth="182.0">
-                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0"
-                                      layoutY="4.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <Label id="stats-header-label" text="Watched Movies"/>
+                            <AnchorPane layoutX="302.0" layoutY="10.0" prefHeight="109.0" prefWidth="182.0">
+                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0" layoutY="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Label id="stats-header-label" text="Watched Movies" />
                                 </HBox>
-                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0"
-                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0">
-                                    <Label id="stats-count-label" fx:id="watchedLabel"
-                                           text="Watched"/>
+                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    <Label id="stats-count-label" fx:id="watchedLabel" text="Watched" />
                                 </HBox>
                             </AnchorPane>
-                            <AnchorPane layoutX="448.0" layoutY="10.0" prefHeight="109.0"
-                                        prefWidth="182.0">
-                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0"
-                                      layoutY="4.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <Label id="stats-header-label" text="Watched Today"/>
+                            <AnchorPane layoutX="448.0" layoutY="10.0" prefHeight="109.0" prefWidth="182.0">
+                                <HBox alignment="CENTER" fillHeight="false" layoutX="11.0" layoutY="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Label id="stats-header-label" text="Watched Today" />
                                 </HBox>
-                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0"
-                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0">
-                                    <Label id="stats-count-label" fx:id="todayLabel"
-                                           text="Today"/>
+                                <HBox alignment="CENTER" layoutX="54.0" layoutY="89.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    <Label id="stats-count-label" fx:id="todayLabel" text="Today" />
                                 </HBox>
                             </AnchorPane>
                         </HBox>
                     </HBox>
-                    <VBox fx:id="sectionPane" spacing="40.0"/>
+                    <VBox fx:id="sectionPane" spacing="40.0" />
                 </VBox>
             </ScrollPane>
         </center>

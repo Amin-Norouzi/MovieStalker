@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Clock;
 import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -55,7 +54,7 @@ public class UserService {
                 .username(request.getUsername())
                 .password(password)
                 .fullName(request.getFullName())
-                .movies(List.of())
+                .movies(new ArrayList<>())
                 .build();
 
         User created = userRepository.save(user);

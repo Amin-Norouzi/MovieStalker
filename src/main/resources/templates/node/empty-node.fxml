@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="196.0" prefWidth="968.0" stylesheets="@../style/empty-node-style.css"
+         type="HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox id="main-pane" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity"
+          minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="968.0">
+        <VBox alignment="TOP_CENTER" prefHeight="88.0" spacing="12.0">
+            <Button id="notify-button" mnemonicParsing="false" prefHeight="48.0" prefWidth="50.0"/>
+            <Label id="message-label" fx:id="messageLabel" text="Message"/>
+        </VBox>
+    </VBox>
+</fx:root>
