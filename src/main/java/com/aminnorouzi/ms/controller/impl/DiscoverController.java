@@ -1,5 +1,8 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
+import com.aminnorouzi.ms.controller.Emptiable;
+import com.aminnorouzi.ms.controller.Searchable;
 import com.aminnorouzi.ms.function.SearchFunction;
 import com.aminnorouzi.ms.model.movie.Query;
 import com.aminnorouzi.ms.model.movie.Search;

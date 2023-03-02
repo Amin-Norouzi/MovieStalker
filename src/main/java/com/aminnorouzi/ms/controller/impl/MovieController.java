@@ -1,5 +1,6 @@
-package com.aminnorouzi.ms.controller;
+package com.aminnorouzi.ms.controller.impl;
 
+import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.node.GenreNode;
 import com.aminnorouzi.ms.service.ActivityService;
