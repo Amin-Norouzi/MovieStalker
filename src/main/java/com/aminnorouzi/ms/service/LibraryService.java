@@ -1,12 +1,14 @@
 package com.aminnorouzi.ms.service;
 
-import com.aminnorouzi.ms.model.movie.*;
+import com.aminnorouzi.ms.model.movie.Movie;
+import com.aminnorouzi.ms.model.movie.MovieRecord;
+import com.aminnorouzi.ms.model.movie.Query;
+import com.aminnorouzi.ms.model.movie.Search;
 import com.aminnorouzi.ms.model.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +26,8 @@ public class LibraryService {
         return userService.update(added.getUser());
     }
 
-    public Movie find(Search search) {
-        return movieService.find(search);
+    public Movie find(User user, Search search) {
+        return movieService.find(user, search);
     }
 
     public List<Search> search(Query query) {

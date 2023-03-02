@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -31,7 +29,7 @@ public class MovieService {
     private final Clock clock;
 
     public Movie add(Movie request) {
-        verify(request.getTmdbId());
+        verify(request.getUser(), request.getTmdbId());
 
         User user = request.getUser();
         user.addMovie(request);
@@ -42,17 +40,17 @@ public class MovieService {
         return added;
     }
 
-    private void verify(Long tmdbId) {
-        movieRepository.findByTmdbId(tmdbId).ifPresent(m -> {
+    private void verify(User user, Long tmdbId) {
+        movieRepository.findByTmdbIdAndUserId(tmdbId, user.getId()).ifPresent(m -> {
             throw new DuplicatedMovieException("This movie already exists!");
         });
     }
 
-    public Movie find(Search search) {
+    public Movie find(User user, Search search) {
         String type = search.getMediaType();
 
-        Movie found = movieRepository.findByTmdbId(search.getTmdbId()).orElseGet(
-                () -> movieClient.get(search.getTmdbId(), type));
+        Movie found = movieRepository.findByTmdbIdAndUserId(search.getTmdbId(), user.getId())
+                .orElseGet(() -> movieClient.get(search.getTmdbId(), type));
 
         found.setType(Type.of(type));
         found.setWebsite(stringUtil.generateImdbUrl(found.getImdbId()));
@@ -70,7 +68,7 @@ public class MovieService {
                 .limit(moviesLimit)
                 .toList();
 
-        List<Movie> trending = track(LocalDate.now(clock));
+        List<Movie> trending = track(user, LocalDate.now(clock));
 
         MovieRecord data = MovieRecord.builder()
                 .total(movieRepository.countTotalMoviesByUser(userId))
@@ -82,20 +80,23 @@ public class MovieService {
                 .slider(trending.subList(5, 10))
                 .build();
 
-        Boolean isAvailable = data.getPlaylist().size() == moviesLimit;
+        Boolean isAvailable = data.getPlaylist().size() == moviesLimit
+                && data.getAdded().size() == moviesLimit
+                && data.getGenres().size() == genresLimit;
+
         data.setIsAvailable(isAvailable);
 
         log.info("Reported a movie record: {}", data);
         return data;
     }
 
-    private List<Movie> track(LocalDate date) {
+    private List<Movie> track(User user, LocalDate date) {
         return movieClient.trending().getResults().stream()
                 .parallel()
                 .filter(s -> s.getMediaType().equals("movie") ||
                         s.getMediaType().equals("tv"))
                 .limit(10)
-                .map(this::find)
+                .map(s -> find(user, s))
                 .toList();
     }
 
