@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/signup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.SignupController">
+<StackPane fx:id="root" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../style/signup-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aminnorouzi.ms.controller.impl.SignupController">
     <children>
         <HBox>
             <children>
