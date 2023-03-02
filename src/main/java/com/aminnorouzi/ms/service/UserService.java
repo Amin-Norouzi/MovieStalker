@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -20,6 +22,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordUtil passwordUtil;
+    private final Clock clock;
 
     public User update(User request) {
         User user = getById(request.getId());
@@ -52,7 +55,7 @@ public class UserService {
                 .username(request.getUsername())
                 .password(password)
                 .fullName(request.getFullName())
-                .movies(new ArrayList<>())
+                .movies(List.of())
                 .build();
 
         User created = userRepository.save(user);
@@ -92,7 +95,7 @@ public class UserService {
         User found = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User: %s does not exist", id)));
 
-        log.info("Found a user: {}", found);
+        log.info("Found an user: {}", found);
         return found;
     }
 
