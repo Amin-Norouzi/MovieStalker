@@ -2,7 +2,7 @@ package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.tool.image.ImageInfo;
+import com.aminnorouzi.ms.tool.image.Info;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -39,8 +39,8 @@ public class MovieNode extends StackPane implements Loadable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Thread background = new Thread(() -> Platform.runLater(() -> {
-            ImageInfo backdropInfo = new ImageInfo(movie.getPoster(), 181 * 4, 236 * 4, true);
-            controller.getImage().load(backdropInfo).thenAccept(image -> {
+
+            controller.getImage().load(movie.getPoster(), Info.MOVIE_NODE_POSTER).thenAccept(image -> {
                 posterPic.setFill(new ImagePattern(image));
             });
 

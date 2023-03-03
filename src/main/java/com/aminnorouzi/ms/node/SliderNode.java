@@ -2,8 +2,7 @@ package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
-import com.aminnorouzi.ms.tool.image.ImageInfo;
-import com.aminnorouzi.ms.tool.image.ImageInfo.Type;
+import com.aminnorouzi.ms.tool.image.Info;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -113,10 +112,10 @@ public class SliderNode extends StackPane implements Loadable {
     private void show(Movie movie) {
         Platform.runLater(() -> {
             setCurrent(movie);
+            // TODO Auto-generated method stub
             backdropPic.setFill(Color.GRAY);
 
-            ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 969*2, 432*2, true, Type.BACKDROP);
-            controller.getImage().load(backdropInfo).thenAccept(image -> {
+            controller.getImage().load(movie.getBackdrop(), Info.SLIDER_NODE_BACKDROP).thenAccept(image -> {
                 backdropPic.setFill(new ImagePattern(image));
             });
 
@@ -156,6 +155,7 @@ public class SliderNode extends StackPane implements Loadable {
             if (Thread.currentThread().getName().equals("background-task-slider")) {
                 Thread.sleep(Duration.ofSeconds(5));
             }
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
     }
 }

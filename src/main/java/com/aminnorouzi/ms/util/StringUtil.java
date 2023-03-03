@@ -20,7 +20,6 @@ public class StringUtil {
 
     public String extractImdbId(String url) {
         Matcher matcher = IMDB_ID_PATTERN.matcher(url);
-
         if (matcher.find()) {
             return matcher.group();
         }
@@ -28,4 +27,7 @@ public class StringUtil {
         return null;
     }
 
+    public String format(String str, Object... args) {
+        return String.format(str, args);
+    }
 }

@@ -5,8 +5,8 @@ import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.node.GenreNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.tool.image.ImageInfo;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
+import com.aminnorouzi.ms.tool.image.Info;
 import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -21,8 +21,6 @@ import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-
-import static com.aminnorouzi.ms.tool.image.ImageInfo.Type;
 
 @Slf4j
 @Component
@@ -65,14 +63,13 @@ public class MovieController extends Controller {
             movie.setUser(getUser());
         }
 
-        ImageInfo backdropInfo = new ImageInfo(movie.getBackdrop(), 1280, 832, true, Type.BACKDROP);
-        image.load(backdropInfo).thenAccept(image -> {
+
+        image.load(movie.getBackdrop(), Info.MOVIE_BACKDROP).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             backdropImage.setFill(pattern);
         });
 
-        ImageInfo posterInfo = new ImageInfo(movie.getPoster(), 300, 960, true, Type.POSTER);
-        image.load(posterInfo).thenAccept(image -> {
+        image.load(movie.getPoster(), Info.MOVIE_POSTER).thenAccept(image -> {
             ImagePattern pattern = new ImagePattern(image);
             posterImage.setFill(pattern);
         });
