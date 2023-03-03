@@ -1,6 +1,8 @@
 package com.aminnorouzi.ms.core;
 
 import com.aminnorouzi.ms.MovieStalkerApplication;
+import com.aminnorouzi.ms.model.user.User;
+import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.application.Application;
@@ -52,11 +54,11 @@ public class ApplicationInitializer extends Application {
     @RequiredArgsConstructor
     public static class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
 
+        private final ActivityService activity;
         private final ViewSwitcher switcher;
 
         @Override
         public void onApplicationEvent(StageReadyEvent event) {
-            View view = View.getDefault();
             Stage stage = event.getDefault(event);
 
             stage.getIcons().add(new Image(Objects.requireNonNull(PrimaryStageInitializer.class
@@ -75,7 +77,17 @@ public class ApplicationInitializer extends Application {
             }
 
             switcher.initialize(stage);
-            switcher.switchTo(view, null, null);
+
+            if (activity.exists()) {
+                try {
+                    User user = activity.remember();
+                    switcher.switchTo(View.HOME, user, null);
+
+                    return;
+                } catch (Exception ignored) {}
+            }
+
+            switcher.switchTo(View.getDefault(), null, null);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.aminnorouzi.ms.node;
 
 import com.aminnorouzi.ms.controller.Controller;
+import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,6 +70,7 @@ public class SidebarNode extends StackPane implements Loadable {
 
     @FXML
     private void onLogout(ActionEvent event) {
-        controller.switchTo(View.SIGNIN);
+        User user = controller.getUser();
+        controller.execute(() -> controller.getActivity().logout(user), View.SIGNIN);
     }
 }

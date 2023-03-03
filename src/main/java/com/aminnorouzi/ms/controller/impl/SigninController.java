@@ -4,13 +4,14 @@ import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
+import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +28,8 @@ public class SigninController extends Controller {
     private PasswordField passwordField;
     @FXML
     private Button signinButton;
+    @FXML
+    private CheckBox rememberBox;
 
     public SigninController(ViewSwitcher switcher, NotificationService notification, LibraryService library, ActivityService activity, ImageLoader image) {
         super(switcher, notification, library, activity, image);
@@ -45,6 +48,8 @@ public class SigninController extends Controller {
         UserRequest request = UserRequest.builder()
                 .username(usernameField.getText().toLowerCase())
                 .password(passwordField.getText())
+                .authenticated(rememberBox.isSelected())
+                .automated(false)
                 .build();
 
         try {

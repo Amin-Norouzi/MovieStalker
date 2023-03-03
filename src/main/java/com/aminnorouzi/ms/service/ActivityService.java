@@ -19,5 +19,15 @@ public class ActivityService {
         return userService.signup(request);
     }
 
+    public User logout(User user) {
+        return userService.logout(user);
+    }
 
+    public User remember() {
+        return userService.remember();
+    }
+
+    public boolean exists() {
+        return userService.exists();
+    }
 }

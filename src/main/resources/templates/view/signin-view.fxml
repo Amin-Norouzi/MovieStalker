@@ -110,7 +110,7 @@
                                                 <Font name="Poppins Regular" size="16.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox id="remenber-box" fx:id="rememberCheckBox" graphicTextGap="8.0" layoutX="-5.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" text="Remember Me?" AnchorPane.leftAnchor="0.0" />
+                                          <CheckBox id="remember-box" fx:id="rememberBox" graphicTextGap="8.0" layoutX="-5.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" text="Remember Me?" AnchorPane.leftAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
