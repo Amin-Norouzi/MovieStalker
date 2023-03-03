@@ -29,7 +29,7 @@
                     <Button id="home-button" fx:id="homeButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHome" prefHeight="48.0" prefWidth="216.0" text="Home" />
                     <Button id="discover-button" fx:id="discoverButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onDiscover" prefHeight="48.0" prefWidth="216.0" text="Discover" />
                     <Button id="library-button" fx:id="libraryButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onLibrary" prefHeight="48.0" prefWidth="216.0" text="Library" />
-                    <Button id="watch-button" fx:id="watchButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="216.0" text="Watch" />
+                    <Button id="watch-button" fx:id="watchButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onWatch" prefHeight="48.0" prefWidth="216.0" text="Watch" />
                 </VBox>
                 <Region prefHeight="402.0" prefWidth="216.0" />
                 <Button id="logout-button" fx:id="logoutButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" graphicTextGap="16.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onLogout" prefHeight="48.0" prefWidth="216.0" text="Logout" />

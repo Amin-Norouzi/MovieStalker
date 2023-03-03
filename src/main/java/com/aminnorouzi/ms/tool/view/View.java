@@ -1,6 +1,6 @@
 package com.aminnorouzi.ms.tool.view;
 
-import com.aminnorouzi.ms.controller.*;
+import com.aminnorouzi.ms.controller.impl.*;
 import lombok.Getter;
 
 @Getter
@@ -12,6 +12,7 @@ public enum View {
     SIGNIN(SigninController.class, "Sign in", false, false),
     SIGNUP(SignupController.class, "Sign up", false, false),
     DISCOVER(DiscoverController.class, "Discover", true, false),
+    WATCH(WatchController.class, "Watch", true, false),
 
     PREVIOUS(null, null, false, false),
     EMPTY(null, null, false, false);
@@ -38,31 +39,5 @@ public enum View {
 
     public static String getTitle(View view) {
         return view.getTitle().toLowerCase();
-    }
-
-    public static View of(String title) {
-        switch (title.toLowerCase()) {
-            case "home" -> {
-                return View.HOME;
-            }
-            case "library" -> {
-                return View.LIBRARY;
-            }
-            case "movie" -> {
-                return View.MOVIE;
-            }
-            case "signin" -> {
-                return View.SIGNIN;
-            }
-            case "signup" -> {
-                return View.SIGNUP;
-            }
-            case "addition" -> {
-                return View.DISCOVER;
-            }
-            default -> {
-                return View.EMPTY;
-            }
-        }
     }
 }

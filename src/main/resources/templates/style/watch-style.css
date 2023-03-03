@@ -1,0 +1,15 @@
+.root {
+    -fx-font-family: "Poppins Regular";
+    -fx-font-size: 16px;
+    -fx-text-fill: #1C1818;
+
+    -fx-background-color: #FFFFFF;
+}
+
+.tile-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.scroll-pane {
+    -fx-background-color: #FFFFFF;
+}

@@ -86,7 +86,20 @@
     -fx-padding: 0px 0px 0px 52px;
 }
 
-/*#watch-button-clicked are disabled by default*/
+#watch-button-clicked {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 16px;
+
+    -fx-background-color: #1C1818;
+    -fx-text-fill: #FFFFFF;
+
+    -fx-background-image: url('../image/watch-w-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 12px;
+
+    -fx-padding: 0px 0px 0px 52px;
+}
 
 #home-button {
     -fx-background-image: url('../image/home-b-icon.png');

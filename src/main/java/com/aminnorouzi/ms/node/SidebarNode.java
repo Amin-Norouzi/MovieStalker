@@ -20,6 +20,8 @@ public class SidebarNode extends StackPane implements Loadable {
     private Button homeButton;
     @FXML
     private Button libraryButton;
+    @FXML
+    private Button watchButton;
 
     public SidebarNode(Controller controller) {
         this.controller = controller;
@@ -36,6 +38,7 @@ public class SidebarNode extends StackPane implements Loadable {
             case "homeButton" -> homeButton.setId(String.format(id, title));
             case "discoverButton" -> discoverButton.setId(String.format(id, title));
             case "libraryButton" -> libraryButton.setId(String.format(id, title));
+            case "watchButton" -> watchButton.setId(String.format(id, title));
         }
     }
 
@@ -57,6 +60,11 @@ public class SidebarNode extends StackPane implements Loadable {
     @FXML
     private void onLibrary(ActionEvent event) {
         controller.switchTo(View.LIBRARY);
+    }
+
+    @FXML
+    private void onWatch(ActionEvent event) {
+        controller.switchTo(View.WATCH);
     }
 
     @FXML
