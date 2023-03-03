@@ -1,9 +1,12 @@
 # feel free to contribute! [contact me](mailto:realaminnorouzi@gmail.com)
 
-### [see daily devlogs here](https://t.me/amindevlog/5) 🍿
+## [see daily devlogs here](https://t.me/amindevlog/5) 🍿
 ### beta version will be out soon!!
 
-it will available for: (with native installers)
+<br/>
+<br/>
+
+it will be available for: (with native installers)
 - windows
 - macos
 
@@ -16,20 +19,20 @@ you will need: (maybe)
 beside those million things i have done so far :)
 
 - [ ] update readme file
-- [x] genre node
+- [ ] genre nodes
 - [x] mini genre node
 - [x] search node
-- [ ] discover view
+- [x] discover view
 - [ ] notifications
 - [ ] deployment
 - [ ] loading/handling images
 - [ ] request caching
 - [ ] trending movies
 - [ ] css files clean up
-- [ ] no data view
-- [ ] empty library
+- [x] no data view
+- [x] empty library
 - [ ] optimizing collections
-- [ ] hadling threats
+- [ ] handling threats
 - [ ] general code clean up
 - [x] movie view
 - [ ] setup view
