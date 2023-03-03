@@ -15,7 +15,7 @@ public class CalculatedTimeConverter extends JsonDeserializer<String> {
         final ObjectCodec objectCodec = jsonParser.getCodec();
         final JsonNode node = objectCodec.readTree(jsonParser);
 
-        int value = 0;
+        int value;
         try {
             value = node.elements().next().asInt();
         } catch (Exception exception) {
@@ -33,6 +33,11 @@ public class CalculatedTimeConverter extends JsonDeserializer<String> {
             builder.append(minutes).append("m");
         }
 
-        return builder.toString();
+        String runtime = builder.toString();
+        if (runtime.isBlank()) {
+            runtime = String.valueOf(0);
+        }
+
+        return runtime;
     }
 }
