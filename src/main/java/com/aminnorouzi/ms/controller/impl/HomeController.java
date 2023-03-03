@@ -20,6 +20,7 @@ import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Setter
@@ -67,8 +68,13 @@ public class HomeController extends Controller implements Emptiable {
                 new SectionNode(this, "Trending Movies", data.getTrending(), new MovieFunction())
         );
 
+        int todayWatchedCount = movies.stream()
+                .filter(m -> m.getWatchedAt() != null
+                        && m.getWatchedAt().toLocalDate().equals(LocalDate.now()))
+                .toList().size();
+
         totalLabel.setText(String.valueOf(data.getTotal()));
         watchedLabel.setText(String.valueOf(data.getWatched()));
-        todayLabel.setText(String.valueOf(0));
+        todayLabel.setText(String.valueOf(todayWatchedCount));
     }
 }
