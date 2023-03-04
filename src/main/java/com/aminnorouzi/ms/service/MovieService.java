@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +26,7 @@ public class MovieService {
     private final MovieRepository movieRepository;
     private final StringUtil stringUtil;
     private final Clock clock;
+    private final CacheService cacheService;
 
     public Movie add(Movie request) {
         verify(request.getUser(), request.getTmdbId());
@@ -47,10 +47,13 @@ public class MovieService {
     }
 
     public Movie find(User user, Search search) {
+        Long tmdbId = search.getTmdbId();
         String type = search.getMediaType();
 
-        Movie found = movieRepository.findByTmdbIdAndUserId(search.getTmdbId(), user.getId())
-                .orElseGet(() -> movieClient.get(search.getTmdbId(), type));
+        Movie found = movieRepository.findByTmdbIdAndUserId(tmdbId, user.getId())
+                .orElse(cacheService.get(
+                        tmdbId, type, () -> movieClient.get(tmdbId, type)
+                ));
 
         found.setType(Type.of(type));
         found.setWebsite(stringUtil.generateImdbUrl(found.getImdbId()));
@@ -68,7 +71,7 @@ public class MovieService {
                 .limit(moviesLimit)
                 .toList();
 
-        List<Movie> trending = track(user, LocalDate.now(clock));
+        List<Movie> trending = track(user);
 
         MovieRecord data = MovieRecord.builder()
                 .total(movieRepository.countTotalMoviesByUser(userId))
@@ -90,8 +93,11 @@ public class MovieService {
         return data;
     }
 
-    private List<Movie> track(User user, LocalDate date) {
-        return movieClient.trending().getResults().stream()
+    private List<Movie> track(User user) {
+        Query query = Query.of(true);
+
+        return cacheService.get(query, () -> movieClient.trending())
+                .getResults().stream()
                 .parallel()
                 .filter(s -> s.getMediaType().equals("movie") ||
                         s.getMediaType().equals("tv"))
@@ -123,14 +129,16 @@ public class MovieService {
         List<Search> found;
         if (query.getImdb() != null) {
             String imdbId = extract(query.getImdb());
-            SearchResponse response = movieClient.find(imdbId);
+            query.setImdb(imdbId);
+
+            SearchResponse response = cacheService.get(query, () -> movieClient.find(imdbId));
             if (!response.getMovies().isEmpty()) {
                 found = response.getMovies();
             } else {
                 found = response.getTvs();
             }
         } else {
-            found = movieClient.search(query.getTitle()).getResults();
+            found = cacheService.get(query, () -> movieClient.search(query.getTitle())).getResults();
         }
 
         List<Search> result = found.stream()
