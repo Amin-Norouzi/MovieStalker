@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GraphicsManager {
+public class GraphicsUtil {
 
     public static Rectangle roundImage(Image image) {
         Rectangle rectangle = new Rectangle(200, 300);

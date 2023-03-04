@@ -25,6 +25,7 @@ public class ViewLoader {
 
             return fxWeaver.loadView(view.getController());
         } catch (Exception exception) {
+            // TODO: do not wrap the exception
             throw new IllegalViewException("Could not load view: " + view.getTitle());
         }
     }

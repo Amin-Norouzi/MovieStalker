@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class IdFromJsonConverter extends JsonDeserializer<String> {
 
-    @Value("${movie.client.api.external-ids-field.imdbId}")
+    @Value("${movie.client.api.external-ids-field.imdb-id}")
     private String field;
 
     @Override

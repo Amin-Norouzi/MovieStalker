@@ -1,10 +1,9 @@
 package com.aminnorouzi.ms.event;
 
-import com.aminnorouzi.ms.controller.LibraryController;
+import com.aminnorouzi.ms.controller.impl.LibraryController;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.tool.view.View;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
