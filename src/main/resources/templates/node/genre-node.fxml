@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
 <fx:root fx:id="root" stylesheets="@../style/genre-node-style.css" type="HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button fx:id="genreButton" id="genre-button" mnemonicParsing="false" text="Button" />
+        <Button id="genre-button" fx:id="genreButton" mnemonicParsing="false" text="Button" />
     </children>
 </fx:root>

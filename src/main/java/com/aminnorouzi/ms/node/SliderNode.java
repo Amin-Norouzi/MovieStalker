@@ -112,8 +112,6 @@ public class SliderNode extends StackPane implements Loadable {
     private void show(Movie movie) {
         Platform.runLater(() -> {
             setCurrent(movie);
-            // TODO Auto-generated method stub
-            backdropPic.setFill(Color.GRAY);
 
             controller.getImage().load(movie.getBackdrop(), Info.SLIDER_NODE_BACKDROP).thenAccept(image -> {
                 backdropPic.setFill(new ImagePattern(image));

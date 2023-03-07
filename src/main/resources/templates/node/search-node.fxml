@@ -8,7 +8,7 @@
     <VBox spacing="8.0">
         <StackPane>
             <children>
-                <Rectangle fx:id="posterPic" arcHeight="6.0" arcWidth="6.0" fill="DODGERBLUE" height="236.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="181.0" />
+                <Rectangle fx:id="posterPic" arcHeight="6.0" arcWidth="6.0" fill="#c4c4c4" height="236.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="181.0" />
                 <StackPane id="hover-pane">
                     <children>
                         <Rectangle arcHeight="6.0" arcWidth="6.0" fill="#00000080" height="236.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="181.0" />

@@ -5,8 +5,21 @@
     -fx-text-fill: #797979;
 }
 
-.label {
+#category-label {
     -fx-font-family: "Poppins SemiBold";
     -fx-font-size: 21px;
+
     -fx-text-fill: #FFFFFF;
+}
+
+#icon-button {
+    -fx-animated: none;
+    -fx-effect: none;
+    -fx-background-color: none;
+    -fx-border-color: none;
+
+    -fx-background-image: url('../image/forward-arrow-icon.png');
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
