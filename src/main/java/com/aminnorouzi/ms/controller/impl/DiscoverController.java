@@ -55,16 +55,37 @@ public class DiscoverController extends Controller implements Searchable, Emptia
     public void find(String text) {
         clear(getContent());
 
-        Thread background = new Thread(() -> Platform.runLater(() -> {
+        Thread background = new Thread(() -> {
             Query query = Query.of(text);
 
             try {
-                List<Search> searches = library.search(query);
-                getContent().getChildren().add(new SectionNode(this, "Your Search Results", searches, new SearchFunction()));
+                List<Search> result = library.search(query);
+
+                Platform.runLater(() -> {
+                    List<Search> movies = result.stream()
+                            .filter(s -> s.getMediaType().equalsIgnoreCase("movie")).toList();
+
+                    if (!movies.isEmpty()) {
+                        SectionNode moviesSection = new SectionNode(this, "Movies",
+                                false, movies, new SearchFunction());
+                        supply(moviesSection);
+                    }
+
+                    List<Search> tvs = result.stream()
+                            .filter(s -> s.getMediaType().equalsIgnoreCase("tv")).toList();
+
+                    if (!tvs.isEmpty()) {
+                        SectionNode tvsSection = new SectionNode(this, "Series",
+                                false, tvs, new SearchFunction());
+                        supply(tvsSection);
+                    }
+                });
             } catch (Exception exception) {
-                onEmpty(getContent(), this, "No result found, try something else!");
+                Platform.runLater(() -> {
+                    onEmpty(getContent(), this, "No result found, try something else!");
+                });
             }
-        }));
+        });
 
         background.setDaemon(true);
         background.start();

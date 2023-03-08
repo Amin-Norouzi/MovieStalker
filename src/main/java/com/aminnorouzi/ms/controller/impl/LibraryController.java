@@ -38,9 +38,6 @@ public class LibraryController extends Controller implements Emptiable {
         }
 
         List<Movie> movies = library.sort(getUser().getMovies());
-
-        getContent().getChildren().add(
-                new SectionNode(this, "Your Library", false, movies, new MovieFunction())
-        );
+        supply(new SectionNode(this, "Your Library", false, movies, new MovieFunction()));
     }
 }

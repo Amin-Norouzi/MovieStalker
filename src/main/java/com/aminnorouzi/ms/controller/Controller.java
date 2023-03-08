@@ -10,6 +10,7 @@ import com.aminnorouzi.ms.tool.notification.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -56,6 +57,18 @@ public class Controller implements Switchable, Executable {
     }
 
     protected void configure() { /* Child classes can override it to do their own configuration */}
+
+    protected void supply(Node value) {
+        content.getChildren().add(value);
+    }
+
+    protected void supply(Node value, int index) {
+        content.getChildren().add(index, value);
+    }
+
+    protected void supply(Node... values) {
+        content.getChildren().addAll(values);
+    }
 
     @Override
     public void execute(Callable<User> callable, View view) {

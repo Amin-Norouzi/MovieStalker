@@ -60,8 +60,8 @@ public class HomeController extends Controller implements Emptiable {
             return;
         }
 
-        getContent().getChildren().add(1, new SliderNode(data.getSlider(), this));
-        sectionPane.getChildren().addAll(
+        supply(new SliderNode(data.getSlider(), this), 1);
+        supply(
                 new SectionNode(this, "Recently Added to Library", data.getAdded(), new MovieFunction()),
                 new SectionNode(this, "Favorite Genres", data.getGenres(), new CategoryFunction()),
                 new SectionNode(this, "Recently Watched", data.getPlaylist(), new MovieFunction()),
