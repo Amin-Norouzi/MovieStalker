@@ -10,8 +10,10 @@ import com.aminnorouzi.ms.util.PasswordUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
@@ -30,23 +32,24 @@ public class UserService {
     private final PasswordUtil passwordUtil;
     private final Clock clock;
 
+    @Transactional
     public User update(User request) {
-        User user = getById(request.getId());
+//        User user = getById(request.getId());
+//
+//        if (request.getFullName() != null &&
+//                !request.getFullName().equals(user.getFullName())) {
+//            user.setFullName(request.getFullName());
+//        }
+//        if (request.getPassword() != null &&
+//                !request.getPassword().equals(user.getPassword())) {
+//            user.setPassword(request.getPassword());
+//        }
+//        if (request.getMovies() != null &&
+//                !request.getMovies().equals(user.getMovies())) {
+//            user.setMovies(request.getMovies());
+//        }
 
-        if (request.getFullName() != null &&
-                !request.getFullName().equals(user.getFullName())) {
-            user.setFullName(request.getFullName());
-        }
-        if (request.getPassword() != null &&
-                !request.getPassword().equals(user.getPassword())) {
-            user.setPassword(request.getPassword());
-        }
-        if (request.getMovies() != null &&
-                !request.getMovies().equals(user.getMovies())) {
-            user.setMovies(request.getMovies());
-        }
-
-        User updated = userRepository.save(user);
+        User updated = userRepository.save(request);
 
         log.info("Updated an user: {}", updated);
         return updated;
@@ -62,6 +65,7 @@ public class UserService {
                 .password(password)
                 .fullName(request.getFullName())
                 .movies(new ArrayList<>())
+                .createdAt(LocalDateTime.now(clock))
                 .build();
 
         User created = userRepository.save(user);

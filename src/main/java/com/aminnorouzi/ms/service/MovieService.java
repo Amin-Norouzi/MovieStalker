@@ -7,10 +7,12 @@ import com.aminnorouzi.ms.model.movie.*;
 import com.aminnorouzi.ms.model.movie.Search.SearchResponse;
 import com.aminnorouzi.ms.model.user.User;
 import com.aminnorouzi.ms.repository.MovieRepository;
+import com.aminnorouzi.ms.repository.UserRepository;
 import com.aminnorouzi.ms.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -21,23 +23,25 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MovieService {
-
     private final MovieClient movieClient;
     private final MovieRepository movieRepository;
     private final StringUtil stringUtil;
     private final Clock clock;
     private final CacheService cacheService;
+    private final UserService userService;
 
-    public Movie add(Movie request) {
-        verify(request.getUser(), request.getTmdbId());
+    public void add(User user, Movie request) {
+        verify(user, request.getTmdbId());
 
-        User user = request.getUser();
-        user.addMovie(request);
+        request.setUser(user);
+        user.getMovies().add(request);
 
-        Movie added = movieRepository.save(request);
+        request.setCreatedAt(LocalDateTime.now(clock));
 
-        log.info("Added a new movie: {}", added);
-        return added;
+//        Movie added = movieRepository.save(request);
+//
+//        log.info("Added a new movie: {}", added);
+//        return added;
     }
 
     private void verify(User user, Long tmdbId) {
@@ -55,8 +59,8 @@ public class MovieService {
                         tmdbId, type, () -> movieClient.get(tmdbId, type)
                 ));
 
-        found.setType(Type.of(type));
-        found.setWebsite(stringUtil.generateImdbUrl(found.getImdbId()));
+        if (found.getType() == null) found.setType(Type.of(type));
+        if (found.getWebsite() == null) found.setWebsite(stringUtil.generateImdbUrl(found.getImdbId()));
 
         log.info("Found a new movie: {}", found);
         return found;
@@ -107,7 +111,7 @@ public class MovieService {
     }
 
     public void watch(Movie request) {
-        request.setWatchedAt(LocalDateTime.now());
+        request.setWatchedAt(LocalDateTime.now(clock));
 
         log.info("Watched a movie: {}", request);
     }
@@ -118,11 +122,19 @@ public class MovieService {
         log.info("Unwatched a movie: {}", request);
     }
 
-    public void delete(Movie movie) {
-        User user = movie.getUser();
-        user.removeMovie(movie);
+    public void delete(Movie request) {
+        User user = request.getUser();
 
-        log.info("Deleted a movie: {}", movie);
+        request.setUser(null);
+        user.getMovies().remove(request);
+
+        log.info("Deleted a movie: {}", request);
+    }
+
+    public void delete(Long id) {
+        if (movieRepository.existsById(id)) {
+            movieRepository.deleteById(id);
+        }
     }
 
     public List<Search> search(Query query) {

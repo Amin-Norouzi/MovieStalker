@@ -7,8 +7,7 @@ import com.aminnorouzi.ms.annotation.SimpleDoubleNumber;
 import com.aminnorouzi.ms.model.user.User;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +15,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -29,15 +29,12 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table(name = "movie")
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@EntityListeners(AuditingEntityListener.class)
 public class Movie implements Serializable {
 
     @Id
     @JsonIgnore
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_seq")
-//    @SequenceGenerator(name = "movie_seq", sequenceName = "movie_seq", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -52,6 +49,7 @@ public class Movie implements Serializable {
     @JsonAlias({"title", "name"})
     private String title;
 
+    @ToString.Exclude
     @Column(length = 2055)
     @JsonProperty("overview")
     private String overview;
@@ -98,13 +96,22 @@ public class Movie implements Serializable {
     private LocalDate released;
 
     private LocalDateTime watchedAt;
-
-    @CreatedDate
     private LocalDateTime createdAt;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    // TODO: implement a proper equals operator
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Movie movie = (Movie) o;
+        return id != null && Objects.equals(id, movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

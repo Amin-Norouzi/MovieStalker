@@ -14,15 +14,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
-@Slf4j
+import java.util.List;
+
 @Component
 @FxmlView("/templates/view/movie-view.fxml")
 public class MovieController extends Controller {
@@ -59,39 +60,19 @@ public class MovieController extends Controller {
     @Override
     protected void configure() {
         movie = (Movie) getInput();
-        if (movie.getUser() == null) {
-            movie.setUser(getUser());
-        }
 
+        changeState(confirms(), movie.getWatchedAt() != null);
 
-        image.load(movie.getBackdrop(), Info.MOVIE_BACKDROP).thenAccept(image -> {
-            ImagePattern pattern = new ImagePattern(image);
-            backdropImage.setFill(pattern);
-        });
+        image.load(movie.getBackdrop(), Info.MOVIE_BACKDROP, backdropImage);
+        image.load(movie.getPoster(), Info.MOVIE_POSTER, posterImage);
 
-        image.load(movie.getPoster(), Info.MOVIE_POSTER).thenAccept(image -> {
-            ImagePattern pattern = new ImagePattern(image);
-            posterImage.setFill(pattern);
-        });
-
-        movie.getGenres().forEach(genre -> {
-            genrePane.getChildren().add(new GenreNode(this, genre));
-        });
+        movie.getGenres().forEach(genre -> genrePane.getChildren().add(new GenreNode(this, genre)));
 
         titleLabel.setText(movie.getTitle());
         releasedLabel.setText(String.valueOf(movie.getReleased()));
         overviewLabel.setText(movie.getOverview());
         ratingLabel.setText(String.valueOf(movie.getRating()));
         runtimeLabel.setText(movie.getRuntime());
-
-        if (movie.getWatchedAt() != null) {
-            watchButton.setText("Watched");
-        }
-        if (movie.getId() != null) {
-            watchButton.setDisable(false);
-            addButton.setText("In Library");
-            addButton.setId("added-button");
-        }
     }
 
     @FXML
@@ -100,20 +81,25 @@ public class MovieController extends Controller {
             String command = "open " + movie.getWebsite();
             Runtime.getRuntime().exec(command);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
     @FXML
     private void onAdd(ActionEvent event) {
-        if (movie.getId() == null) {
-            execute(() -> library.add(movie));
+        try {
+            if (!confirms()) {
+                execute(() -> library.add(getUser(), movie));
+                changeState(true);
 
-            watchButton.setDisable(false);
-            addButton.setText("In Library");
-            addButton.setId("added-button");
-        } else {
-            execute(() -> library.delete(movie), View.PREVIOUS);
+                List<Movie> movies = getUser().getMovies();
+                movie = movies.get(movies.size() - 1);
+            } else {
+                execute(() -> library.delete(movie));
+                changeState(false);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -121,15 +107,51 @@ public class MovieController extends Controller {
     private void onWatch(ActionEvent event) {
         if (movie.getWatchedAt() != null) {
             execute(() -> library.unwatch(movie));
-            watchButton.setText("Watch Now");
+            changeState(true, false);
         } else {
             execute(() -> library.watch(movie));
-            watchButton.setText("Watched");
+            changeState(true, true);
         }
     }
 
     @FXML
     private void onBack(ActionEvent event) {
         switchTo(View.PREVIOUS);
+    }
+
+    @FXML
+    private void onEscape(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE) {
+            switchTo(View.PREVIOUS);
+        }
+    }
+
+    private void changeState(boolean added) {
+        changeState(added, false);
+    }
+
+    private void changeState(boolean added, boolean watched) {
+        if (added) {
+            watchButton.setDisable(false);
+            addButton.setText("In Library");
+            addButton.setId("added-button");
+
+            if (watched) {
+                watchButton.setText("Watched");
+            } else {
+                watchButton.setText("Watch Now");
+            }
+        } else {
+            watchButton.setDisable(true);
+            addButton.setText("Add to Library");
+            addButton.setId("add-button");
+
+            movie.setUser(null);
+            movie.setId(null);
+        }
+    }
+
+    private boolean confirms() {
+        return movie.getUser() != null || movie.getId() != null;
     }
 }

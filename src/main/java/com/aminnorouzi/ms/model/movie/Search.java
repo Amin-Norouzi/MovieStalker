@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class Search {
     @JsonAlias({"name", "title"})
     private String title;
 
+    @ToString.Exclude
     @Column(length = 2055)
     @JsonProperty("overview")
     private String overview;

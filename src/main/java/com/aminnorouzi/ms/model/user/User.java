@@ -2,14 +2,13 @@ package com.aminnorouzi.ms.model.user;
 
 import com.aminnorouzi.ms.model.movie.Movie;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -19,14 +18,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-//    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     @Column(unique = true)
@@ -41,21 +37,18 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movie> movies;
 
-    @CreatedDate
     private LocalDateTime createdAt;
 
-    public void addMovie(Movie movie) {
-        if (movies == null) {
-            this.movies = new ArrayList<>();
-        }
-        this.movies.add(movie);
-        movie.setUser(this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
     }
 
-    public void removeMovie(Movie movie) {
-        this.movies.remove(movie);
-        movie.setUser(null);
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
-
-    // TODO: implement a proper equals operator
 }
