@@ -9,9 +9,9 @@ public enum Info {
     MOVIE_BACKDROP(1280, 720, true, true),
 
     MOVIE_NODE_POSTER(181 * 3, 236 * 3, true, true),
-    SLIDER_NODE_BACKDROP(969*2, 432*2, true, false),
+    SLIDER_NODE_BACKDROP(969 * 2, 432 * 2, true, false),
     SEARCH_NODE_POSTER(181 * 3, 236 * 3, true, false),
-    GENRE_NODE_BACKDROP(300 * 2, 960 * 2, true, true);
+    GENRE_NODE_BACKDROP(312, 158, false, false);
 
     private final int width;
     private final int height;

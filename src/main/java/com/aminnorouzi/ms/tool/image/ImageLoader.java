@@ -3,6 +3,8 @@ package com.aminnorouzi.ms.tool.image;
 import com.aminnorouzi.ms.util.StringUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class ImageLoader {
     static {
         // https://stackoverflow.com/a/22742898/11552184
         System.setProperty("java.awt.headless", "false");
+
+        File root = new File("res");
+        if (!root.exists()) root.mkdir();
     }
 
     // TODO: handle exceptions
@@ -42,6 +47,10 @@ public class ImageLoader {
         }
 
         return CompletableFuture.supplyAsync(() -> download(fileName, info));
+    }
+
+    public void load(String fileName, Info info, Rectangle rec) {
+        load(fileName, info).thenAccept(image -> rec.setFill(new ImagePattern(image)));
     }
 
     private Image find(String fileName, Info info) {
