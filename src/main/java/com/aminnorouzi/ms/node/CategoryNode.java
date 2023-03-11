@@ -42,22 +42,24 @@ public class CategoryNode extends StackPane implements Loadable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Thread background = new Thread(() -> Platform.runLater(() -> {
+        Thread background = new Thread(() -> {
             String base = "/templates/image/genre/%s-genre.png";
             String path = base.formatted(category.toLowerCase()
                     .replaceAll("\\s", "-").trim());
 
             Image image = new Image(path, true);
-            image.progressProperty().addListener((observable, oldValue, newValue) -> {
-                if ((Double) observable.getValue() == 1.0) {
-                    ImagePattern pattern = new ImagePattern(image);
-                    categoryImage.setFill(pattern);
-                }
-            });
+
+            Platform.runLater(() -> {
+                image.progressProperty().addListener((observable, oldValue, newValue) -> {
+                    if ((Double) observable.getValue() == 1.0) {
+                        categoryImage.setFill(new ImagePattern(image));
+                    }
+                });
 
 //            controller.getImage().load(path, Info.GENRE_NODE_BACKDROP, categoryImage);
-            categoryLabel.setText(category);
-        }));
+                categoryLabel.setText(category);
+            });
+        });
 
         background.setDaemon(true);
         background.start();

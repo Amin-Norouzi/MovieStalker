@@ -55,15 +55,10 @@ public class SectionNode extends VBox implements Loadable {
 
         titleLabel.setText(title);
 
-        Thread background = new Thread(() -> Platform.runLater(() -> {
-            values.forEach(value -> {
-                try {
-                    Node node = function.apply(controller, value);
-                    contentPane.getChildren().add(node);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        Thread background = new Thread(() -> values.forEach(value -> {
+            Node node = function.apply(controller, value);
+
+            Platform.runLater(() -> contentPane.getChildren().add(node));
         }));
 
         background.setDaemon(true);

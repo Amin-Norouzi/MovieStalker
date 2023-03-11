@@ -6,7 +6,7 @@ import com.aminnorouzi.ms.node.SidebarNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
@@ -51,8 +51,6 @@ public class Controller implements Switchable, Executable {
         if (view.getHasSidebar()) layout.setLeft(new SidebarNode(this));
         if (view.getHasHeader()) content.getChildren().add(0, new HeaderNode(this));
 
-        notification.initialize(root);
-
         configure();
     }
 
@@ -66,10 +64,6 @@ public class Controller implements Switchable, Executable {
         content.getChildren().add(index, value);
     }
 
-    protected void supply(Node... values) {
-        content.getChildren().addAll(values);
-    }
-
     @Override
     public void execute(Callable<User> callable, View view) {
         try {
@@ -80,9 +74,7 @@ public class Controller implements Switchable, Executable {
                 switchTo(view);
             }
         } catch (Exception e) {
-//            notification.show(e.getMessage());
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+            notification.showError(e.getMessage());
         }
     }
 

@@ -9,7 +9,7 @@ import com.aminnorouzi.ms.node.SectionNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import lombok.Getter;
 import net.rgielen.fxweaver.core.FxmlView;

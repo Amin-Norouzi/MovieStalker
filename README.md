@@ -19,15 +19,15 @@ you will need: (maybe)
 beside those million things i have done so far :)
 
 - [ ] update readme file
-- [ ] genre nodes
+- [x] genre nodes
 - [x] mini genre node
 - [x] search node
 - [x] discover view
 - [ ] notifications
 - [ ] deployment
 - [ ] loading/handling images
-- [ ] request caching
-- [ ] trending movies
+- [x] request caching
+- [x] trending movies
 - [ ] css files clean up
 - [x] no data view
 - [x] empty library
@@ -37,7 +37,7 @@ beside those million things i have done so far :)
 - [x] movie view
 - [ ] setup view
 - [ ] movies importing tool
-- [ ] caching user data
+- [x] caching user data
 
 ### v2 todo list:
 

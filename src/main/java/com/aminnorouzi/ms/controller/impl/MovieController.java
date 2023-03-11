@@ -7,7 +7,7 @@ import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.image.Info;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;

@@ -11,7 +11,7 @@ import com.aminnorouzi.ms.node.SliderNode;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -61,12 +61,10 @@ public class HomeController extends Controller implements Emptiable {
         }
 
         supply(new SliderNode(data.getSlider(), this), 1);
-        supply(
-                new SectionNode(this, "Recently Added to Library", data.getAdded(), new MovieFunction()),
-                new SectionNode(this, "Favorite Genres", data.getGenres(), new CategoryFunction()),
-                new SectionNode(this, "Recently Watched", data.getPlaylist(), new MovieFunction()),
-                new SectionNode(this, "Trending Movies", data.getTrending(), new MovieFunction())
-        );
+        supply(new SectionNode(this, "Recently Added to Library", data.getAdded(), new MovieFunction()));
+        supply(new SectionNode(this, "Favorite Genres", data.getGenres(), new CategoryFunction()));
+        supply(new SectionNode(this, "Recently Watched", data.getPlaylist(), new MovieFunction()));
+        supply(new SectionNode(this, "Trending Movies", data.getTrending(), new MovieFunction()));
 
         int todayWatchedCount = movies.stream()
                 .filter(m -> m.getWatchedAt() != null

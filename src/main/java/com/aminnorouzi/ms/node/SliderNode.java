@@ -32,7 +32,6 @@ public class SliderNode extends StackPane implements Loadable {
     private final Controller controller;
     private final List<Movie> movies;
 
-    private Thread thread;
     private Movie current;
     private boolean reset = false;
 
@@ -69,9 +68,7 @@ public class SliderNode extends StackPane implements Loadable {
 
         background.setName("background-task-slider");
         background.setDaemon(true);
-
-        setThread(background);
-        thread.start();
+        background.start();
     }
 
     @Override
@@ -81,7 +78,6 @@ public class SliderNode extends StackPane implements Loadable {
 
     @FXML
     private void onWatch(MouseEvent event) {
-        thread.interrupt();
         controller.switchTo(View.MOVIE, current);
     }
 
@@ -110,12 +106,10 @@ public class SliderNode extends StackPane implements Loadable {
     }
 
     private void show(Movie movie) {
-        Platform.runLater(() -> {
-            setCurrent(movie);
+        setCurrent(movie);
 
-            controller.getImage().load(movie.getBackdrop(), Info.SLIDER_NODE_BACKDROP).thenAccept(image -> {
-                backdropPic.setFill(new ImagePattern(image));
-            });
+        Platform.runLater(() -> {
+            controller.getImage().load(movie.getBackdrop(), Info.SLIDER_NODE_BACKDROP, backdropPic);
 
             String title = movie.getTitle() + " " + movie.getReleased().getYear();
             titleLabel.setText(title);
@@ -153,7 +147,6 @@ public class SliderNode extends StackPane implements Loadable {
             if (Thread.currentThread().getName().equals("background-task-slider")) {
                 Thread.sleep(Duration.ofSeconds(5));
             }
-        } catch (InterruptedException ignored) {
-        }
+        } catch (InterruptedException ignored) {}
     }
 }

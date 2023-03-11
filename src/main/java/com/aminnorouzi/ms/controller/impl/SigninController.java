@@ -5,7 +5,7 @@ import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
 import javafx.event.ActionEvent;
@@ -52,11 +52,7 @@ public class SigninController extends Controller {
                 .automated(false)
                 .build();
 
-        try {
-            execute(() -> activity.signin(request), View.HOME);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-        }
+        execute(() -> activity.signin(request), View.HOME);
     }
 
     @FXML

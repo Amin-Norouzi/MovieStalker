@@ -4,7 +4,7 @@ import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.user.UserRequest;
 import com.aminnorouzi.ms.service.ActivityService;
 import com.aminnorouzi.ms.service.LibraryService;
-import com.aminnorouzi.ms.tool.notification.NotificationService;
+import com.aminnorouzi.ms.service.NotificationService;
 import com.aminnorouzi.ms.tool.image.ImageLoader;
 import com.aminnorouzi.ms.tool.view.View;
 import com.aminnorouzi.ms.tool.view.ViewSwitcher;
@@ -57,11 +57,7 @@ public class SignupController extends Controller {
                 .password(passwordField.getText())
                 .build();
 
-        try {
-            execute(() -> activity.signup(request), View.HOME);
-        } catch (RuntimeException exception) {
-            notification.showError(exception.getMessage());
-        }
+        execute(() -> activity.signup(request), View.HOME);
     }
 
     @FXML

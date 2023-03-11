@@ -4,12 +4,10 @@ import com.aminnorouzi.ms.controller.Controller;
 import com.aminnorouzi.ms.model.movie.Movie;
 import com.aminnorouzi.ms.tool.image.Info;
 import com.aminnorouzi.ms.tool.view.View;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
@@ -38,19 +36,11 @@ public class MovieNode extends StackPane implements Loadable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Thread background = new Thread(() -> Platform.runLater(() -> {
+        controller.getImage().load(movie.getPoster(), Info.MOVIE_NODE_POSTER, posterPic);
 
-            controller.getImage().load(movie.getPoster(), Info.MOVIE_NODE_POSTER).thenAccept(image -> {
-                posterPic.setFill(new ImagePattern(image));
-            });
-
-            titleLabel.setText(movie.getTitle());
-            yearLabel.setText(String.valueOf(movie.getReleased().getYear()));
-            genreLabel.setText(movie.getGenres().get(0));
-        }));
-
-        background.setDaemon(true);
-        background.start();
+        titleLabel.setText(movie.getTitle());
+        yearLabel.setText(String.valueOf(movie.getReleased().getYear()));
+        genreLabel.setText(movie.getGenres().get(0));
     }
 
     @Override
